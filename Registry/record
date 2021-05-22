@@ -1,0 +1,7 @@
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render\{b9736be9-28d7-44b1-b72a-97935ba3e37a}\FxProperties]
+
+"{3BA0CD54-830F-4551-A6EB-F3EAB68E3700},4"=dword:00000000
+"{3BA0CD54-830F-4551-A6EB-F3EAB68E3700},6"=dword:00000001
+
+
+"{dd0df94b-53a2-4a92-854e-91f42e28fd7b},0"=dword:00000001 ou 3
