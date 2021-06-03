@@ -1264,7 +1264,7 @@ $#a::
 	CoordMode, Pixel, Relative
 Return
 
->+Media_Play_Pause::F21
++Media_Play_Pause::F21
 
 
 
