@@ -43,9 +43,10 @@ _TTHook() {
 }
  
 _TTWndProc(nCode, _wp, _lp) {
-    Critical 999
-   ;lParam  := NumGet(_lp+0*A_PtrSize)
-   ;wParam  := NumGet(_lp+1*A_PtrSize)
+    ;Critical 999
+
+    ;lParam  := NumGet(_lp+0*A_PtrSize)
+    ;wParam  := NumGet(_lp+1*A_PtrSize)
     uMsg    := NumGet(_lp+2*A_PtrSize, "uint")
     hwnd    := NumGet(_lp+3*A_PtrSize)
     if (nCode >= 0 && (uMsg = 1081 || uMsg = 1036)) {
@@ -56,7 +57,7 @@ _TTWndProc(nCode, _wp, _lp) {
             ToolTipFont(,, hwnd)
         }
     }
-    return DllCall("CallNextHookEx", "ptr", 0, "int", nCode, "ptr", _wp, "ptr", _lp, "ptr")
+return DllCall("CallNextHookEx", "ptr", 0, "int", nCode, "ptr", _wp, "ptr", _lp, "ptr")
 }
  
 _TTG(Cmd, Arg1, Arg2 := "") {

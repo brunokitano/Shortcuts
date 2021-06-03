@@ -4,7 +4,7 @@
 #Persistent
 #MaxHotkeysPerInterval 99000000
 #HotkeyInterval 99000000
-#KeyHistory 0 ; Comment this line to see the key history
+;#KeyHistory 0 ; Comment this line to see the key history
 #UseHook, On
 #InstallMouseHook
 
@@ -21,8 +21,9 @@ SetControlDelay, 0
 ;Thread, Interrupt, -1
 	;OPTIMIZATIONS
 
-#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Scripts\Tooltip.ahk
-ToolTipColor("Black", "White")
+ntimes := 0
+;#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Scripts\Tooltip.ahk
+;ToolTipColor("Black", "White")
 CoordMode, ToolTip, Screen
 
 I_Icon = D:\Users\Bruno\Documents\Scripts\Shortcuts\Icon\Shortcut.ico
@@ -44,14 +45,16 @@ RegRead, headphones, HKEY_LOCAL_MACHINE, %headphonesPath%, %headphonesValue%
 prevValue := headphones
 SetTimer, checkHeadphones, 500
 
-Status := 1
-SetTimer, CheckIdle, 50
-
 ;SetTimer, checkKDE, 10000
 SetTimer, reopenKDE, 1800000 ; 30mins
 
 gotActivated := 0
 SetTimer, programRoutine, 500
+
+joystickSwitch := 0
+SetTimer, WatchPOVandStick, 20
+
+resChange := 0
 	;VARIABLES AND FUNCTIONS
 
 
@@ -78,7 +81,7 @@ Send, {Control Up}
 Send, {LControl Up}  
 Send, {RControl Up}
 Send, {<^ Up} 
-Send, {>^ Up}        
+Send, {>^ Up}
 Send, {LWin Up}
 Send, {RWin Up}
 	;RELEASE KEYS
@@ -95,25 +98,6 @@ While (DllCall("MoveWindow","Uptr",hwnd,"Int",x+20,"Int",y-10,"Int",w,"Int",h,"I
 
 ToolTip, 
 return
-
-CheckIdle:
-	if(A_TimeIdleMouse > 2000){
-		if Status
-			SystemCursor(Status := !Status)
-	}else if !Status
-		SystemCursor(Status := !Status)
-return
-SystemCursor(OnOff){
-	if(OnOff){
-		DllCall("ShowCursor", Int,1)	
-	}else{
-		MouseGetPos, , , hwnd
-		if(!ErrorLevel){
-			Try Gui Cursor:+Owner%hwnd%
-		}
-		DllCall("ShowCursor", Int,0)	
-	}
-}
 
 checkHeadphones:
 	if(lidState = "opened"){
@@ -170,15 +154,11 @@ reopenKDE:
 Return
 
 programRoutine:
-	if(WinActive("ahk_exe witcher3.exe") || WinActive("ahk_exe ShareX.exe")){
-		gotActivated++
-		if(gotActivated = 1){
-			DllCall("ShowCursor", Int,1)
-		}
-		SetTimer, CheckIdle, Off
-	}else{
-		gotActivated := 0
-		SetTimer, CheckIdle, On
+	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
+		WinActivate, Games
+		WinActivate, Resolution
+		WinActivate, Yes || No
+		WinActivate, Emulators
 	}
 Return
 
@@ -297,6 +277,67 @@ showMessage:
 		message := ""
 	}
 Return
+
+WatchPOVandStick:
+	if(WinActive("Games") || WinActive("Resolution") || WinActive("Yes || No") || WinActive("Emulators")){
+		joystickSwitch := !joystickSwitch
+
+		if(joystickSwitch){		
+		    POV := GetKeyState("JoyPOV")  ; Get position of the POV control.
+		    KeyToHoldDownPrevPOV := KeyToHoldDownPOV  ; Prev now holds the key that was down before (if any).
+
+		    ; Some joysticks might have a smooth/continous POV rather than one in fixed increments.
+		    ; To support them all, use a range:
+		    if (POV < 0)   ; No angle to report
+		        KeyToHoldDownPOV := ""
+		    else if (POV > 31500)               ; 315 to 360 degrees: Forward
+		        KeyToHoldDownPOV := "Up"
+		    else if POV between 0 and 4500      ; 0 to 45 degrees: Forward
+		        KeyToHoldDownPOV := "Up"
+		    else if POV between 4501 and 13500  ; 45 to 135 degrees: Right
+		        KeyToHoldDownPOV := "Right"
+		    else if POV between 13501 and 22500 ; 135 to 225 degrees: Down
+		        KeyToHoldDownPOV := "Down"
+		    else                                ; 225 to 315 degrees: Left
+		        KeyToHoldDownPOV := "Left"
+
+		    if (KeyToHoldDownPOV = KeyToHoldDownPrevPOV)  ; The correct key is already down (or no key is needed).
+		        return  ; Do nothing.
+
+		    ; Otherwise, release the previous key and press down the new key:
+		    SetKeyDelay -1  ; Avoid delays between keystrokes.
+		    if KeyToHoldDownPrevPOV   ; There is a previous key to release.
+		        Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
+		    if KeyToHoldDownPOV   ; There is a key to press down.
+		        Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+		}else{
+			JoyX := GetKeyState("JoyX")  ; Get position of X axis.
+			JoyY := GetKeyState("JoyY")  ; Get position of Y axis.
+			KeyToHoldDownPrevStick := KeyToHoldDownStick  ; Prev now holds the key that was down before (if any).
+
+			if (JoyX > 70)
+			    KeyToHoldDownStick := "Right"
+			else if (JoyX < 30)
+			    KeyToHoldDownStick := "Left"
+			else if (JoyY > 70)
+			    KeyToHoldDownStick := "Down"
+			else if (JoyY < 30)
+			    KeyToHoldDownStick := "Up"
+			else
+			    KeyToHoldDownStick := ""
+
+			if (KeyToHoldDownStick = KeyToHoldDownPrevStick)  ; The correct key is already down (or no key is needed).
+			    return  ; Do nothing.
+
+			; Otherwise, release the previous key and press down the new key:
+			SetKeyDelay -1  ; Avoid delays between keystrokes.
+			if KeyToHoldDownPrevStick   ; There is a previous key to release.
+			    Send, {%KeyToHoldDownPrevStick% up}  ; Release it.
+			if KeyToHoldDownStick   ; There is a key to press down.
+			    Send, {%KeyToHoldDownStick% down}  ; Press it down.
+		}
+	}
+return
 
 MouseIsOver(WinTitle){
     MouseGetPos,,, Win
@@ -434,6 +475,7 @@ $<^>!f::
 Return
 
 ; Game mode
+$vk07::
 $>!g::
 $<^>!g::
 	Suspend, Off
@@ -458,10 +500,12 @@ GameChoose:
 		IfMsgBox, Yes
 		{
 			Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\768p.bat"
+			resChange := 1
 		}
 		IfMsgBox, No
 		{
 			Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
+			resChange := 1
 		}
 
 		Process, Exist, vivaldi.exe
@@ -503,7 +547,10 @@ GameChoose:
 			Send, !{F4}				
 			runDiscord := 0
 		}
+
 	Gui, Destroy
+		if(resChange = 1)
+			Reload
 	}
 
 	if(GameChoice = "Rocket League"){
@@ -586,7 +633,7 @@ GameChoose:
 
 		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\1080p.bat"
 		if(!ProcessExist("vivaldi.exe")){
-			Run, "C:\Users\Bruno\AppData\Local\Vivaldi\Application\vivaldi.exe"
+			Run, "D:\Program Files\Vivaldi\Application\vivaldi.exe"
 		}
 		if(!ProcessExist("WhatsApp.exe")){
 			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
@@ -618,6 +665,9 @@ GameChoose:
 			Send, !{F4}
 			fallGuys := 0
 		}
+
+		if(resChange)
+			Reload
 	Gui, Destroy
 	}
 
@@ -828,7 +878,6 @@ Return
 
 $PrintScreen::
 	Send, ^{F24}
-	SetTimer, CheckIdle, Off
 	prtscCounter := 0
 	while(1){
 		if(GetKeyState("Enter", "P"))
@@ -839,8 +888,6 @@ $PrintScreen::
 			Break
 		}
 	}
-
-	SetTimer, CheckIdle, On
 Return
 
 $>!,::
@@ -919,11 +966,11 @@ $>+;::
 		waniKaniError := ErrorLevel
 		if(waniKaniError){
 			ControlClick, x1820 y70, ahk_exe vivaldi.exe, , Left, 1
-			Sleep, 900
+			varTime := 1000
+			Sleep, %varTime%
 			ImageSearch, , , 1400, 10, 1930, 360, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
-		varTime := 900
 		while(waniKaniError){
 			ControlClick, x1820 y70, ahk_exe vivaldi.exe, , Left, 1
 			varTime := varTime + 100
@@ -947,13 +994,17 @@ $>+;::
 		PixelSearch, , , 1452, 228, 1824, 313, 0xF100A1, 10, Fast RGB  ; Lesson
 		waniKaniLesson := ErrorLevel			
 		if(!waniKaniLesson){
-			ControlClick, x1540 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on lesson
+/*			ControlClick, x1540 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on lesson
 			Send, {Esc Down}
 			Sleep, 10
 			Send, {Esc Up}
 			WinWaitActive, WaniKani / Lessons - Vivaldi, , 1.5
 			Sleep, 400
 			ControlClick, x1740 y160, ahk_exe vivaldi.exe, , Left, 1 ; Start lesson
+*/
+			Send, {Esc}
+			Sleep, 10
+			Run, https://www.wanikani.com/lesson/session
 
 			waniKaniReview := 1
 		}else{
@@ -962,13 +1013,17 @@ $>+;::
 		}
 
 		if(!waniKaniReview){
-			ControlClick, x1735 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on review
+/*			ControlClick, x1735 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on review
 			Send, {Esc Down}
 			Sleep, 10
 			Send, {Esc Up}
 			WinWaitActive, WaniKani / Reviews - Vivaldi, , 1.5
 			Sleep, 400
 			ControlClick, x1740 y160, ahk_exe vivaldi.exe, , Left, 1 ; Start review
+*/
+			Send, {Esc}
+			Sleep, 10
+			Run, https://www.wanikani.com/review/session
 		}
 		if(waniKaniLesson){
 			Send, {Esc}
@@ -983,7 +1038,7 @@ $F1::
 $F2::
 $F3::
 	if(!ProcessExist("vivaldi.exe")){
-		Run, C:\Users\Bruno\AppData\Local\Vivaldi\Application\vivaldi.exe
+		Run, D:\Program Files\Vivaldi\Application\vivaldi.exe
 		WinWait, ahk_exe vivaldi.exe
 	}
 
@@ -1087,7 +1142,7 @@ $^Tab::
 	}
 Return
 
-$\::
+$^\::
 	SoundGet, volume
 	if(volume != "20.000000"){
 		SoundSet, %lowVol%, MASTER
@@ -1116,7 +1171,7 @@ $\::
 	CoordMode, Mouse, Relative
 Return
 
-$^F3::Volume_Up
+$^F3::
 $Volume_Up::
 	SoundGet, volume
 	Send, {Volume_Up}
@@ -1175,10 +1230,6 @@ Return
 
 $^F1::Volume_Mute
 
-$^\::
-	Send, {\}
-Return
-
 $^#Down:: 
 	WinGetActiveTitle, winTitle
 	WinMinimize, %winTitle%
@@ -1213,6 +1264,8 @@ $#a::
 	CoordMode, Pixel, Relative
 Return
 
+>+Media_Play_Pause::F21
+
 
 
 
@@ -1225,21 +1278,27 @@ Return
 		WinClose, Resolution
 		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
 	Return
+
+	$Joy1::
+		Send, {Enter}
+	Return
+	$Joy2::
 	Esc::
 	$1::
 		WinClose, Resolution
 	Return
-	$Left::
+	Left::
 		WinActivate, Resolution 
 		WinWaitActive, Resolution
 		Send, {Left}
 	Return
-	$Right::
+	Right::
 		WinActivate, Resolution 
 		WinWaitActive, Resolution
 		Send, {Right}
 	Return
 #IfWinExist, Yes || No
+	$Joy1::
 	$y::
 		WinClose, Yes || No
 		Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
@@ -1251,32 +1310,37 @@ Return
 		WinWaitActive, ahk_class RTXVoiceWindowClass, , 1.5
 		Send, !{F4}
 	Return
+	$Joy2::
 	Esc::
 	$n::
 		WinClose, Yes || No
 	Return
-	$Left::
+	Left::
 		WinActivate, Yes || No 
 		WinWaitActive, Yes || No
 		Send, {Left}
 	Return
-	$Right::
+	Right::
 		WinActivate, Yes || No 
 		WinWaitActive, Yes || No
 		Send, {Right}
 	Return
 
 #IfWinActive, Games
+	$Joy1::
 	$Enter::
 		Gosub, GameChoose
 	Return
+	$Joy2::
 	$Esc::
 		Gui, Destroy
 	Return
 #IfWinActive, Emulators
+	$Joy1::
 	$Enter::
 		Gosub, EmuChoose
 	Return
+	$Joy2::
 	$Esc::
 		Gui, Destroy
 	Return
@@ -1577,7 +1641,7 @@ actionOnYt:
 		if(mouseX > 60 && mouseY > 360 && mouseX < 200 && mouseY < 410)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 60, 360, 200, 500, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
+		ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
 		if(!ErrorLevel){
 			ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 		}
@@ -1629,7 +1693,7 @@ Return
 				MouseGetPos, mouseX, mouseY
 				if(mouseX > 61 && mouseY > 360 && mouseX < 2000 && mouseY < 410)
 					MouseMove, 1000, 600, 0 ; Center of the page
-				ImageSearch, , , 60, 360, 200, 410, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
+				ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
 				if(!ErrorLevel){
 					ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 				}
@@ -1703,8 +1767,7 @@ Return
 		}
 
 		if(!twitterLogo){
-			KeyWait, 2
-			KeyWait, Control
+			KeyWait, LCtrl
 			ControlClick, x300 y220, ahk_exe vivaldi.exe, , Left, 1
 		}
 	Return
@@ -1769,7 +1832,7 @@ Return
 			MouseGetPos, mouseX, mouseY
 			if(mouseX > 61 && mouseY > 360 && mouseX < 2000 && mouseY < 410)
 				MouseMove, 1000, 600, 0 ; Center of the page
-			ImageSearch, , , 60, 360, 200, 500, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTLibrary.png
+			ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
 			if(!ErrorLevel){
 				ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 			}
@@ -1794,19 +1857,24 @@ Return
 	Return
 
 	~$LButton::
+		KeyWait, LButton
 		PixelGetColor, colorVar, 500, 100, RGB
 		if(colorVar = 0x404076){
 			Return
 		}
 		MouseGetPos, mouseX, mouseY
-		KeyWait, LButton
 		; (mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) YT logo
 		; (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) Reload page
 		; (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) Reload all pages
 		; (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46) First tab (YT)
-		if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) || (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) || (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) || (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){
+		if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) 
+		|| (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) 
+		|| (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) 
+		|| (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){
 			if((mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87)){
 				MouseMove, 1000, 600, 0 ; Center of the page
+			}else if(mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87){
+				Send, ^{r}
 			}
 			Gosub, downloadsPanel
 			Sleep, 500
@@ -1839,7 +1907,6 @@ Return
 			Gosub, loadingPage
 
 			DllCall("ShowCursor", Int,0)
-			SetTimer, CheckIdle, Off
 			MouseGetPos, mouseX, mouseY
 			if(mouseX > 460 && mouseY > 270 && mouseX < 650 && mouseY < 330)
 				MouseMove, 1000, 600, 0
@@ -1852,7 +1919,6 @@ Return
 				loadingInsta := ErrorLevel
 			}
 			DllCall("ShowCursor", Int,1)
-			SetTimer, CheckIdle, On
 
 			PixelGetColor, instaColor, 512, 241, Fast RGB
 			if(instaColor = "0xD72B7D"){
@@ -2223,14 +2289,17 @@ Return
 ; 5.0.4 Backing up, because I will change ControlClick to mouseclick on explorer directories
 
 ;	Hotkeys 		Function
+;	AltGr+c 		Class Mode (English)
 ;	AltGr+e			Exit Class mode
 ;	AltGr+f 		Fatec Mode
-;	AltGr+r 		Start recording with OBS
-;	AltGr+c 		Class Mode (English)
+;	AltGr+g 		Game mode
 ;	AltGr+h 		Hibernate Computer
 ;	AltGr+l 		Turn on || off the light
-;	AltGr+g 		Game mode
+;	AltGr+m 		Open MusicBee
+;	AltGr+r 		Start recording with OBS
 ; 	Alt+w 			Stop Wallpaper Engine
+;	AltGr+,			Open WhatsApp
+
 ;	Numpad0 || 0	Disable 0 if it's in a video
 ;	F1 || F2 || F3	Suspend for Vivaldi search
 
