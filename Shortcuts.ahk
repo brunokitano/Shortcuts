@@ -549,8 +549,10 @@ GameChoose:
 		}
 
 	Gui, Destroy
-		if(resChange = 1)
+		if(resChange = 1){
+			Sleep, 5000
 			Reload
+		}
 	}
 
 	if(GameChoice = "Rocket League"){
@@ -666,8 +668,10 @@ GameChoose:
 			fallGuys := 0
 		}
 
-		if(resChange)
+		if(resChange){
+			Sleep, 5000
 			Reload
+		}
 	Gui, Destroy
 	}
 
@@ -1068,7 +1072,7 @@ $<!Tab::
 		}
 	}
 	Send, {LAlt Down}{Tab}
-	KeyWait, Tab
+	KeyWait, Tab, T0.5
 	if(vivaldiFull = 1){
 		if(vivaldiCounter >= 2){
 			if(WinActive("ahk_exe vivaldi.exe")){	
@@ -1083,7 +1087,7 @@ $<!Tab::
 	while(GetKeyState("LAlt", "P")){
 		if(GetKeyState("Tab", "P")){
 			Send, {LAlt Down}{Tab}
-			KeyWait, Tab
+			KeyWait, Tab, T0.5
 		}
 	}
 	Send, {LAlt Up}
@@ -2124,7 +2128,7 @@ Return
 		if(ErrorLevel){
 			ControlClick, x490 y50, ahk_exe MusicBee.exe, , Left, 1
 		}else{
-			WinMinimize, ahk_exe MusicBee.exe
+			WinMinimize, ahk_class WindowsForms10.Window.8.app.0.2bf8098_r7_ad1
 		}
 	Return
 
