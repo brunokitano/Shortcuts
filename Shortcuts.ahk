@@ -1302,7 +1302,6 @@ Return
 		Send, {Right}
 	Return
 #IfWinExist, Yes || No
-	$Joy1::
 	$y::
 		WinClose, Yes || No
 		Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
@@ -1314,6 +1313,9 @@ Return
 		WinWaitActive, ahk_class RTXVoiceWindowClass, , 1.5
 		Send, !{F4}
 	Return
+
+	$Joy1:: Send, {Enter}
+	
 	$Joy2::
 	Esc::
 	$n::
@@ -1466,7 +1468,7 @@ Return
 			}
 
 			Gosub, expSelect
-			sleepTime(100)
+			sleepTime(150)
 
 			while(GetKeyState("1", "P")){
 				if(expCounter <= 9 && expCounter > 0){
@@ -1477,7 +1479,7 @@ Return
 
 				Gosub, expSelect
 
-				sleepTime(100)
+				sleepTime(150)
 			}
 
 			SetTimer, emptyDetection, -100
@@ -1496,7 +1498,7 @@ Return
 			}
 
 			Gosub, expSelect
-			sleepTime(100)
+			sleepTime(150)
 
 			while(GetKeyState("2", "P")){
 				if(expCounter < 9 && expCounter >= 0){
@@ -1507,7 +1509,7 @@ Return
 
 				Gosub, expSelect
 
-				sleepTime(100)
+				sleepTime(150)
 			}
 			
 			SetTimer, emptyDetection, -100
