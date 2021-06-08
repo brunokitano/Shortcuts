@@ -801,12 +801,12 @@ $<^>!b::
 	Gosub, musicBee
 
 	Sleep, 200
-	ImageSearch, , , 200, 0, 400, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+	ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
 	if(ErrorLevel){
-		ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 	}else{
-		ControlClick, x150 y60, ahk_exe MusicBee.exe, , Left, 1
-		ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 	}
 
 	MouseGetPos, mouseX, mouseY
@@ -822,12 +822,12 @@ $<^>!n::
 	Gosub, musicBee
 
 	Sleep, 200
-	ImageSearch, , , 200, 0, 400, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+	ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
 	if(ErrorLevel){
-		ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 	}else{
-		ControlClick, x150 y60, ahk_exe MusicBee.exe, , Left, 1
-		ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
+		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 	}
 
 	MouseGetPos, mouseX, mouseY
@@ -2029,7 +2029,7 @@ Return
 		if(mouseX > 400 && mouseY > 0 && mouseX < 600 && mouseY < 100)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 400, 0, 600, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+		ImageSearch, , , 400, 0, 650, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
 		if(!ErrorLevel){
 			MouseMove, 1460, 125, 0
 			Send, {WheelDown}
@@ -2045,7 +2045,7 @@ Return
 			if(mouseX > 400 && mouseY > 0 && mouseX < 600 && mouseY < 100)
 				MouseMove, 1000, 600, 0 ; Center of the page
 
-			ImageSearch, , , 400, 0, 600, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+			ImageSearch, , , 400, 0, 650, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
 			if(!ErrorLevel){
 				MouseMove, 1460, 125, 0
 				Send, {WheelDown}
@@ -2062,7 +2062,7 @@ Return
 		if(mouseX > 400 && mouseY > 0 && mouseX < 600 && mouseY < 100)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 400, 0, 600, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+		ImageSearch, , , 400, 0, 650, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
 		if(!ErrorLevel){
 			MouseMove, 1460, 125, 0
 			Send, {WheelUp}
@@ -2078,7 +2078,7 @@ Return
 			if(mouseX > 400 && mouseY > 0 && mouseX < 600 && mouseY < 0)
 				MouseMove, 1000, 600, 0 ; Center of the page
 
-			ImageSearch, , , 400, 0, 600, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+			ImageSearch, , , 400, 0, 650, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
 			if(!ErrorLevel){
 				MouseMove, 1460, 125, 0
 				Send, {WheelUp}
@@ -2090,12 +2090,12 @@ Return
 
 	$>!b::
 	$<^>!b::
-		ImageSearch, , , 200, 0, 400, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+		ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
 		if(ErrorLevel){
-			ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 		}else{
-			ControlClick, x150 y60, ahk_exe MusicBee.exe, , Left, 1
-			ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 		}
 
 		MouseGetPos, mouseX, mouseY
@@ -2104,12 +2104,12 @@ Return
 	Return
 	$>!n::
 	$<^>!n::
-		ImageSearch, , , 200, 0, 400, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+		ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
 		if(ErrorLevel){
-			ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 		}else{
-			ControlClick, x150 y60, ahk_exe MusicBee.exe, , Left, 1
-			ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
 		}
 
 		MouseGetPos, mouseX, mouseY
@@ -2126,9 +2126,9 @@ Return
 		if(mouseX > 400 && mouseY > 0 && mouseX < 600 && mouseY < 100)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 400, 0, 600, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+		ImageSearch, , , 400, 0, 650, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
 		if(ErrorLevel){
-			ControlClick, x490 y50, ahk_exe MusicBee.exe, , Left, 1
+			ControlClick, x540 y50, ahk_exe MusicBee.exe, , Left, 1
 		}else{
 			WinMinimize, ahk_class WindowsForms10.Window.8.app.0.2bf8098_r7_ad1
 		}
@@ -2139,10 +2139,9 @@ Return
 	Return
 
 	$^1:: ControlClick, x150 y60, ahk_exe MusicBee.exe, , Left, 1
-	$^2:: ControlClick, x260 y60, ahk_exe MusicBee.exe, , Left, 1
-	$^3:: ControlClick, x370 y60, ahk_exe MusicBee.exe, , Left, 1
-	$^4:: ControlClick, x480 y60, ahk_exe MusicBee.exe, , Left, 1
-
+	$^2:: ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
+	$^3:: ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+	$^4:: ControlClick, x540 y60, ahk_exe MusicBee.exe, , Left, 1
 
 #IfWinActive, ahk_exe WhatsApp.exe
 	$Down::
