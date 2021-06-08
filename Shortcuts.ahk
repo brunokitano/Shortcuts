@@ -1337,6 +1337,7 @@ Return
 	$Enter::
 		Gosub, GameChoose
 	Return
+	$vk07::
 	$Joy2::
 	$Esc::
 		Gui, Destroy
