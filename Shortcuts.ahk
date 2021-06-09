@@ -49,7 +49,7 @@ SetTimer, checkHeadphones, 500
 SetTimer, reopenKDE, 1800000 ; 30mins
 
 gotActivated := 0
-SetTimer, programRoutine, 500
+SetTimer, programRoutine, 300
 
 joystickSwitch := 0
 SetTimer, WatchPOVandStick, 20
@@ -154,11 +154,19 @@ reopenKDE:
 Return
 
 programRoutine:
+	WinGetTitle, winTitle, A
+
 	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
 		WinActivate, Games
 		WinActivate, Resolution
 		WinActivate, Yes || No
 		WinActivate, Emulators
+	}else if InStr(winTitle, "Stories", CaseSensitive := false) and InStr(winTitle, "Instagram", CaseSensitive := false){
+		ImageSearch, , , 1100, 150, 1200, 250, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\InstaMuted.png
+		if(!ErrorLevel){
+			ControlClick, x1150 y195, ahk_exe vivaldi.exe, , Left, 1
+		}
+		Sleep, 300 ; Make it scan less 
 	}
 Return
 
@@ -1604,9 +1612,9 @@ downloadsPanel:
 		if(mouseX > 55 && mouseY > 130 && mouseX < 180 && mouseY < 180)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 55, 130, 180, 180, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiDownloads.png
+		ImageSearch, , , 55, 130, 180, 180, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiDownloads.png
 		VivaldiDownloads := ErrorLevel
-		ImageSearch, , , 55, 130, 180, 180, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiDownloads2.png
+		ImageSearch, , , 55, 130, 180, 180, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiDownloads2.png
 		VivaldiDownloads2 := ErrorLevel
 		if(!VivaldiDownloads || !VivaldiDownloads2){
 			Send, ^{j}
