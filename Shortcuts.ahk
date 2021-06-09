@@ -162,7 +162,7 @@ programRoutine:
 		WinActivate, Yes || No
 		WinActivate, Emulators
 	}else if InStr(winTitle, "Stories", CaseSensitive := false) and InStr(winTitle, "Instagram", CaseSensitive := false){
-		ImageSearch, , , 1100, 150, 1200, 250, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\InstaMuted.png
+		ImageSearch, , , 1100, 150, 1200, 250, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\InstaMuted.png
 		if(!ErrorLevel){
 			ControlClick, x1150 y195, ahk_exe vivaldi.exe, , Left, 1
 		}
