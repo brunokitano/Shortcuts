@@ -46,7 +46,7 @@ prevValue := headphones
 SetTimer, checkHeadphones, 500
 
 ;SetTimer, checkKDE, 10000
-SetTimer, reopenKDE, 1800000 ; 30mins
+;SetTimer, reopenKDE, 1800000 ; 30mins
 
 gotActivated := 0
 SetTimer, programRoutine, 300
@@ -212,11 +212,11 @@ LidStateChange(newstate)
 	if(newstate = "closed"){
 		SoundGet, volume, MASTER
 	 	SoundSet, Mute, MASTER
-	 	SetTimer, reopenKDE, Off
+;	 	SetTimer, reopenKDE, Off
 	}
 	if(newstate = "opened"){
 	 	SoundSet, %volume%, MASTER
-	 	SetTimer, reopenKDE, On
+;	 	SetTimer, reopenKDE, On
 	}
 	lidState := newstate 
 }
