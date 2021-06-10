@@ -100,6 +100,8 @@ ToolTip,
 return
 
 checkHeadphones:
+	SetTimer, checkHeadphones, Off
+
 	if(lidState = "opened"){
 		RegRead, headphones, HKEY_LOCAL_MACHINE, %headphonesPath%, %headphonesValue%
 		if(headphones != 0 && prevValue != headphones){
@@ -136,6 +138,8 @@ checkHeadphones:
 
 		prevValue := headphones
 	}
+
+	SetTimer, checkHeadphones, On
 Return
 
 reopenKDE:
@@ -154,6 +158,8 @@ reopenKDE:
 Return
 
 programRoutine:
+	SetTimer, programRoutine, Off
+
 	WinGetTitle, winTitle, A
 
 	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
@@ -168,6 +174,8 @@ programRoutine:
 		}
 		Sleep, 300 ; Make it scan less 
 	}
+
+	SetTimer, programRoutine, On
 Return
 
 Start_LidWatcher()
@@ -287,6 +295,8 @@ showMessage:
 Return
 
 WatchPOVandStick:
+	SetTimer, WatchPOVandStick, Off
+
 	if(WinActive("Games") || WinActive("Resolution") || WinActive("Yes || No") || WinActive("Emulators")){
 		joystickSwitch := !joystickSwitch
 
@@ -345,6 +355,8 @@ WatchPOVandStick:
 			    Send, {%KeyToHoldDownStick% down}  ; Press it down.
 		}
 	}
+
+	SetTimer, WatchPOVandStick, On
 return
 
 MouseIsOver(WinTitle){
