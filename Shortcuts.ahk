@@ -1111,14 +1111,15 @@ $<^>!Esc::
 Return
 
 ~$#Space::
-	Sleep, 200
+	KeyWait, #
+	Sleep, 500
 	CoordMode, Pixel, Screen
 
 	MouseGetPos, mouseX, mouseY
 		if(mouseX > 1670 && mouseY > 1042 && mouseX < 1716 && mouseY < 1079)
 			MouseMove, 1000, 600, 0 ; Center of the page
 
-	ImageSearch, , , 1670, 1042, 1716, 1079, *TransBlack *200 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\JapaneseIME.png
+	ImageSearch, , , 1670, 1042, 1716, 1079, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\JapaneseIME.png
 	if(!ErrorLevel){
 		Send, +{CapsLock}
 	}
