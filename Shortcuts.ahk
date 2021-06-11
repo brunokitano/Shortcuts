@@ -295,8 +295,6 @@ showMessage:
 Return
 
 WatchPOVandStick:
-	SetTimer, WatchPOVandStick, Off
-
 	if(WinActive("Games") || WinActive("Resolution") || WinActive("Yes || No") || WinActive("Emulators")){
 		joystickSwitch := !joystickSwitch
 
@@ -355,8 +353,6 @@ WatchPOVandStick:
 			    Send, {%KeyToHoldDownStick% down}  ; Press it down.
 		}
 	}
-
-	SetTimer, WatchPOVandStick, On
 return
 
 MouseIsOver(WinTitle){
@@ -570,7 +566,7 @@ GameChoose:
 
 	Gui, Destroy
 		if(resChange = 1){
-			Sleep, 5000
+			Sleep, 10000
 			Reload
 		}
 	}
