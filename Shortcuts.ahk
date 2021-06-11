@@ -565,10 +565,6 @@ GameChoose:
 		}
 
 	Gui, Destroy
-		if(resChange = 1){
-			Sleep, 10000
-			Reload
-		}
 	}
 
 	if(GameChoice = "Rocket League"){
