@@ -55,6 +55,8 @@ joystickSwitch := 0
 SetTimer, WatchPOVandStick, 20
 
 resChange := 0
+
+outputChange := 0
 	;VARIABLES AND FUNCTIONS
 
 
@@ -1067,6 +1069,42 @@ $F3::
 	}
 
 	Send, {F1}
+Return
+
+F12::
+	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
+	WinShow, ahk_class JUCE_17a0ca5f24e
+	WinActivate, ahk_exe FxSound.exe
+	WinWaitActive, ahk_exe FxSound.exe
+	Sleep, 300
+
+	CoordMode, Mouse, Screen
+	MouseGetPos, mouseX, mouseY
+	if(mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+		MouseMove, 1000, 600
+
+	CoordMode, Mouse, Relative
+	ImageSearch, , , 600, 80, 1100, 200, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek.png
+	if(!ErrorLevel){ ; Laptop
+		SoundSet, %lowVol%, MASTER
+		MouseClick, Left, 800, 130, 1, 0
+		sleepTime(300)
+		MouseClick, Left, 800, 180, 1, 0
+	}else{ ; TV
+		SoundSet, %highVol%, MASTER
+		MouseClick, Left, 800, 130, 1, 0
+		sleepTime(300)
+		MouseClick, Left, 800, 230, 1, 0
+	}
+	sleepTime(300)
+	CoordMode, Mouse, Screen
+	CoordMode, Pixel, Screen
+	ImageSearch, fxCloseX, fxCloseY, 0, 0, 1930, 1080, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundClose.png
+	MouseClick, Left, % fxCloseX+8, % fxCloseY+8, 1, 0
+
+	MouseMove, %mouseX%, %mouseY%, 0
+	CoordMode, Mouse, Relative
+	CoordMode, Pixel, Relative
 Return
 
 $<!Tab::
