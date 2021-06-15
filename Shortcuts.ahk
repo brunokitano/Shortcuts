@@ -43,7 +43,7 @@ headphonesPath := "SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Ren
 headphonesValue := "{3BA0CD54-830F-4551-A6EB-F3EAB68E3700},6"
 RegRead, headphones, HKEY_LOCAL_MACHINE, %headphonesPath%, %headphonesValue%
 prevValue := headphones
-SetTimer, checkHeadphones, 500
+;SetTimer, checkHeadphones, 500
 
 ;SetTimer, checkKDE, 10000
 ;SetTimer, reopenKDE, 1800000 ; 30mins
