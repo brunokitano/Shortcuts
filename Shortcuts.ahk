@@ -362,6 +362,15 @@ MouseIsOver(WinTitle){
 	return WinExist(WinTitle . " ahk_id " . Win)
 }
 
+resFix(x0 := 0, y0 := 0, x1 := 0, y1 := 0){
+	global
+	xValue0 := x0 * (A_ScreenWidth / 1920)
+	yValue0 := y0 * (A_ScreenHeight / 1080)
+
+	xValue1 := x1 * (A_ScreenWidth / 1920)
+	yValue1 := y1 * (A_ScreenHeight / 1080)
+Return
+}
 
 
 
@@ -971,74 +980,73 @@ $>+;::
 	}
 
 	MouseGetPos, mouseX, mouseY
-		if(mouseX > 1600 && mouseY > 110 && mouseX < 1910 && mouseY < 210)
-			MouseMove, 1000, 600, 0 ; Center of the page
 
-	ImageSearch, , , 1600, 110, 1910, 210, *100 *TransBlack D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession.png ; Detects if it's already on the page
+	resFix(1600, 110, 1910, 210) ; (mouseX > 1600 && mouseY > 110 && mouseX < 1910 && mouseY < 210)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, xValue0, yValue0, 0 ; Center of the page
+	}
+
+	resFix(1600, 110, 1910, 210) ; (mouseX > 1600 && mouseY > 110 && mouseX < 1910 && mouseY < 210)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession.png ; Detects if it's already on the page
 	if(ErrorLevel){
 		MouseGetPos, mouseX, mouseY
-		if(mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			MouseMove, 1000, 600, 0 ; Center of the page
 
-		ImageSearch, , , 1400, 10, 1930, 360, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+		resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+			resFix(1000, 600)
+			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+		}
+
+		resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
 		waniKaniError := ErrorLevel
 		if(waniKaniError){
-			ControlClick, x1820 y70, ahk_exe vivaldi.exe, , Left, 1
+			resFix(1820, 70)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
+			Sleep, 10
+
 			varTime := 1000
 			Sleep, %varTime%
-			ImageSearch, , , 1400, 10, 1930, 360, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+
+			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
 		while(waniKaniError){
-			ControlClick, x1820 y70, ahk_exe vivaldi.exe, , Left, 1
+			resFix(1820, 70)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
 			varTime := varTime + 100
 			Sleep, %varTime%
 
 			MouseGetPos, mouseX, mouseY
-			if(mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-				MouseMove, 1000, 600, 0 ; Center of the page
-
-			ImageSearch, , , 1400, 10, 1930, 360, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+				resFix(1000, 600)
+				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+			}
+			
+			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
 
-		ImageSearch, , , 1600, 110, 1910, 210, *100 *TransBlack D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession.png ; Detects if it's already on the page
-		wanikaniSessionError := ErrorLevel
-		while(wanikaniSessionError){ ; Wait for WaniKani page
-			ImageSearch, , , 1600, 110, 1910, 210, *100 *TransBlack D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession.png ; Detects if it's already on the page
-			wanikaniSessionError := ErrorLevel
-		}
-
-		PixelSearch, , , 1452, 228, 1824, 313, 0xF100A1, 10, Fast RGB  ; Lesson
-		waniKaniLesson := ErrorLevel			
+		resFix(1452, 228, 1824, 313)
+		PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 50, Fast RGB  ; Lesson
+		waniKaniLesson := ErrorLevel
 		if(!waniKaniLesson){
-/*			ControlClick, x1540 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on lesson
-			Send, {Esc Down}
-			Sleep, 10
-			Send, {Esc Up}
-			WinWaitActive, WaniKani / Lessons - Vivaldi, , 1.5
-			Sleep, 400
-			ControlClick, x1740 y160, ahk_exe vivaldi.exe, , Left, 1 ; Start lesson
-*/
 			Send, {Esc}
 			Sleep, 10
 			Run, https://www.wanikani.com/lesson/session
 
 			waniKaniReview := 1
 		}else{
-			PixelSearch, waniX, waniY, 1452, 228, 1824, 313, 0x00AAFF, 10, Fast RGB ; Review
+			resFix(1452, 228, 1824, 313)
+			PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 50, Fast RGB ; Review
 			waniKaniReview := ErrorLevel
 		}
 
 		if(!waniKaniReview){
-/*			ControlClick, x1735 y260, ahk_exe vivaldi.exe, , Left, 1 ; Click on review
-			Send, {Esc Down}
-			Sleep, 10
-			Send, {Esc Up}
-			WinWaitActive, WaniKani / Reviews - Vivaldi, , 1.5
-			Sleep, 400
-			ControlClick, x1740 y160, ahk_exe vivaldi.exe, , Left, 1 ; Start review
-*/
 			Send, {Esc}
 			Sleep, 10
 			Run, https://www.wanikani.com/review/session
@@ -1048,7 +1056,8 @@ $>+;::
 			Sleep, 10
 		}
 	}else{
-		ControlClick, x1740 y160, ahk_exe vivaldi.exe, , Left, 1 ; If it's already on review/lesson page
+		resFix(1740, 160)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; If it's already on review/lesson page
 	}
 Return
 
