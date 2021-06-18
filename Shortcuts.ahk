@@ -1225,12 +1225,12 @@ $F3::
 Return
 
 F12::
+	WinGetActiveTitle, activeWindow
+	Send, #{m}
 	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
 	WinActivate, ahk_exe FxSound.exe
 	WinWaitActive, ahk_exe FxSound.exe
-	Sleep, 500
-	WinActivate, ahk_exe FxSound.exe
-	WinWaitActive, ahk_exe FxSound.exe
+	Sleep, 300
 
 	CoordMode, Mouse, Screen
 	MouseGetPos, mouseX, mouseY
@@ -1265,10 +1265,12 @@ F12::
 	ImageSearch, fxCloseX, fxCloseY, 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundClose.png
 	MouseMove, fxCloseX, fxCloseY
 	MouseClick, Left, % fxCloseX+8, % fxCloseY+8, 1, 0
+	Sleep, 50
 
 	MouseMove, %mouseX%, %mouseY%, 0
 	CoordMode, Mouse, Relative
 	CoordMode, Pixel, Relative
+	WinActivate, %activeWindow%
 Return
 
 $<!Tab::
