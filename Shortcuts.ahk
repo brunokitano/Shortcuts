@@ -1230,7 +1230,7 @@ F12::
 	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
 	WinActivate, ahk_exe FxSound.exe
 	WinWaitActive, ahk_exe FxSound.exe
-	Sleep, 300
+	Sleep, 600
 
 	CoordMode, Mouse, Screen
 	MouseGetPos, mouseX, mouseY
@@ -1242,6 +1242,8 @@ F12::
 
 	CoordMode, Mouse, Relative
 	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+	WinActivate, ahk_exe FxSound.exe
+	WinWaitActive, ahk_exe FxSound.exe
 	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek.png
 	if(!ErrorLevel){ ; Laptop
 		SoundSet, %lowVol%, MASTER
