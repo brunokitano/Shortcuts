@@ -56,7 +56,37 @@ SetTimer, WatchPOVandStick, 20
 
 resChange := 0
 
-outputChange := 0
+; Sound output
+outputChange := 0 
+
+; Joystic as mouse
+JoyMultiplier = 0.30 
+JoyThreshold = 3
+InvertYAxis := false
+ButtonLeft = 1
+ButtonRight = 2
+ButtonMiddle = 3
+WheelDelay = 250
+JoystickNumber = 1
+
+JoystickPrefix = %JoystickNumber%Joy
+Hotkey, %JoystickPrefix%%ButtonLeft%, ButtonLeft
+Hotkey, %JoystickPrefix%%ButtonRight%, ButtonRight
+Hotkey, %JoystickPrefix%%ButtonMiddle%, ButtonMiddle
+
+; Calculate the axis displacements that are needed to start moving the cursor:
+JoyThresholdUpper := 50 + JoyThreshold
+JoyThresholdLower := 50 - JoyThreshold
+if InvertYAxis
+	YAxisMultiplier = -1
+else
+	YAxisMultiplier = 1
+
+SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
+
+GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
+IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
+	SetTimer, MouseWheel, %WheelDelay%
 	;VARIABLES AND FUNCTIONS
 
 
@@ -165,6 +195,9 @@ programRoutine:
 	WinGetTitle, winTitle, A
 
 	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
+		SetTimer, WatchJoystick, Off
+		SetTimer, MouseWheel, Off
+
 		WinActivate, Games
 		WinActivate, Resolution
 		WinActivate, Yes || No
@@ -357,6 +390,88 @@ WatchPOVandStick:
 	}
 return
 
+ButtonLeft:
+	SetMouseDelay, -1  ; Makes movement smoother.
+	MouseClick, left,,, 1, 0, D  ; Hold down the left mouse button.
+	SetTimer, WaitForLeftButtonUp, 10
+return
+ButtonRight:
+	SetMouseDelay, -1  ; Makes movement smoother.
+	MouseClick, right,,, 1, 0, D  ; Hold down the right mouse button.
+	SetTimer, WaitForRightButtonUp, 10
+return
+ButtonMiddle:
+	SetMouseDelay, -1  ; Makes movement smoother.
+	MouseClick, middle,,, 1, 0, D  ; Hold down the right mouse button.
+	SetTimer, WaitForMiddleButtonUp, 10
+return
+WaitForLeftButtonUp:
+	if GetKeyState(JoystickPrefix . ButtonLeft)
+		return  ; The button is still, down, so keep waiting.
+	; Otherwise, the button has been released.
+	SetTimer, WaitForLeftButtonUp, Off
+	SetMouseDelay, -1  ; Makes movement smoother.
+	MouseClick, left,,, 1, 0, U  ; Release the mouse button.
+return
+WaitForRightButtonUp:
+	if GetKeyState(JoystickPrefix . ButtonRight)
+		return  ; The button is still, down, so keep waiting.
+	; Otherwise, the button has been released.
+	SetTimer, WaitForRightButtonUp, Off
+	MouseClick, right,,, 1, 0, U  ; Release the mouse button.
+return
+WaitForMiddleButtonUp:
+	if GetKeyState(JoystickPrefix . ButtonMiddle)
+		return  ; The button is still, down, so keep waiting.
+	; Otherwise, the button has been released.
+	SetTimer, WaitForMiddleButtonUp, Off
+	MouseClick, middle,,, 1, 0, U  ; Release the mouse button.
+return
+WatchJoystick:
+	MouseNeedsToBeMoved := false  ; Set default.
+	SetFormat, float, 03
+	GetKeyState, JoyX, %JoystickNumber%JoyX
+	GetKeyState, JoyY, %JoystickNumber%JoyY
+	if JoyX > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyX - JoyThresholdUpper
+	}
+	else if JoyX < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyX - JoyThresholdLower
+	}
+	else
+		DeltaX = 0
+	if JoyY > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyY - JoyThresholdUpper
+	}
+	else if JoyY < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyY - JoyThresholdLower
+	}
+	else
+		DeltaY = 0
+	if MouseNeedsToBeMoved
+	{
+		SetMouseDelay, -1  ; Makes movement smoother.
+		MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
+	}
+return
+MouseWheel:
+	GetKeyState, JoyPOV, %JoystickNumber%JoyPOV
+	if JoyPOV = -1  ; No angle.
+		return
+	if (JoyPOV > 31500 or JoyPOV < 4500)  ; Forward
+		Send {WheelUp}
+	else if JoyPOV between 13500 and 22500  ; Back
+		Send {WheelDown}
+return
+
 MouseIsOver(WinTitle){
     MouseGetPos,,, Win
 	return WinExist(WinTitle . " ahk_id " . Win)
@@ -502,7 +617,36 @@ $<^>!f::
 Return
 
 ; Game mode
-$vk07::
+~$Joy1::
+	if(!ProcessExist("GalaxyClientService.exe")){
+		Send, {LButton Down}
+		KeyWait, Joy1
+		Send, {LButton Up}
+	}
+Return
+VK07::
+	KeyWait, VK07
+	KeyWait, Joy1, D T0.5
+	if(!ErrorLevel){
+		joysticAsMouseSwitch := !joysticAsMouseSwitch
+		if(joysticAsMouseSwitch){
+			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
+			GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
+			IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
+				SetTimer, MouseWheel, On
+		}else{
+			SetTimer, WatchJoystick, Off
+			SetTimer, MouseWheel, Off
+		}
+	}else{
+		Suspend, Off
+		Gui, Destroy
+		Gui +AlwaysOnTop -0x30000
+		Gui, Add, DropDownList, vGameChoice Choose1, General|Rocket League|Emulation|Close
+		Gui, Add, Button, gGameChoose, Choose
+		Gui, Show, , Games
+	}
+Return
 $>!g::
 $<^>!g::
 	Suspend, Off
@@ -1082,33 +1226,44 @@ Return
 
 F12::
 	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
-	WinShow, ahk_class JUCE_17a0ca5f24e
 	WinActivate, ahk_exe FxSound.exe
 	WinWaitActive, ahk_exe FxSound.exe
-	Sleep, 300
+	Sleep, 500
+	WinActivate, ahk_exe FxSound.exe
+	WinWaitActive, ahk_exe FxSound.exe
 
 	CoordMode, Mouse, Screen
 	MouseGetPos, mouseX, mouseY
-	if(mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
-		MouseMove, 1000, 600
+	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, %xValue0%, %yValue0%
+	}
 
 	CoordMode, Mouse, Relative
-	ImageSearch, , , 600, 80, 1100, 200, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek.png
+	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek.png
 	if(!ErrorLevel){ ; Laptop
 		SoundSet, %lowVol%, MASTER
-		MouseClick, Left, 800, 130, 1, 0
+		resFix(800, 130)
+		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 		sleepTime(300)
-		MouseClick, Left, 800, 180, 1, 0
+		resFix(800, 180)
+		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 	}else{ ; TV
 		SoundSet, %highVol%, MASTER
-		MouseClick, Left, 800, 130, 1, 0
+		resFix(800, 130)
+		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 		sleepTime(300)
-		MouseClick, Left, 800, 230, 1, 0
+		resFix(800, 230)
+		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 	}
 	sleepTime(300)
 	CoordMode, Mouse, Screen
 	CoordMode, Pixel, Screen
-	ImageSearch, fxCloseX, fxCloseY, 0, 0, 1930, 1080, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundClose.png
+	resFix(1930, 1080)
+	ImageSearch, fxCloseX, fxCloseY, 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundClose.png
+	MouseMove, fxCloseX, fxCloseY
 	MouseClick, Left, % fxCloseX+8, % fxCloseY+8, 1, 0
 
 	MouseMove, %mouseX%, %mouseY%, 0
