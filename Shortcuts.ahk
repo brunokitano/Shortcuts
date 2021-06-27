@@ -1303,21 +1303,25 @@ F12::
 	CoordMode, Mouse, Relative
 	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
 	WinActivate, ahk_exe FxSound.exe
-	WinWaitActive, ahk_exe FxSound.exe
-	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek.png
-	if(!ErrorLevel){ ; Laptop
+	WinWaitActive, ahk_exe FxSound.exe 
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek%A_ScreenHeight%.png
+	if(!ErrorLevel){ ; Output is Laptop
 		SoundSet, %lowVol%, MASTER
 		resFix(800, 130)
 		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 		sleepTime(300)
 		resFix(800, 180)
+		MouseMove, %xValue0%, %yValue0%
+		Sleep, 2000
 		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
-	}else{ ; TV
+	}else{ ; Output is TV
 		SoundSet, %highVol%, MASTER
 		resFix(800, 130)
 		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 		sleepTime(300)
 		resFix(800, 230)
+		MouseMove, %xValue0%, %yValue0%
+		Sleep, 2000
 		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 	}
 	sleepTime(300)
@@ -2614,8 +2618,7 @@ Return
 	Return
 	$>!n::
 	$<^>!n::
-		resFix(200, 0, 500, 100)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
 		if(ErrorLevel){
 			resFix(410, 60)
 			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
@@ -2644,8 +2647,7 @@ Return
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(400, 0, 650, 100)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying.png
+		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying%A_ScreenHeight%.png
 		if(ErrorLevel){
 			resFix(540, 50)
 			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
