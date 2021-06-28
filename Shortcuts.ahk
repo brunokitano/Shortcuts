@@ -965,10 +965,13 @@ musicBee:
 	CoordMode, Pixel, Screen
 	
 	MouseGetPos, mouseX, mouseY
-	if(mouseX > 1450 && mouseY > 1042 && mouseX < 1700 && mouseY < 1080)
-		MouseMove, 1000, 600, 0 ; Center of the page
+	resFix(1450, 1042, 1700, 1080)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+	}
 
-	ImageSearch, musicBeeX, musicBeeY, 1450, 1042, 1700, 1080, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBLogo.png
+	ImageSearch, musicBeeX, musicBeeY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBLogo%A_ScreenHeight%.png
 	if(!ErrorLevel){
 		MouseClick, Left, %musicBeeX%, %musicBeeY%, 2, 0
 		MouseMove, %mouseX%, %mouseY%, 0
@@ -988,16 +991,20 @@ $<^>!b::
 	Gosub, musicBee
 
 	Sleep, 200
-	ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+	ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
 	if(ErrorLevel){
-		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+		resFix(410, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 	}else{
-		ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
-		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+		resFix(280, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+		resFix(410, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 	}
 
 	MouseGetPos, mouseX, mouseY
-	MouseClick, Left, 220, 120, 2, 0 ; Classical
+	resFix(220, 120)
+	MouseClick, Left, %xValue0%, %yValue0%, 2, 0 ; Classical
 	MouseMove, %mouseX%, %mouseY%, 0
 Return
 $>!m::
@@ -1009,16 +1016,21 @@ $<^>!n::
 	Gosub, musicBee
 
 	Sleep, 200
-	ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+	ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
 	if(ErrorLevel){
-		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+		resFix(410, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 	}else{
-		ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
-		ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+		resFix(280, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+		resFix(410, 60)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 	}
 
+
 	MouseGetPos, mouseX, mouseY
-	MouseClick, Left, 220, 140, 2, 0 ; Not Classical
+	ImageSearch, MBnotClassicalX, MBnotClassicalY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNotClassical%A_ScreenHeight%.png
+	MouseClick, Left, %MBnotClassicalX%, %MBnotClassicalY%, 2, 0 ; Not Classical
 	MouseMove, %mouseX%, %mouseY%, 0
 Return
 
@@ -2333,30 +2345,42 @@ Return
 
 	$>!b::
 	$<^>!b::
-		ImageSearch, , , 200, 0, 500, 100, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists.png
+		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
 		if(ErrorLevel){
-			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+			resFix(410, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+			Sleep 50
 		}else{
-			ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
-			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+			resFix(280, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+			resFix(410, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 		}
 
 		MouseGetPos, mouseX, mouseY
-		MouseClick, Left, 220, 120, 2, 0 ; Classical
+		resFix(220, 120)
+		MouseClick, Left, %xValue0%, %yValue0%, 2, 0 ; Classical
+		Sleep 50
 		MouseMove, %mouseX%, %mouseY%, 0
 	Return
 	$>!n::
 	$<^>!n::
-		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
+		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBPlaylists%A_ScreenHeight%.png
 		if(ErrorLevel){
-			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+			resFix(410, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+			Sleep 50
 		}else{
-			ControlClick, x280 y60, ahk_exe MusicBee.exe, , Left, 1
-			ControlClick, x410 y60, ahk_exe MusicBee.exe, , Left, 1
+			resFix(280, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
+			resFix(410, 60)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 		}
 
 		MouseGetPos, mouseX, mouseY
-		MouseClick, Left, 220, 140, 2, 0 ; Not Classical
+		ImageSearch, MBnotClassicalX, MBnotClassicalY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNotClassical%A_ScreenHeight%.png
+		MouseClick, Left, %MBnotClassicalX%, %MBnotClassicalY%, 2, 0 ; Not Classical
+		Sleep 50
 		MouseMove, %mouseX%, %mouseY%, 0
 	Return
 
@@ -2374,7 +2398,8 @@ Return
 
 		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying%A_ScreenHeight%.png
 		if(ErrorLevel){
-			ControlClick, x540 y50, ahk_exe MusicBee.exe, , Left, 1
+			resFix(540, 50)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
 		}else{
 			WinMinimize, ahk_class WindowsForms10.Window.8.app.0.2bf8098_r7_ad1
 		}
