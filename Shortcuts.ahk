@@ -143,10 +143,14 @@ checkHeadphones:
 			Sleep, 200
 
 			MouseGetPos, mouseX, mouseY
-			if(mouseX > 62 && mouseY > 75 && mouseX < 142 && mouseY < 249)
-				MouseMove, 1000, 600, 0 ; Center of the page
+			resFix(62, 75, 696, 280)
+			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+				resFix(1000, 600)
+				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+			}
 
-			ImageSearch, , , 62, 75, 142, 249, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute.png
+			resFix(62, 75, 142, 280)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute%A_ScreenHeight%.png
 			if(!ErrorLevel){
 				Send, {Volume_Mute}		
 			}
@@ -158,10 +162,14 @@ checkHeadphones:
 			Sleep, 200
 
 			MouseGetPos, mouseX, mouseY
-			if(mouseX > 62 && mouseY > 75 && mouseX < 142 && mouseY < 249)
-				MouseMove, 1000, 600, 0 ; Center of the page
+			resFix(62, 75, 696, 280)
+			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+				resFix(1000, 600)
+				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+			}
 
-			ImageSearch, , , 62, 75, 142, 249, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute.png
+			resFix(62, 75, 142, 280)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute%A_ScreenHeight%.png
 			if(!ErrorLevel){
 				Send, {Volume_Mute}		
 			}
@@ -1366,11 +1374,15 @@ $^\::
 	CoordMode, Mouse, Screen
 
 	MouseGetPos, mouseX, mouseY
-	if(mouseX > 62 && mouseY > 75 && mouseX < 696 && mouseY < 249)
-		MouseMove, 1000, 600, 0 ; Center of the page
+	resFix(62, 75, 696, 280)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+	}
 
 	Sleep, 100
-	ImageSearch, , , 62, 75, 142, 249, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute.png
+	resFix(62, 75, 142, 280)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsMute%A_ScreenHeight%.png
 	if(!ErrorLevel){
 		Send, {Volume_Mute}		
 	}
@@ -1390,15 +1402,6 @@ $Volume_Up::
 	}else{
 		RegWrite, REG_DWORD, HKEY_LOCAL_MACHINE\SOFTWARE\Dolby\DAX, DolbyEnable, 00000000
 	}
-
-	CoordMode, Mouse, Screen
-
-	MouseGetPos, mouseX, mouseY
-	if(mouseX > 62 && mouseY > 75 && mouseX < 696 && mouseY < 249){	
-		MouseMove, 1000, 600, 0 ; Center of the page
-	}
-
-	CoordMode, Mouse, Relative
 Return
 $^F2::
 $Volume_Down::
@@ -1412,27 +1415,6 @@ $Volume_Down::
 	}else{
 		RegWrite, REG_DWORD, HKEY_LOCAL_MACHINE\SOFTWARE\Dolby\DAX, DolbyEnable, 00000000
 	}
-
-	CoordMode, Mouse, Screen
-
-	MouseGetPos, mouseX, mouseY
-	if(mouseX > 62 && mouseY > 75 && mouseX < 696 && mouseY < 249){	
-		MouseMove, 1000, 600, 0 ; Center of the page
-	}
-	
-	CoordMode, Mouse, Relative
-Return
-
-~$Media_Next::
-~$Media_Prev::
-~$Media_Play_Pause::
-~$Volume_Mute::
-	CoordMode, Mouse, Screen
-	MouseGetPos, mouseX, mouseY
-	if(mouseX > 62 && mouseY > 75 && mouseX < 696 && mouseY < 249){	
-		MouseMove, 1000, 600, 0 ; Center of the page
-	}
-	CoordMode, Mouse, Relative
 Return
 
 $^F1::Volume_Mute
@@ -1447,16 +1429,27 @@ $#a::
 	CoordMode, Pixel, Screen
 
 	MouseGetPos, mouseX, mouseY
-	if(mouseX > 1750 && mouseY > 890 && mouseX < 1910 && mouseY < 930)
-		MouseMove, 1000, 600, 0 ; Center of the page
+	resFix(1700, 850, 1910, 930)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+	}
 
-	ImageSearch, , , 1750, 890, 1910, 930, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsNotifications1.png
+	resFix(1700, 850, 1910, 930)
+	ImageSearch, WinNotif1X, WinNotif1Y, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsNotifications1%A_ScreenHeight%.png
 	windowsNotifications1 := ErrorLevel
-	ImageSearch, , , 1750, 890, 1910, 930, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsNotifications2.png
+	resFix(1700, 850, 1910, 930)
+	ImageSearch, WinNotif2X, WinNotif2Y, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WindowsNotifications2%A_ScreenHeight%.png
 	windowsNotifications2 := ErrorLevel
-	if(!windowsNotifications1 || !windowsNotifications2){
+	if(!windowsNotifications1){
 		MouseGetPos, mouseX, mouseY
-		MouseClick, , 1830, 920, 1, 0
+		MouseClick, , %WinNotif1X%, %WinNotif1Y%, 1, 0
+		Send, #{a}
+		Sleep, 150
+		WinActivate, %winTitle%
+	}else if(!windowsNotifications2){
+		MouseGetPos, mouseX, mouseY
+		MouseClick, , %WinNotif2X%, %WinNotif2Y%, 1, 0
 		Send, #{a}
 		Sleep, 150
 		WinActivate, %winTitle%
@@ -1479,11 +1472,15 @@ Return
 #IfWinExist, Resolution
 	$7::
 		WinClose, Resolution
-		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\768p.bat"
+;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\768p.bat"
 	Return
 	$9::
 		WinClose, Resolution
 		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
+	Return
+	$1::
+		WinClose, Resolution
+		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\1080p.bat"
 	Return
 
 	$Joy1::
@@ -1491,7 +1488,6 @@ Return
 	Return
 	$Joy2::
 	Esc::
-	$1::
 		WinClose, Resolution
 	Return
 	Left::
@@ -1561,7 +1557,7 @@ Return
 		MsgBox, 0x1000, Button pressed, Turning the light off., 1
 	Return
 
-expGetColor:
+expGetColor: ; rewrite all of this
 	selectedQA := 0
 	PixelGetColor, expColor, 30, 286, Fast RGB
 	if(expColor = "0x333333" || expColor = "0x626262" || expColor = "0x777777"){
@@ -1835,8 +1831,11 @@ loadingPage:
 	pageLoading := ErrorLevel
 	while(pageLoading = 0){
 		MouseGetPos, mouseX, mouseY
-		if(mouseX > 80 && mouseY > 40 && mouseX < 140 && mouseY < 90)
-			MouseMove, 1000, 600, 0 ; Center of the page
+		resFix(80, 40, 160, 110)
+		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+			resFix(1000, 600)
+			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+		}
 
 		resFix(80, 40, 160, 110)
 		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiPageLoading%A_ScreenHeight%.png
@@ -1846,31 +1845,41 @@ loadingPage:
 Return
 isOnYt:
 	MouseGetPos, mouseX, mouseY
-	if(mouseX > 150 && mouseY > 30 && mouseX < 700 && mouseY < 90)
-		MouseMove, 1000, 600, 0 ; Center of the page
+	resFix(150, 30, 700, 90)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1000, 600)
+		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+	}
 
-	ImageSearch, , , 150, 30, 700, 90, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\URLYT1.png
+	resFix(150, 30, 700, 90)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\URLYT1%A_ScreenHeight%.png
 	ytUrl1 := ErrorLevel
-	ImageSearch, , , 150, 30, 700, 90, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\URLYT2.png
+	resFix(150, 30, 700, 90)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\URLYT2%A_ScreenHeight%.png
 	ytUrl2 := ErrorLevel
-	ImageSearch, , , 150, 30, 700, 90, *TransBlack *150 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\URLYT3.png
-	ytUrl3 := ErrorLevel
 Return
 actionOnYt:
-	if(!ytUrl1 || !ytUrl2 || !ytUrl3){
+	if(!ytUrl1 || !ytUrl2){
 		MouseGetPos, mouseX, mouseY
-		if(mouseX > 60 && mouseY > 360 && mouseX < 200 && mouseY < 410)
-			MouseMove, 1000, 600, 0 ; Center of the page
-
-		ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
-		if(!ErrorLevel){
-			ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+		resFix(60, 360, 250, 410)
+		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+			resFix(1000, 600)
+			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		PixelGetColor, ytColor, 1810, 150, Fast RGB
-		if(ytColor = "0xCC0000"){
-			ControlClick, x1790 y155, ahk_exe vivaldi.exe, , Left, 1 ; notifications
-			MouseMove, 1500, 320, 0
+		resFix(0, 300, 250, 500)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
+		if(!ErrorLevel){
+			resFix(90, 160)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+		}
+
+		resFix(1750, 120, 1810, 160)
+		PixelSearch, ytColorX, ytColorY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xCC0000, 20, Fast RGB
+		if(!ErrorLevel){
+			ControlClick, x%ytColorX% y%ytColorY%, ahk_exe vivaldi.exe, , Left, 1 ; notifications
+			resFix(1500, 320)
+			MouseMove, %xValue0%, %yValue0%, 0
 		}
 	}
 Return
@@ -1878,7 +1887,8 @@ Return
 	$^1::
 		WinGet, window, MinMax
 		if(window = 1){
-			PixelGetColor, colorVar, 500, 100, RGB
+			resFix(500, 100)
+			PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
 			if(colorVar = 0x404076){ ; Incognito
 				Send, ^{2}
 				Return
@@ -1906,25 +1916,33 @@ Return
 			Gosub, downloadsPanel
 			Gosub, loadingPage
 			Gosub, isOnYt
-			PixelGetColor, firstTab, 80, 10, Fast RGB
+			resFix(80, 10)
+			PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
 			Send, ^{1}
 
 			KeyWait, 1
 			KeyWait, Control
 
-			if((!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+			if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 				ControlClick, x1790 y155, ahk_exe vivaldi.exe, , Left, 1 ; notifications
-				MouseMove, 1500, 320, 0
+				resFix(1500, 320)
+				MouseMove, %xValue0%, %yValue0%, 0
 
 				MouseGetPos, mouseX, mouseY
-				if(mouseX > 61 && mouseY > 360 && mouseX < 2000 && mouseY < 410)
-					MouseMove, 1000, 600, 0 ; Center of the page
-				ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
+				resFix(60, 360, 250, 410)
+				if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+					resFix(1000, 600)
+					MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+				}
+
+				resFix(0, 300, 250, 500)
+				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
 				if(!ErrorLevel){
-					ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+					resFix(90, 160)
+					ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 				}
 				MouseMove, %mouseX%, %mouseY%, 0
-			}else if(!(!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+			}else if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 				Send, ^{l}
 				Sleep, 100
 				Send, youtube.com
@@ -1937,14 +1955,17 @@ Return
 			}else{
 				Sleep, 200
 				Gosub, isOnYt
-				PixelGetColor, firstTab, 80, 10, Fast RGB
-				if(!(!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+				resFix(80, 10)
+				PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
+				if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 					Sleep, 500
 					Gosub, isOnYt
-					PixelGetColor, firstTab, 80, 10, Fast RGB
+					resFix(80, 10)
+					PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
 
-					if(!(!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
-						PixelGetColor, firstTab, 80, 10, Fast RGB		
+					if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+						resFix(80, 10)
+						PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB	
 						Send, ^{l}
 						Sleep, 100
 						Send, youtube.com
@@ -1954,10 +1975,10 @@ Return
 						Gosub, loadingPage
 						Gosub, isOnYt
 						Gosub, actionOnYt
-					}else if((!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+					}else if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 						Gosub, actionOnYt
 					}
-				}else if ((!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+				}else if ((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 					Gosub, actionOnYt
 				}
 			}
@@ -1969,17 +1990,22 @@ Return
 	$^2::
 		Gosub, downloadsPanel
 
-		PixelGetColor, colorVar, 500, 100, RGB
+		resFix(500, 100)
+		PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
 		if(colorVar = 0x404076){ ; Incognito
 			Send, ^{2}
 			Return
 		}
 
 		MouseGetPos, mouseX, mouseY
-		if(mouseX > 250 && mouseY > 130 && mouseX < 340 && mouseY < 180)
-			MouseMove, 1000, 600, 0 ; Center of the page
+		resFix(180, 130, 350, 180)
+		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+			resFix(1000, 600)
+			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+		}
 
-		ImageSearch, , , 250, 130, 350, 180, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\TwitterLogo.png
+		resFix(180, 130, 350, 180)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\TwitterLogo%A_ScreenHeight%.png
 		twitterLogo := ErrorLevel
 		Send, ^{2}
 
@@ -1991,14 +2017,15 @@ Return
 		}
 
 		resFix(9, 85, 50, 140)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
 		if(!ErrorLevel){
 			Send, {Esc}
 		}
 
 		if(!twitterLogo){
 			KeyWait, LCtrl
-			ControlClick, x300 y220, ahk_exe vivaldi.exe, , Left, 1
+			resFix(300, 220)
+			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
 		}
 	Return
 
@@ -2070,23 +2097,30 @@ Return
 		Gosub, loadingPage
 		Sleep, 500
 		Gosub, isOnYt
-		PixelGetColor, firstTab, 80, 10, Fast RGB
+		resFix(80, 10)
+		PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
 
-		if((!ytUrl1 || !ytUrl2 || !ytUrl3) && firstTab = 0x2E2F37){
+		if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
 			MouseGetPos, mouseX, mouseY
-			if(mouseX > 61 && mouseY > 360 && mouseX < 2000 && mouseY < 410)
-				MouseMove, 1000, 600, 0 ; Center of the page
-			ImageSearch, , , 0, 300, 200, 500, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory.png
+			resFix(60, 360, 250, 410)
+			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+				resFix(1000, 600)
+				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+			}
+
+			resFix(0, 300, 250, 500)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
 			if(!ErrorLevel){
-				ControlClick, x90 y160, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+				resFix(90, 160)
+				ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 			}
 			MouseMove, %mouseX%, %mouseY%, 0
 		}
-		if((!(!ytUrl1 || !ytUrl2 || !ytUrl3)) && firstTab = 0x2E2F37){
+		if((!(!ytUrl1 || !ytUrl2)) && firstTab = "0x2E2F37"){
 			Sleep, 500
 			Gosub, isOnYt
 
-			if((!(!ytUrl1 || !ytUrl2 || !ytUrl3)) && firstTab = 0x2E2F37){
+			if((!(!ytUrl1 || !ytUrl2)) && firstTab = "0x2E2F37"){
 				Send, ^{l}
 				Sleep, 50
 				Send, youtube.com
@@ -2102,29 +2136,45 @@ Return
 
 	~$LButton::
 		KeyWait, LButton
-		PixelGetColor, colorVar, 500, 100, RGB
+		resFix(500, 100)
+		PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
 		if(colorVar = 0x404076){
 			Return
 		}
 		MouseGetPos, mouseX, mouseY
-		; (mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) YT logo
-		; (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) Reload page
-		; (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) Reload all pages
-		; (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46) First tab (YT)
-		if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) 
-		|| (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) 
-		|| (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) 
-		|| (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){
-			if((mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87)){
-				MouseMove, 1000, 600, 0 ; Center of the page
-			}else if(mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87){
-				Send, ^{r}
+		if(A_ScreenHeight = "1080"){
+			if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) ; YT logo
+			|| (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) ; Reload page 
+			|| (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) ;Reload all pages 
+			|| (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){ ; First tab (YT)
+				if(mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87){
+					MouseMove, 1000, 600, 0 ; Center of the page
+				}else if(mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87){
+					Send, ^{r}
+				}
+				Gosub, downloadsPanel
+				Sleep, 500
+				Gosub, loadingPage
+				Gosub, isOnYt
+				Gosub, actionOnYt
 			}
-			Gosub, downloadsPanel
-			Sleep, 500
-			Gosub, loadingPage
-			Gosub, isOnYt
-			Gosub, actionOnYt
+		}else if(A_ScreenHeight = "768"){
+			if((mouseX > 108 && mouseY > 116 && mouseX < 188 && mouseY < 132) ; YT logo
+			|| (mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70) ; Reload page
+			|| (mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70) ;Reload all pages
+			|| (mouseX > 42 && mouseY > 8 && mouseX < 71 && mouseY < 37)){ ; First tab (YT)
+				if(mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70){
+					resFix(1000, 600)
+					MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+				}else if(mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70){
+					Send, ^{r}
+				}
+				Gosub, downloadsPanel
+				Sleep, 500
+				Gosub, loadingPage
+				Gosub, isOnYt
+				Gosub, actionOnYt
+			}
 		}
 	Return
 
@@ -2215,7 +2265,8 @@ Return
 	Return
 
 	~$^g::
-		MouseMove, 1300, 230, 0
+		resFix(1300, 230)
+		MouseMove, %xValue0%, %yValue0%, 0
 	Return
 
 	$^Enter::
