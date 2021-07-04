@@ -1916,15 +1916,17 @@ Return
 			Gosub, downloadsPanel
 			Gosub, loadingPage
 			Gosub, isOnYt
-			resFix(80, 10)
-			PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
+			resFix(80, 10, 80, 15)
+			PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2E2F37, 20, Fast RGB
+			firstTab := ErrorLevel
 			Send, ^{1}
 
 			KeyWait, 1
 			KeyWait, Control
 
-			if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
-				ControlClick, x1790 y155, ahk_exe vivaldi.exe, , Left, 1 ; notifications
+			if((!ytUrl1 || !ytUrl2) && !firstTab){
+				resFix(1790, 155)
+				ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; notifications
 				resFix(1500, 320)
 				MouseMove, %xValue0%, %yValue0%, 0
 
@@ -1942,7 +1944,7 @@ Return
 					ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
 				}
 				MouseMove, %mouseX%, %mouseY%, 0
-			}else if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+			}else if(!(!ytUrl1 || !ytUrl2) && !firstTab){
 				Send, ^{l}
 				Sleep, 100
 				Send, youtube.com
@@ -1955,17 +1957,20 @@ Return
 			}else{
 				Sleep, 200
 				Gosub, isOnYt
-				resFix(80, 10)
-				PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
-				if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+				resFix(80, 10, 80, 15)
+				PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2E2F37, 20, Fast RGB
+				firstTab := ErrorLevel
+				if(!(!ytUrl1 || !ytUrl2) && !firstTab){
 					Sleep, 500
 					Gosub, isOnYt
-					resFix(80, 10)
-					PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
+					resFix(80, 10, 80, 15)
+					PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2E2F37, 20, Fast RGB
+					firstTab := ErrorLevel
 
-					if(!(!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
-						resFix(80, 10)
-						PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB	
+					if(!(!ytUrl1 || !ytUrl2) && !firstTab){
+						resFix(80, 10, 80, 15)
+						PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2E2F37, 20, Fast RGB
+						firstTab := ErrorLevel
 						Send, ^{l}
 						Sleep, 100
 						Send, youtube.com
@@ -1975,10 +1980,10 @@ Return
 						Gosub, loadingPage
 						Gosub, isOnYt
 						Gosub, actionOnYt
-					}else if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+					}else if((!ytUrl1 || !ytUrl2) && !firstTab){
 						Gosub, actionOnYt
 					}
-				}else if ((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+				}else if ((!ytUrl1 || !ytUrl2) && !firstTab){
 					Gosub, actionOnYt
 				}
 			}
@@ -2097,10 +2102,11 @@ Return
 		Gosub, loadingPage
 		Sleep, 500
 		Gosub, isOnYt
-		resFix(80, 10)
-		PixelGetColor, firstTab, %xValue0%, %yValue0%, Fast RGB
+		resFix(80, 10, 80, 15)
+		PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2E2F37, 20, Fast RGB
+		firstTab := ErrorLevel
 
-		if((!ytUrl1 || !ytUrl2) && firstTab = "0x2E2F37"){
+		if((!ytUrl1 || !ytUrl2) && !firstTab){
 			MouseGetPos, mouseX, mouseY
 			resFix(60, 360, 250, 410)
 			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
@@ -2116,11 +2122,11 @@ Return
 			}
 			MouseMove, %mouseX%, %mouseY%, 0
 		}
-		if((!(!ytUrl1 || !ytUrl2)) && firstTab = "0x2E2F37"){
+		if((!(!ytUrl1 || !ytUrl2)) && !firstTab){
 			Sleep, 500
 			Gosub, isOnYt
 
-			if((!(!ytUrl1 || !ytUrl2)) && firstTab = "0x2E2F37"){
+			if((!(!ytUrl1 || !ytUrl2)) && !firstTab){
 				Send, ^{l}
 				Sleep, 50
 				Send, youtube.com
