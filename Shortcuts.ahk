@@ -58,7 +58,7 @@ outputChange := 0
 
 ; Joystic as mouse
 JoyMultiplier = 0.50 
-JoyThreshold = 0
+JoyThreshold = 1
 InvertYAxis := false
 ButtonLeft = 1
 ButtonRight = 2
@@ -1113,18 +1113,18 @@ $>+;::
 	}
 
 	resFix(1600, 110, 1910, 210) ; (mouseX > 1600 && mouseY > 110 && mouseX < 1910 && mouseY < 210)
-	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession.png ; Detects if it's already on the page
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniSession%A_ScreenHeight%.png ; Detects if it's already on the page
 	if(ErrorLevel){
 		MouseGetPos, mouseX, mouseY
 
-		resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		resFix(1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
 		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
 			resFix(1000, 600)
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+		resFix(1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
 		waniKaniError := ErrorLevel
 		if(waniKaniError){
 			resFix(1820, 70)
@@ -1134,8 +1134,8 @@ $>+;::
 			varTime := 1000
 			Sleep, %varTime%
 
-			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+			resFix(1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
 		while(waniKaniError){
@@ -1145,14 +1145,14 @@ $>+;::
 			Sleep, %varTime%
 
 			MouseGetPos, mouseX, mouseY
-			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			resFix(1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
 			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
 				resFix(1000, 600)
 				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 			}
 			
-			resFix(1400, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *120 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension.png ; Detects if the extension is open
+			resFix(1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
 
@@ -1220,31 +1220,51 @@ F12::
 	WinWaitActive, ahk_exe FxSound.exe
 	Sleep, 600
 
+	resFix(200, 70)
+	ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpen%A_ScreenHeight%.png
+	fxSoundOpen := ErrorLevel
+	while(fxSoundOpen){
+		Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
+		WinActivate, ahk_exe FxSound.exe
+		Sleep, 100
+		resFix(200, 70)
+		ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpen%A_ScreenHeight%.png
+		fxSoundOpen := ErrorLevel
+		if(ErrorLevel){
+			ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpenPink%A_ScreenHeight%.png
+			fxSoundOpen := ErrorLevel
+		}
+	}
+
 	CoordMode, Mouse, Screen
 	MouseGetPos, mouseX, mouseY
-	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+	resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
 	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
 		resFix(1000, 600)
 		MouseMove, %xValue0%, %yValue0%
 	}
 
 	CoordMode, Mouse, Relative
-	resFix(600, 80, 1100, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
-	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek%A_ScreenHeight%.png
+	resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+	ImageSearch, fxX, fxY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek%A_ScreenHeight%.png
 	if(!ErrorLevel){ ; Laptop
 		SoundSet, %lowVol%, MASTER
-		resFix(800, 130)
-		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
+		MouseClick, Left, %fxX%, %fxY%, 1, 0
 		sleepTime(300)
 		resFix(800, 200)
 		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
 	}else{ ; TV
-		SoundSet, %highVol%, MASTER
-		resFix(800, 130)
-		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
-		sleepTime(300)
-		resFix(800, 250)
-		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
+		resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
+		ImageSearch, fxX, fxY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundPhilco%A_ScreenHeight%.png
+		if(!ErrorLevel){
+			SoundSet, %highVol%, MASTER
+			MouseClick, Left, %fxX%, %fxY%, 1, 0
+			sleepTime(300)
+			resFix(800, 250)
+			MouseClick, Left, %xValue0%, %yValue0%, 1, 0
+		}Else{
+			MsgBox, , Error, FxSound Error, 1
+		}
 	}
 	sleepTime(300)
 	CoordMode, Mouse, Screen
@@ -1254,6 +1274,7 @@ F12::
 	MouseClick, Left, % fxCloseX+8, % fxCloseY+8, 1, 0
 	Sleep, 300
 
+	ToolTip, 
 	MouseMove, %mouseX%, %mouseY%, 0
 	CoordMode, Mouse, Relative
 	CoordMode, Pixel, Relative
@@ -2286,9 +2307,9 @@ Return
 		Send, {LControl Up}
 	Return
 	$XButton2::
-		Send, {Enter Down}
+		Send, {Right Down}
 		KeyWait, XButton2
-		Send, {Enter Up}
+		Send, {Right Up}
 	Return
 
 #IfWinActive, ahk_exe MusicBee.exe
