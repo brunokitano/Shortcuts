@@ -2007,7 +2007,7 @@ Return
 		}
 	Return
 
-	$^2::
+/*	$^2::
 		Gosub, downloadsPanel
 
 		resFix(500, 100)
@@ -2048,7 +2048,7 @@ Return
 			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
 		}
 	Return
-
+*/
 	~$^3::
 	~$^4::
 	~$^5::
