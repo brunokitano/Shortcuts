@@ -2586,27 +2586,6 @@ Return
 
 
 
-; CHANGELOG
-; 3.1 Changed shortcut (#+h to AltGr+h)
-; 3.2 Optimized code
-; 3.3 Changed optmization settings, optimized 0, added returns and implemented Class mode
-; 3.4 Implemented accessibility check
-; 3.5 Start recording with OBS, optimized code and changed AltGr+l logics
-; 3.5 Implemented AltGr+r to start recording with OBS, close vivaldi if it's running
-
-; 3.7 AltGr as Ctrl in vivaldi
-; 3.8 Start Nvidia RTX Voice, added MsgBox, added F1, F2 and F3 on susVivaldi, optimized code
-; 3.9 Optmized code, close and open livelywpf, improved obs recording state detection
-; 4.0 solved Critical Error, optmized code, changed lively to Wallpaper Engine, changed gui to MsgBox on selection, 
-;optimized temporary MsgBox, fixed close teams, improved OBS recording, msgbox always on top (0x1000 = AoT; 0x1001 = AoT + OkCancel)
-; 4.1 Implemented Game mode, confirmation for class modes
-
-; 5.0.0 Rewrote too many stuff
-; 5.0.1 Disabled a lot of things
-; 5.0.2 Erased disabled things
-; 5.0.3 Did so many things, but the ^1 and ^2 on vivaldi is "working"
-; 5.0.4 Backing up, because I will change ControlClick to mouseclick on explorer directories
-
 ;	Hotkeys 		Function
 ;	AltGr+c 		Class Mode (English)
 ;	AltGr+e			Exit Class mode
@@ -2623,6 +2602,3 @@ Return
 ;	F1 || F2 || F3	Suspend for Vivaldi search
 
 ;	AltGr+i 		Shortcuts list
-
-;X := Your_X_Value * (A_ScreenWidth / Designed_Width)
-;Y := Your_Y_Value * (A_ScreenHeight / Designed_Height)
