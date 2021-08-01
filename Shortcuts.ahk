@@ -35,7 +35,6 @@ expCounter := 0
 
 lowVol := 20
 highVol := 80
-/*
 SoundGet, volume, MASTER
 Start_LidWatcher()
 
@@ -67,9 +66,6 @@ WheelDelay = 250
 JoystickNumber = 1
 
 JoystickPrefix = %JoystickNumber%Joy
-Hotkey, %JoystickPrefix%%ButtonLeft%, ButtonLeft
-Hotkey, %JoystickPrefix%%ButtonRight%, ButtonRight
-Hotkey, %JoystickPrefix%%ButtonMiddle%, ButtonMiddle
 
 ; Calculate the axis displacements that are needed to start moving the cursor:
 JoyThresholdUpper := 50 + JoyThreshold
@@ -79,13 +75,13 @@ if InvertYAxis
 else
 	YAxisMultiplier = 1
 
+SetTimer, WatchPOV, 10
 SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
 SetTimer, joyButtons, 10
 
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
 	SetTimer, MouseWheel, %WheelDelay%
-*/
 	;VARIABLES AND FUNCTIONS
 
 
@@ -398,43 +394,35 @@ WatchPOVandStick:
 	}
 return
 
-ButtonLeft:
-	SetMouseDelay, -1  ; Makes movement smoother.
-	MouseClick, left,,, 1, 0, D  ; Hold down the left mouse button.
-	SetTimer, WaitForLeftButtonUp, 10
-return
-ButtonRight:
-	SetMouseDelay, -1  ; Makes movement smoother.
-	MouseClick, right,,, 1, 0, D  ; Hold down the right mouse button.
-	SetTimer, WaitForRightButtonUp, 10
-return
-ButtonMiddle:
-	SetMouseDelay, -1  ; Makes movement smoother.
-	MouseClick, middle,,, 1, 0, D  ; Hold down the right mouse button.
-	SetTimer, WaitForMiddleButtonUp, 10
-return
-WaitForLeftButtonUp:
-	if GetKeyState(JoystickPrefix . ButtonLeft)
-		return  ; The button is still, down, so keep waiting.
-	; Otherwise, the button has been released.
-	SetTimer, WaitForLeftButtonUp, Off
-	SetMouseDelay, -1  ; Makes movement smoother.
-	MouseClick, left,,, 1, 0, U  ; Release the mouse button.
-return
-WaitForRightButtonUp:
-	if GetKeyState(JoystickPrefix . ButtonRight)
-		return  ; The button is still, down, so keep waiting.
-	; Otherwise, the button has been released.
-	SetTimer, WaitForRightButtonUp, Off
-	MouseClick, right,,, 1, 0, U  ; Release the mouse button.
-return
-WaitForMiddleButtonUp:
-	if GetKeyState(JoystickPrefix . ButtonMiddle)
-		return  ; The button is still, down, so keep waiting.
-	; Otherwise, the button has been released.
-	SetTimer, WaitForMiddleButtonUp, Off
-	MouseClick, middle,,, 1, 0, U  ; Release the mouse button.
-return
+WatchPOV:
+	POV := GetKeyState("JoyPOV")  ; Get position of the POV control.
+	KeyToHoldDownPrevPOV := KeyToHoldDownPOV  ; Prev now holds the key that was down before (if any).
+
+	; Some joysticks might have a smooth/continous POV rather than one in fixed increments.
+	; To support them all, use a range:
+	if (POV < 0)   ; No angle to report
+	    KeyToHoldDownPOV := ""
+	else if (POV > 31500)               ; 315 to 360 degrees: Forward
+	    KeyToHoldDownPOV := "Up"
+	else if POV between 0 and 4500      ; 0 to 45 degrees: Forward
+	    KeyToHoldDownPOV := "Up"
+	else if POV between 4501 and 13500  ; 45 to 135 degrees: Right
+	    KeyToHoldDownPOV := "Right"
+	else if POV between 13501 and 22500 ; 135 to 225 degrees: Down
+	    KeyToHoldDownPOV := "Down"
+	else                                ; 225 to 315 degrees: Left
+	    KeyToHoldDownPOV := "Left"
+
+	if (KeyToHoldDownPOV = KeyToHoldDownPrevPOV)  ; The correct key is already down (or no key is needed).
+	    return  ; Do nothing.
+
+	; Otherwise, release the previous key and press down the new key:
+	SetKeyDelay -1  ; Avoid delays between keystrokes.
+	if KeyToHoldDownPrevPOV   ; There is a previous key to release.
+	    Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
+	if KeyToHoldDownPOV   ; There is a key to press down.
+	    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+Return
 WatchJoystick:
 	JoyZ := GetKeyState("JoyZ")
 	if(JoyZ < 45){
@@ -477,13 +465,17 @@ WatchJoystick:
 	}
 return
 MouseWheel:
-	GetKeyState, JoyPOV, %JoystickNumber%JoyPOV
-	if JoyPOV = -1  ; No angle.
+	JoyR := GetKeyState("JoyR")
+	if(JoyR = 50)  ; No angle.
 		return
-	if (JoyPOV > 31500 or JoyPOV < 4500)  ; Forward
-		Send {WheelUp}
-	else if JoyPOV between 13500 and 22500  ; Back
-		Send {WheelDown}
+	while(GetKeyState("JoyR") > 55 || GetKeyState("JoyR") < 45){
+		if(JoyR <= 45)
+			Send {WheelUp}
+		else if(JoyR >= 55)
+			Send {WheelDown}
+		
+		Sleep, 50
+	}
 return
 joyButtons:
 	SetTimer, joyButtons, Off
@@ -661,12 +653,14 @@ VK07::
 	if(!ErrorLevel){
 		joysticAsMouseSwitch := !joysticAsMouseSwitch
 		if(joysticAsMouseSwitch){
+			SetTimer, WatchPOV, On
 			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
 			GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 			IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
 				SetTimer, MouseWheel, On
 			SetTimer, joyButtons, On
 		}else{
+			SetTimer, WatchPOV, Off
 			SetTimer, WatchJoystick, Off
 			SetTimer, MouseWheel, Off
 			SetTimer, joyButtons, Off
@@ -766,7 +760,7 @@ GameChoose:
 		if(!ProcessExist("WhatsApp.exe")){
 			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
 		}
-		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Restart explorer.bat"
+;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Restart explorer.bat"
 
 		Process, Close, NVIDIA RTX Voice.exe
 		Process, Close, GalaxyClient.exe
@@ -2161,7 +2155,7 @@ Return
 		}
 	Return
 
-	~$LButton::
+	~LButton::
 		KeyWait, LButton
 		resFix(500, 100)
 		PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
