@@ -57,7 +57,7 @@ outputChange := 0
 
 ; Joystic as mouse
 JoyMultiplier = 0.50 
-JoyThreshold = 1
+JoyThreshold = 0
 InvertYAxis := false
 ButtonLeft = 1
 ButtonRight = 2
@@ -483,6 +483,7 @@ joyButtons:
 		Send, {LButton Down}
 		KeyWait, Joy1
 		Send, {LButton Up}
+		Gosub, lbActions
 	}
 	if GetKeyState("Joy3", "P"){
 		Send, ^{LButton Down}
@@ -2155,48 +2156,51 @@ Return
 		}
 	Return
 
+lbActions:
+	resFix(500, 100)
+	PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
+	if(colorVar = 0x404076){
+		Return
+	}
+	MouseGetPos, mouseX, mouseY
+	if(A_ScreenHeight = "1080"){
+		if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) ; YT logo
+		|| (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) ; Reload page 
+		|| (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) ;Reload all pages 
+		|| (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){ ; First tab (YT)
+			if(mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87){
+				MouseMove, 1000, 600, 0 ; Center of the page
+			}else if(mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87){
+				Send, ^{r}
+			}
+			Gosub, downloadsPanel
+			Sleep, 500
+			Gosub, loadingPage
+			Gosub, isOnYt
+			Gosub, actionOnYt
+		}
+	}else if(A_ScreenHeight = "768"){
+		if((mouseX > 108 && mouseY > 116 && mouseX < 188 && mouseY < 132) ; YT logo
+		|| (mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70) ; Reload page
+		|| (mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70) ;Reload all pages
+		|| (mouseX > 42 && mouseY > 8 && mouseX < 71 && mouseY < 37)){ ; First tab (YT)
+			if(mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70){
+				resFix(1000, 600)
+				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+			}else if(mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70){
+				Send, ^{r}
+			}
+			Gosub, downloadsPanel
+			Sleep, 500
+			Gosub, loadingPage
+			Gosub, isOnYt
+			Gosub, actionOnYt
+		}
+	}
+Return
 	~LButton::
 		KeyWait, LButton
-		resFix(500, 100)
-		PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
-		if(colorVar = 0x404076){
-			Return
-		}
-		MouseGetPos, mouseX, mouseY
-		if(A_ScreenHeight = "1080"){
-			if((mouseX > 133 && mouseY > 145 && mouseX < 222 && mouseY < 168) ; YT logo
-			|| (mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87) ; Reload page 
-			|| (mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87) ;Reload all pages 
-			|| (mouseX > 52 && mouseY > 9 && mouseX < 88 && mouseY < 46)){ ; First tab (YT)
-				if(mouseX > 94 && mouseY > 47 && mouseX < 136 && mouseY < 87){
-					MouseMove, 1000, 600, 0 ; Center of the page
-				}else if(mouseX > 1844 && mouseY > 47 && mouseX < 1886 && mouseY < 87){
-					Send, ^{r}
-				}
-				Gosub, downloadsPanel
-				Sleep, 500
-				Gosub, loadingPage
-				Gosub, isOnYt
-				Gosub, actionOnYt
-			}
-		}else if(A_ScreenHeight = "768"){
-			if((mouseX > 108 && mouseY > 116 && mouseX < 188 && mouseY < 132) ; YT logo
-			|| (mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70) ; Reload page
-			|| (mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70) ;Reload all pages
-			|| (mouseX > 42 && mouseY > 8 && mouseX < 71 && mouseY < 37)){ ; First tab (YT)
-				if(mouseX > 76 && mouseY > 38 && mouseX < 109 && mouseY < 70){
-					resFix(1000, 600)
-					MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
-				}else if(mouseX > 1306 && mouseY > 38 && mouseX < 1339 && mouseY < 70){
-					Send, ^{r}
-				}
-				Gosub, downloadsPanel
-				Sleep, 500
-				Gosub, loadingPage
-				Gosub, isOnYt
-				Gosub, actionOnYt
-			}
-		}
+		Gosub, lbActions
 	Return
 
 	$F1::
