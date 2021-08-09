@@ -485,15 +485,26 @@ joyButtons:
 		Send, {LButton Up}
 		Gosub, lbActions
 	}
-	if GetKeyState("Joy3", "P"){
-		Send, ^{LButton Down}
-		Send, ^{LButton Up}
-		KeyWait, Joy3
-	}
 	if GetKeyState("Joy2", "P"){
 		Send, {RButton Down}
 		KeyWait, Joy2
 		Send, {RButton Up}
+	}
+	if GetKeyState("Joy3", "P"){
+		Send, {LControl Down}
+		while(GetKeyState("Joy3", "P")){
+			if(GetKeyState("Joy1", "P")){
+				Send, {LButton Down}
+				KeyWait, Joy1
+				Send, {LButton Up}
+			}
+		}
+		Send, {LControl Up}
+	}
+	if GetKeyState("Joy4", "P"){
+		Send, ^{LButton Down}
+		Send, ^{LButton Up}
+		KeyWait, Joy4
 	}
 	SetTimer, joyButtons, On
 Return
@@ -616,9 +627,9 @@ $<^>!f::
 	MsgBox, 0x1001, Fatec Mode, Do you want to start Fatec mode?
 	IfMsgBox, OK
 	{		
-		if(!ProcessExist("NVIDIA RTX Voice.exe")){
-			Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
-		}
+;		if(!ProcessExist("NVIDIA RTX Voice.exe")){
+;			Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
+;		}
 		message := "fClass"
 		SetTimer, showMessage, -10
 		if(!ProcessExist("Teams.exe")){
@@ -635,11 +646,12 @@ $<^>!f::
 		if(ProcessExist("MusicBee.exe")){
 			Process, close, MusicBee.exe
 		}
-		WinWait, ahk_class RTXVoiceWindowClass
-		Sleep, 200
+/*		WinWait, ahk_class RTXVoiceWindowClass
+		Sleep, 2000
 		WinActivate, ahk_class RTXVoiceWindowClass
 		WinWaitActive, ahk_class RTXVoiceWindowClass, , 1.5
 		Send, !{F4}
+*/
 	}
 	Else
 	{
@@ -1064,11 +1076,13 @@ $<^>!,::
 		MouseMove, %mouseX%, %mouseY%, 0
 	}
 
-	if(!ProcessExist("WhatsappTray.exe")){
+	;if(!ProcessExist("WhatsappTray.exe")){
+	if(!ProcessExist("Whatsapp.exe")){
 		while(ProcessExist("WhatsApp.exe")){
 			Process, Close, WhatsApp.exe
 		}
-		Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+		;Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+		Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
 	}
 	
 	Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
@@ -2476,23 +2490,29 @@ Return
 			Send, #{Up}
 		}
 		
-		if(!ProcessExist("WhatsappTray.exe")){
+		;if(!ProcessExist("WhatsappTray.exe")){
+		if(!ProcessExist("Whatsapp.exe")){
 			while(ProcessExist("WhatsApp.exe")){
 				Process, Close, WhatsApp.exe
 			}
-			Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+			;Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
 		}
 
 		PixelGetColor, whatsappColor, 120, 20, Fast RGB
 		if(whatsappColor != "0x00BFA5"){
-			Process, Close, WhatsappTray.exe
-			Process, WaitClose, WhatsappTray.exe
+			;Process, Close, WhatsappTray.exe
+			;Process, WaitClose, WhatsappTray.exe
+			Process, Close, Whatsapp.exe
+			Process, WaitClose, Whatsapp.exe
+
 
 			while(ProcessExist("WhatsApp.exe")){
 				Process, Close, WhatsApp.exe
 			}
 
-			Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+			;Run, "D:\Program Files (x86)\WhatsappTray\WhatsappTray.exe"
+			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
 		}
 		
 		PixelSearch, , , 418, 68, 429, 79, 0x09D261, 20, Fast RGB
