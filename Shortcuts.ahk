@@ -44,6 +44,11 @@ RegRead, headphones, HKEY_LOCAL_MACHINE, %headphonesPath%, %headphonesValue%
 prevValue := headphones
 ;SetTimer, checkHeadphones, 500
 
+JoystickNumber = 0
+GetKeyState, joy_name, 1JoyName
+if(joy_name = "")
+	SetTimer, checkController, 500
+
 gotActivated := 0
 SetTimer, programRoutine, 300
 
@@ -59,9 +64,6 @@ outputChange := 0
 JoyMultiplier = 0.50 
 JoyThreshold = 0
 InvertYAxis := false
-ButtonLeft = 1
-ButtonRight = 2
-ButtonMiddle = 3
 WheelDelay = 250
 JoystickNumber = 1
 
@@ -175,6 +177,12 @@ checkHeadphones:
 	}
 
 	SetTimer, checkHeadphones, On
+Return
+
+checkController:
+	GetKeyState, joy_name, 1JoyName
+	if(joy_name != "")
+		Reload
 Return
 
 reopenKDE:
@@ -466,6 +474,9 @@ WatchJoystick:
 return
 MouseWheel:
 	JoyR := GetKeyState("JoyR")
+	if(JoyR = ""){
+		Reload
+	}
 	if(JoyR = 50)  ; No angle.
 		return
 	while(GetKeyState("JoyR") > 55 || GetKeyState("JoyR") < 45){
