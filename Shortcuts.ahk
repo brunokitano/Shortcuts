@@ -84,6 +84,8 @@ SetTimer, joyButtons, 10
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
 	SetTimer, MouseWheel, %WheelDelay%
+
+joystickAsMouseSwitch := 1
 	;VARIABLES AND FUNCTIONS
 
 
@@ -115,17 +117,9 @@ Send, {LWin Up}
 Send, {RWin Up}
 	;RELEASE KEYS
 
-startTime := A_TickCount
 ToolTip, Shortcuts reloaded.
-Process, Exist 
-hwnd := WinExist("ahk_class tooltips_class32 ahk_pid " ErrorLevel) 
-WinGetPos,,,w,h,ahk_id %hwnd%
-While (DllCall("MoveWindow","Uptr",hwnd,"Int",x+20,"Int",y-10,"Int",w,"Int",h,"Int",0) && runTime <= 1000){
-	MouseGetPos, x, y
-	runTime := A_TickCount - startTime
-}
+Goto, smoothTooltip
 
-ToolTip, 
 return
 
 checkHeadphones:
@@ -513,8 +507,16 @@ joyButtons:
 		Send, {LControl Up}
 	}
 	if GetKeyState("Joy4", "P"){
-		Send, ^{LButton Down}
-		Send, ^{LButton Up}
+		if(WinActive("ahk_exe vivaldi.exe")){
+			Send, ^{w Down}
+			Send, ^{w Up}
+		}else if(WinActive("ahk_exe explorer.exe")){
+			Send, +{Delete Down}
+			Send, +{Delete Up}
+		}else if(WinActive("ahk_exe MusicBee.exe")){
+			Send, +{Delete Down}
+			Send, +{Delete Up}
+		}
 		KeyWait, Joy4
 	}
 	SetTimer, joyButtons, On
@@ -538,6 +540,19 @@ resFix(x0 := 0, y0 := 0, x1 := 0, y1 := 0){
 	yValue1 := Round(yValue1)
 Return
 }
+
+smoothTooltip:
+	startTime := A_TickCount
+	runTime := 0
+	Process, Exist 
+	hwnd := WinExist("ahk_class tooltips_class32 ahk_pid " ErrorLevel) 
+	WinGetPos,,,w,h,ahk_id %hwnd%
+	While (DllCall("MoveWindow","Uptr",hwnd,"Int",x+20,"Int",y-10,"Int",w,"Int",h,"Int",0) && runTime <= 1000){
+		MouseGetPos, x, y
+		runTime := A_TickCount - startTime
+	}
+	ToolTip, 
+Return
 
 
 
@@ -671,33 +686,47 @@ $<^>!f::
 Return
 
 ; Game mode
-VK07::
-	KeyWait, VK07
-	KeyWait, Joy1, D T0.5
-	if(!ErrorLevel){
-		joysticAsMouseSwitch := !joysticAsMouseSwitch
-		if(joysticAsMouseSwitch){
+JoystickAsMouseEnable:
+	if(flipJoystickSwitch){
+		joystickAsMouseSwitch := !joystickAsMouseSwitch
+		if(joystickAsMouseSwitch){
 			SetTimer, WatchPOV, On
 			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
 			GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 			IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
 				SetTimer, MouseWheel, On
 			SetTimer, joyButtons, On
+			ToolTip, Joystick as Mouse enabled
+			Goto, smoothTooltip
 		}else{
 			SetTimer, WatchPOV, Off
 			SetTimer, WatchJoystick, Off
 			SetTimer, MouseWheel, Off
 			SetTimer, joyButtons, Off
+			ToolTip, Joystick as Mouse disabled
+			Goto, smoothTooltip
 		}
-	}else{
-		Suspend, Off
-		Gui, Destroy
-		Gui +AlwaysOnTop -0x30000
-		Gui, Add, DropDownList, vGameChoice Choose1, General|Emulation|Close
-		Gui, Add, Button, gGameChoose, Choose
-		Gui, Show, , Games
 	}
 Return
+Joy7::
+	flipJoystickSwitch := 0
+	While(GetKeyState("Joy8", "P")){
+		if(!GetKeyState("Joy7", "P"))
+			flipJoystickSwitch := 1
+	}
+
+	Goto, JoystickAsMouseEnable
+Return
+Joy8::
+	flipJoystickSwitch := 0
+	While(GetKeyState("Joy7", "P")){
+		if(!GetKeyState("Joy8", "P"))
+			flipJoystickSwitch := 1
+	}
+
+	Goto, JoystickAsMouseEnable
+Return
+VK07::	
 $>!g::
 $<^>!g::
 	Suspend, Off
@@ -781,9 +810,9 @@ GameChoose:
 		if(!ProcessExist("vivaldi.exe")){
 			Run, "D:\Program Files\Vivaldi\Application\vivaldi.exe"
 		}
-		if(!ProcessExist("WhatsApp.exe")){
-			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
-		}
+;		if(!ProcessExist("WhatsApp.exe")){
+;			Run, C:\Users\Bruno\AppData\Local\WhatsApp\WhatsApp.exe
+;		}
 ;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Restart explorer.bat"
 
 		Process, Close, NVIDIA RTX Voice.exe
@@ -2334,6 +2363,10 @@ Return
 		KeyWait, XButton2
 		Send, {Right Up}
 	Return
+
+	$Joy5:: Send, ^{F1}
+	$Joy6:: Send, ^{F2}
+
 
 #IfWinActive, ahk_exe MusicBee.exe
 	$^!Up::
