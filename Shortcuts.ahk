@@ -789,7 +789,7 @@ GameChoose:
 		}
 
 		SetTimer, yesNo, 50
-		MsgBox, 0x1001, Yes || No, Do you want to open Discord and RTX Voice?
+		MsgBox, 0x1101, Yes || No, Do you want to open Discord and RTX Voice?
 		IfMsgBox, OK
 		{
 			Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
