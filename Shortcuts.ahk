@@ -519,6 +519,13 @@ joyButtons:
 		}
 		KeyWait, Joy4
 	}
+
+	JoyZ := GetKeyState("JoyZ")
+	if(JoyZ > 55){
+		Send, {Enter}
+		While(JoyZ > 55){
+		}
+	}
 	SetTimer, joyButtons, On
 Return
 
