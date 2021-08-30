@@ -8,7 +8,7 @@
 #UseHook, On
 #InstallMouseHook
 
-ListLines, On
+ListLines, Off
 Process, Priority, , A
 SetBatchLines, -1
 SetKeyDelay, 0, 0
@@ -82,8 +82,6 @@ SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
 SetTimer, joyButtons, 10
 
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
-IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
-	SetTimer, MouseWheel, %WheelDelay%
 
 joystickAsMouseSwitch := 1
 	;VARIABLES AND FUNCTIONS
@@ -201,8 +199,8 @@ programRoutine:
 
 	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
 		SetTimer, WatchJoystick, Off
-		SetTimer, MouseWheel, Off
 		SetTimer, joyButtons, Off
+		flipJoystickSwitch := 0
 
 		WinActivate, Games
 		WinActivate, Resolution
@@ -309,7 +307,7 @@ stores:
 	SetTimer, stores, Off 
 	WinActivate 
 	ControlSetText, Button1, &GOG
-	ControlSetText, Button2, &EGS
+	ControlSetText, Button2, &Steam
 return
 closeClass:
 	IfWinNotExist, Close Class
@@ -425,38 +423,32 @@ WatchPOV:
 	if KeyToHoldDownPOV   ; There is a key to press down.
 	    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
 Return
-WatchJoystick:
-	JoyZ := GetKeyState("JoyZ")
-	if(JoyZ < 45){
-		JoyMultiplier := 0.10
-	}else{
-		JoyMultiplier := 0.50
-	}
+joystickAsMouse:
 	MouseNeedsToBeMoved := false  ; Set default.
 	SetFormat, float, 03
-	GetKeyState, JoyX, %JoystickNumber%JoyX
-	GetKeyState, JoyY, %JoystickNumber%JoyY
-	if JoyX > %JoyThresholdUpper%
+	GetKeyState, JoyU, %JoystickNumber%JoyU
+	GetKeyState, JoyR, %JoystickNumber%JoyR
+	if JoyU > %JoyThresholdUpper%
 	{
 		MouseNeedsToBeMoved := true
-		DeltaX := JoyX - JoyThresholdUpper
+		DeltaX := JoyU - JoyThresholdUpper
 	}
-	else if JoyX < %JoyThresholdLower%
+	else if JoyU < %JoyThresholdLower%
 	{
 		MouseNeedsToBeMoved := true
-		DeltaX := JoyX - JoyThresholdLower
+		DeltaX := JoyU - JoyThresholdLower
 	}
 	else
 		DeltaX = 0
-	if JoyY > %JoyThresholdUpper%
+	if JoyR > %JoyThresholdUpper%
 	{
 		MouseNeedsToBeMoved := true
-		DeltaY := JoyY - JoyThresholdUpper
+		DeltaY := JoyR - JoyThresholdUpper
 	}
-	else if JoyY < %JoyThresholdLower%
+	else if JoyR < %JoyThresholdLower%
 	{
 		MouseNeedsToBeMoved := true
-		DeltaY := JoyY - JoyThresholdLower
+		DeltaY := JoyR - JoyThresholdLower
 	}
 	else
 		DeltaY = 0
@@ -465,15 +457,20 @@ WatchJoystick:
 		SetMouseDelay, -1  ; Makes movement smoother.
 		MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
 	}
-return
-MouseWheel:
-	JoyR := GetKeyState("JoyR")
-	if(JoyR = ""){
+Return
+WatchJoystick:
+	JoyZ := GetKeyState("JoyZ")
+	if(JoyZ = ""){
 		Reload
-	}
-	if(JoyR = 50)  ; No angle.
-		return
-	while(GetKeyState("JoyR") > 55 || GetKeyState("JoyR") < 45){
+	}else if(JoyZ < 45){
+		JoyMultiplier := 0.10
+		Gosub, joystickAsMouse
+	}else if (JoyZ >= 45 && JoyZ <= 55){
+		JoyMultiplier := 0.50
+		Gosub, joystickAsMouse
+	}else if(JoyZ > 55){
+		JoyR := GetKeyState("JoyR")
+
 		if(JoyR <= 45)
 			Send {WheelUp}
 		else if(JoyR >= 55)
@@ -483,8 +480,7 @@ MouseWheel:
 	}
 return
 joyButtons:
-	SetTimer, joyButtons, Off
-	if GetKeyState("Joy1", "P"){
+	if GetKeyState("Joy1", "P") && !(WinActive("Delete File") || WinActive("Delete Folder")){
 		Send, {LButton Down}
 		KeyWait, Joy1
 		Send, {LButton Up}
@@ -508,25 +504,29 @@ joyButtons:
 	}
 	if GetKeyState("Joy4", "P"){
 		if(WinActive("ahk_exe vivaldi.exe")){
-			Send, ^{w Down}
-			Send, ^{w Up}
+			Send, ^{w}
 		}else if(WinActive("ahk_exe explorer.exe")){
-			Send, +{Delete Down}
-			Send, +{Delete Up}
+			Send, +{Delete}
 		}else if(WinActive("ahk_exe MusicBee.exe")){
-			Send, +{Delete Down}
-			Send, +{Delete Up}
+			Send, +{Delete}
+		}else if(WinActive("ahk_exe mpc-hc64.exe")){
+			Send, !{F4}
 		}
 		KeyWait, Joy4
 	}
 
-	JoyZ := GetKeyState("JoyZ")
-	if(JoyZ > 55){
-		Send, {Enter}
-		While(JoyZ > 55){
+	if(GetKeyState("Joy7", "P")){
+		while(GetKeyState("Joy7", "P")){
+			if(GetKeyState("Joy5", "P")){
+				Gosub, turnOnOffLights
+				KeyWait, Joy5
+			}
+			if(GetKeyState("Joy6", "P")){
+				Gosub, fxSoundChangeOutput
+				KeyWait, Joy6
+			}
 		}
 	}
-	SetTimer, joyButtons, On
 Return
 
 MouseIsOver(WinTitle){
@@ -700,15 +700,12 @@ JoystickAsMouseEnable:
 			SetTimer, WatchPOV, On
 			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
 			GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
-			IfInString, JoyInfo, P  ; Joystick has POV control, so use it as a mouse wheel.
-				SetTimer, MouseWheel, On
 			SetTimer, joyButtons, On
 			ToolTip, Joystick as Mouse enabled
 			Goto, smoothTooltip
 		}else{
 			SetTimer, WatchPOV, Off
 			SetTimer, WatchJoystick, Off
-			SetTimer, MouseWheel, Off
 			SetTimer, joyButtons, Off
 			ToolTip, Joystick as Mouse disabled
 			Goto, smoothTooltip
@@ -750,8 +747,17 @@ GameChoose:
 		Send, ^{F23}
 		Sleep, 50
 		Gui, Destroy
-		
-		Run, steam://rungameid/14209988591219638272 ; GOG 2.0
+
+		SetTimer, stores, 50
+		MsgBox, 0x1003, Stores, Which Store?
+		IfMsgBox, Yes
+		{
+			Run, steam://rungameid/14209988591219638272 ; GOG 2.0
+		}
+		IfMsgBox, No
+		{
+			Run, "C:\Users\Bruno\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Big Picture.lnk"
+		}
 
 		SetTimer, resolution, 50
 		MsgBox, 0x1003, Resolution, Which resolution?
@@ -824,7 +830,7 @@ GameChoose:
 
 		Process, Close, NVIDIA RTX Voice.exe
 		Process, Close, GalaxyClient.exe
-;		Process, Close, EpicGamesLauncher.exe
+		Process, Close, EpicGamesLauncher.exe
 		Process, Close, Discord.exe
 		Process, Close, retroarch.exe
 		Process, Close, citra-qt.exe
@@ -846,6 +852,16 @@ GameChoose:
 			WinWaitActive, ahk_class vguiPopupWindow, , 1.5, Steam Login
 			Send, !{F4}
 			fallGuys := 0
+		}
+
+		if(WinExist("ahk_class CUIEngineWin32")){
+			WinActivate, ahk_class CUIEngineWin32
+			WinWaitActive, ahk_class CUIEngineWin32
+			Send, !{Enter}
+			WinWait, ahk_class vguiPopupWindow
+			WinActivate, ahk_class vguiPopupWindow
+			WinWaitActive, ahk_class vguiPopupWindow
+			Send, !{F4}
 		}
 
 		if(resChange){
@@ -929,8 +945,7 @@ lightButtons:
 	ControlSetText, Button1, &Ligar
 	ControlSetText, Button2, &Desligar
 return
-$>!l::
-$<^>!l::
+turnOnOffLights:
 	Suspend, Off
 	SetTimer, lightButtons, 50
 	MsgBox, 0x1003, Lights, What do you want to do with the lights?
@@ -944,6 +959,10 @@ $<^>!l::
 		Run, D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Lights\Off.vbs
 		MsgBox, 0x1000, Button pressed, Turning the light off., 1
 	}
+Return
+$>!l::
+$<^>!l::
+	Goto, turnOnOffLights
 Return
 
 ; MusicBee
@@ -1268,7 +1287,7 @@ $F3::
 	}
 Return
 
-F12::
+fxSoundChangeOutput:
 	WinGetActiveTitle, activeWindow
 	Send, #{m}
 	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
@@ -1335,6 +1354,9 @@ F12::
 	CoordMode, Mouse, Relative
 	CoordMode, Pixel, Relative
 	WinActivate, %activeWindow%
+Return
+F12::
+	Goto, fxSoundChangeOutput
 Return
 
 $<!Tab::
@@ -1607,7 +1629,13 @@ Return
 		WinWaitActive, Yes || No
 		Send, {Right}
 	Return
-
+#If WinActive("Delete File") || WinActive("Delete Folder")
+	$Joy1::
+		Send, {Enter}
+	Return
+	$Joy2::
+		Send, {Esc}
+	Return
 #IfWinActive, Games
 	$Joy1::
 	$Enter::
@@ -1627,7 +1655,19 @@ Return
 	$Esc::
 		Gui, Destroy
 	Return
+#IfWinActive, Stores
+	$Joy1::
+		Send, {Enter}
+	Return
+	$Joy2::
+	$Esc::
+		Gui, Destroy
+	Return
 #IfWinActive, Lights
+	Joy1::
+		Send, {Enter}
+	Return
+
 	$k::
 		WinClose, Lights
 		Run, D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Lights\Off.vbs
@@ -2371,8 +2411,14 @@ Return
 		Send, {Right Up}
 	Return
 
-	$Joy5:: Send, ^{F1}
-	$Joy6:: Send, ^{F2}
+	$Joy5::
+		if(!GetKeyState("Joy7", "P"))
+			Send, ^{F1}
+	Return
+	$Joy6::
+		if(!GetKeyState("Joy7", "P"))
+			Send, ^{F2}
+	Return
 
 
 #IfWinActive, ahk_exe MusicBee.exe
