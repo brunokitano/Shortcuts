@@ -1985,11 +1985,11 @@ actionOnYt:
 		}
 
 		resFix(0, 300, 250, 500)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
-		if(!ErrorLevel){
-			resFix(90, 160)
-			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
-		}
+;		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
+;		if(!ErrorLevel){
+;			resFix(90, 160)
+;			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+;		}
 
 		resFix(1750, 120, 1810, 160)
 		PixelSearch, ytColorX, ytColorY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xCC0000, 20, Fast RGB
@@ -2055,11 +2055,11 @@ Return
 				}
 
 				resFix(0, 300, 250, 500)
-				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
-				if(!ErrorLevel){
-					resFix(90, 160)
-					ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
-				}
+;				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
+;				if(!ErrorLevel){
+;					resFix(90, 160)
+;					ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+;				}
 				MouseMove, %mouseX%, %mouseY%, 0
 			}else if(!(!ytUrl1 || !ytUrl2) && !firstTab){
 				Send, ^{l}
@@ -2232,11 +2232,11 @@ Return
 			}
 
 			resFix(0, 300, 250, 500)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
-			if(!ErrorLevel){
-				resFix(90, 160)
-				ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
-			}
+;			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\YTHistory%A_ScreenHeight%.png
+;			if(!ErrorLevel){
+;				resFix(90, 160)
+;				ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; left icons
+;			}
 			MouseMove, %mouseX%, %mouseY%, 0
 		}
 		if((!(!ytUrl1 || !ytUrl2)) && !firstTab){
