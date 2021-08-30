@@ -424,74 +424,38 @@ WatchPOV:
 	    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
 Return
 joystickAsMouse:
-	if(GetKeyState("Joy1", "P") || GetKeyState("Joy3", "P")){
-		MouseNeedsToBeMoved := false  ; Set default.
-		SetFormat, float, 03
-		GetKeyState, JoyX, %JoystickNumber%JoyX
-		GetKeyState, JoyY, %JoystickNumber%JoyY
-		if JoyX > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyX - JoyThresholdUpper
-		}
-		else if JoyX < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyX - JoyThresholdLower
-		}
-		else
-			DeltaX = 0
-		if JoyY > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyY - JoyThresholdUpper
-		}
-		else if JoyY < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyY - JoyThresholdLower
-		}
-		else
-			DeltaY = 0
-		if MouseNeedsToBeMoved
-		{
-			SetMouseDelay, -1  ; Makes movement smoother.
-			MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
-		}
-	}else{
-		MouseNeedsToBeMoved := false  ; Set default.
-		SetFormat, float, 03
-		GetKeyState, JoyU, %JoystickNumber%JoyU
-		GetKeyState, JoyR, %JoystickNumber%JoyR
-		if JoyU > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyU - JoyThresholdUpper
-		}
-		else if JoyU < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyU - JoyThresholdLower
-		}
-		else
-			DeltaX = 0
-		if JoyR > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyR - JoyThresholdUpper
-		}
-		else if JoyR < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyR - JoyThresholdLower
-		}
-		else
-			DeltaY = 0
-		if MouseNeedsToBeMoved
-		{
-			SetMouseDelay, -1  ; Makes movement smoother.
-			MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
-		}
+	MouseNeedsToBeMoved := false  ; Set default.
+	SetFormat, float, 03
+	GetKeyState, JoyU, %JoystickNumber%JoyU
+	GetKeyState, JoyR, %JoystickNumber%JoyR
+	if JoyU > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyU - JoyThresholdUpper
+	}
+	else if JoyU < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyU - JoyThresholdLower
+	}
+	else
+		DeltaX = 0
+	if JoyR > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyR - JoyThresholdUpper
+	}
+	else if JoyR < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyR - JoyThresholdLower
+	}
+	else
+		DeltaY = 0
+	if MouseNeedsToBeMoved
+	{
+		SetMouseDelay, -1  ; Makes movement smoother.
+		MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
 	}
 Return
 WatchJoystick:
@@ -516,7 +480,7 @@ WatchJoystick:
 	}
 return
 joyButtons:
-	if GetKeyState("Joy1", "P") && !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items")){
+	if GetKeyState("Joy1", "P") && !(WinActive("Delete File") || WinActive("Delete Folder")){
 		Send, {LButton Down}
 		KeyWait, Joy1
 		Send, {LButton Up}
@@ -1665,7 +1629,7 @@ Return
 		WinWaitActive, Yes || No
 		Send, {Right}
 	Return
-#If WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items")
+#If WinActive("Delete File") || WinActive("Delete Folder")
 	$Joy1::
 		Send, {Enter}
 	Return
