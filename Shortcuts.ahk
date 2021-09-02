@@ -50,7 +50,7 @@ if(joy_name = "")
 	SetTimer, checkController, 500
 
 gotActivated := 0
-SetTimer, programRoutine, 300
+SetTimer, programRoutine, 100
 
 joystickSwitch := 0
 SetTimer, WatchPOVandStick, 20
@@ -197,10 +197,15 @@ programRoutine:
 
 	WinGetTitle, winTitle, A
 
-	if(WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No") || WinExist("Emulators")){
+	if(WinActive("ahk_exe AutoHotkey.exe") && (WinExist("Games") || WinExist("Resolution") || WinExist("Yes || No")
+		|| WinExist("Emulators") || WinExist("Stores"))){
+
+		SetTimer, WatchPOV, Off
 		SetTimer, WatchJoystick, Off
 		SetTimer, joyButtons, Off
 		flipJoystickSwitch := 0
+
+		Gosub, WatchPOV
 
 		WinActivate, Games
 		WinActivate, Resolution
@@ -334,7 +339,9 @@ showMessage:
 Return
 
 WatchPOVandStick:
-	if(WinActive("Games") || WinActive("Resolution") || WinActive("Yes || No") || WinActive("Emulators")){
+	if(WinActive("ahk_exe AutoHotkey.exe") && (WinActive("Games") || WinActive("Resolution")
+		|| WinActive("Yes || No") || WinActive("Emulators"))){
+		
 		joystickSwitch := !joystickSwitch
 
 		if(joystickSwitch){		
@@ -424,74 +431,71 @@ WatchPOV:
 	    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
 Return
 joystickAsMouse:
-	if(GetKeyState("Joy1", "P") || GetKeyState("Joy3", "P")){
-		MouseNeedsToBeMoved := false  ; Set default.
-		SetFormat, float, 03
-		GetKeyState, JoyX, %JoystickNumber%JoyX
-		GetKeyState, JoyY, %JoystickNumber%JoyY
-		if JoyX > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyX - JoyThresholdUpper
-		}
-		else if JoyX < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyX - JoyThresholdLower
-		}
-		else
-			DeltaX = 0
-		if JoyY > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyY - JoyThresholdUpper
-		}
-		else if JoyY < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyY - JoyThresholdLower
-		}
-		else
-			DeltaY = 0
-		if MouseNeedsToBeMoved
-		{
-			SetMouseDelay, -1  ; Makes movement smoother.
-			MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
-		}
-	}else{
-		MouseNeedsToBeMoved := false  ; Set default.
-		SetFormat, float, 03
-		GetKeyState, JoyU, %JoystickNumber%JoyU
-		GetKeyState, JoyR, %JoystickNumber%JoyR
-		if JoyU > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyU - JoyThresholdUpper
-		}
-		else if JoyU < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaX := JoyU - JoyThresholdLower
-		}
-		else
-			DeltaX = 0
-		if JoyR > %JoyThresholdUpper%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyR - JoyThresholdUpper
-		}
-		else if JoyR < %JoyThresholdLower%
-		{
-			MouseNeedsToBeMoved := true
-			DeltaY := JoyR - JoyThresholdLower
-		}
-		else
-			DeltaY = 0
-		if MouseNeedsToBeMoved
-		{
-			SetMouseDelay, -1  ; Makes movement smoother.
-			MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
-		}
+	MouseNeedsToBeMoved := false  ; Set default.
+	SetFormat, float, 03
+	GetKeyState, JoyX, %JoystickNumber%JoyX
+	GetKeyState, JoyY, %JoystickNumber%JoyY
+	if JoyX > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyX - JoyThresholdUpper
+	}
+	else if JoyX < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyX - JoyThresholdLower
+	}
+	else
+		DeltaX = 0
+	if JoyY > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyY - JoyThresholdUpper
+	}
+	else if JoyY < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyY - JoyThresholdLower
+	}
+	else
+		DeltaY = 0
+	if MouseNeedsToBeMoved
+	{
+		SetMouseDelay, -1  ; Makes movement smoother.
+		MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
+	}
+	MouseNeedsToBeMoved := false  ; Set default.
+	SetFormat, float, 03
+	GetKeyState, JoyU, %JoystickNumber%JoyU
+	GetKeyState, JoyR, %JoystickNumber%JoyR
+	if JoyU > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyU - JoyThresholdUpper
+	}
+	else if JoyU < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaX := JoyU - JoyThresholdLower
+	}
+	else
+		DeltaX = 0
+	if JoyR > %JoyThresholdUpper%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyR - JoyThresholdUpper
+	}
+	else if JoyR < %JoyThresholdLower%
+	{
+		MouseNeedsToBeMoved := true
+		DeltaY := JoyR - JoyThresholdLower
+	}
+	else
+		DeltaY = 0
+	if MouseNeedsToBeMoved
+	{
+		SetMouseDelay, -1  ; Makes movement smoother.
+		MouseMove, DeltaX * JoyMultiplier, DeltaY * JoyMultiplier * YAxisMultiplier, 0, R
 	}
 Return
 WatchJoystick:
@@ -511,26 +515,23 @@ WatchJoystick:
 			Send {WheelUp}
 		else if(JoyR >= 55)
 			Send {WheelDown}
-		
+
+		JoyY := GetKeyState("JoyY")
+
+		if(JoyY <= 45)
+			Send {WheelUp}
+		else if(JoyY >= 55)
+			Send {WheelDown}
+
 		Sleep, 50
 	}
 return
 joyButtons:
-	if GetKeyState("Joy1", "P") && !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items")){
-		Send, {LButton Down}
-		KeyWait, Joy1
-		Send, {LButton Up}
-		Gosub, lbActions
-	}
-	if GetKeyState("Joy2", "P"){
-		Send, {RButton Down}
-		KeyWait, Joy2
-		Send, {RButton Up}
-	}
-	if GetKeyState("Joy3", "P"){
+	SetTimer, joyButtons, Off
+	if GetKeyState("Joy3"){
 		Send, {LControl Down}
-		while(GetKeyState("Joy3", "P")){
-			if(GetKeyState("Joy1", "P")){
+		while(GetKeyState("Joy3")){
+			if(GetKeyState("Joy1")){
 				Send, {LButton Down}
 				KeyWait, Joy1
 				Send, {LButton Up}
@@ -538,7 +539,18 @@ joyButtons:
 		}
 		Send, {LControl Up}
 	}
-	if GetKeyState("Joy4", "P"){
+	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items"))){
+		Send, {LButton Down}
+		KeyWait, Joy1
+		Send, {LButton Up}
+		Gosub, lbActions
+	}
+	if GetKeyState("Joy2"){
+		Send, {RButton Down}
+		KeyWait, Joy2
+		Send, {RButton Up}
+	}
+	if GetKeyState("Joy4"){
 		if(WinActive("ahk_exe vivaldi.exe")){
 			Send, ^{w}
 		}else if(WinActive("ahk_exe explorer.exe")){
@@ -551,18 +563,19 @@ joyButtons:
 		KeyWait, Joy4
 	}
 
-	if(GetKeyState("Joy7", "P")){
-		while(GetKeyState("Joy7", "P")){
-			if(GetKeyState("Joy5", "P")){
+	if(GetKeyState("Joy7")){
+		while(GetKeyState("Joy7")){
+			if(GetKeyState("Joy5")){
 				Gosub, turnOnOffLights
 				KeyWait, Joy5
 			}
-			if(GetKeyState("Joy6", "P")){
+			if(GetKeyState("Joy6")){
 				Gosub, fxSoundChangeOutput
 				KeyWait, Joy6
 			}
 		}
 	}
+	SetTimer, joyButtons, On
 Return
 
 MouseIsOver(WinTitle){
@@ -735,7 +748,6 @@ JoystickAsMouseEnable:
 		if(joystickAsMouseSwitch){
 			SetTimer, WatchPOV, On
 			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
-			GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 			SetTimer, joyButtons, On
 			ToolTip, Joystick as Mouse enabled
 			Goto, smoothTooltip
@@ -892,18 +904,11 @@ GameChoose:
 
 		if(WinExist("ahk_class CUIEngineWin32")){
 			WinActivate, ahk_class CUIEngineWin32
-			WinWaitActive, ahk_class CUIEngineWin32
+			WinWaitActive, ahk_class CUIEngineWin32, , 2
 			Send, !{Enter}
-			WinWait, ahk_class vguiPopupWindow
-			WinActivate, ahk_class vguiPopupWindow
-			WinWaitActive, ahk_class vguiPopupWindow
-			Send, !{F4}
 		}
 
-		if(resChange){
-			Sleep, 5000
-			Reload
-		}
+		Reload
 	Gui, Destroy
 	}
 
@@ -2450,10 +2455,12 @@ Return
 	$Joy5::
 		if(!GetKeyState("Joy7", "P"))
 			Send, ^{F1}
+		KeyWait, Joy5
 	Return
 	$Joy6::
 		if(!GetKeyState("Joy7", "P"))
 			Send, ^{F2}
+		KeyWait, Joy6
 	Return
 
 
