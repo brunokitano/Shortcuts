@@ -528,7 +528,20 @@ WatchJoystick:
 return
 joyButtons:
 	SetTimer, joyButtons, Off
-	if GetKeyState("Joy3"){
+	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !GetKeyState("Joy7") 
+		&& !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items"))){
+
+		Send, {LButton Down}
+		KeyWait, Joy1
+		Send, {LButton Up}
+		Gosub, lbActions
+	}
+	if(GetKeyState("Joy2") && !GetKeyState("Joy7")){
+		Send, {RButton Down}
+		KeyWait, Joy2
+		Send, {RButton Up}
+	}
+	if(GetKeyState("Joy3") && !GetKeyState("Joy7")){
 		Send, {LControl Down}
 		while(GetKeyState("Joy3")){
 			if(GetKeyState("Joy1")){
@@ -539,18 +552,7 @@ joyButtons:
 		}
 		Send, {LControl Up}
 	}
-	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items"))){
-		Send, {LButton Down}
-		KeyWait, Joy1
-		Send, {LButton Up}
-		Gosub, lbActions
-	}
-	if GetKeyState("Joy2"){
-		Send, {RButton Down}
-		KeyWait, Joy2
-		Send, {RButton Up}
-	}
-	if GetKeyState("Joy4"){
+	if(GetKeyState("Joy4") && !GetKeyState("Joy7")){
 		if(WinActive("ahk_exe vivaldi.exe")){
 			Send, ^{w}
 		}else if(WinActive("ahk_exe explorer.exe")){
@@ -565,6 +567,23 @@ joyButtons:
 
 	if(GetKeyState("Joy7")){
 		while(GetKeyState("Joy7")){
+			if(GetKeyState("Joy1")){
+				Send, ^!{m}
+				KeyWait, Joy1
+			}
+			if(GetKeyState("Joy2")){
+				Send, {Media_Next}
+				KeyWait, Joy2
+			}
+			if(GetKeyState("Joy3")){
+				Send, {Media_Prev}
+				KeyWait, Joy3
+			}
+			if(GetKeyState("Joy4")){
+				Send, !{Media_Play_Pause}
+				KeyWait, Joy4
+			}
+
 			if(GetKeyState("Joy5")){
 				Gosub, turnOnOffLights
 				KeyWait, Joy5
@@ -1060,10 +1079,6 @@ $<^>!b::
 	MouseClick, Left, %xValue0%, %yValue0%, 2, 0 ; Classical
 	MouseMove, %mouseX%, %mouseY%, 0
 Return
-$>!m::
-$<^>!m::
-	Gosub, musicBee
-Return
 $>!n::
 $<^>!n::
 	Gosub, musicBee
@@ -1329,72 +1344,42 @@ $F3::
 Return
 
 fxSoundChangeOutput:
-	WinGetActiveTitle, activeWindow
-	Send, #{m}
-	Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
-	WinActivate, ahk_exe FxSound.exe
-	WinWaitActive, ahk_exe FxSound.exe
-	Sleep, 600
+	MySearchTerm := "philco"
+	 
+	currentOutput := "" ; clears the var variable if it has contents
+	TheFile := "" ; clears the TheFile variable if it has contents
 
-	resFix(200, 70)
-	ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpen%A_ScreenHeight%.png
-	fxSoundOpen := ErrorLevel
-	while(fxSoundOpen){
-		Run, C:\Program Files\FxSound LLC\FxSound\FxSound.exe
-		WinActivate, ahk_exe FxSound.exe
-		Sleep, 100
-		resFix(200, 70)
-		ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpen%A_ScreenHeight%.png
-		fxSoundOpen := ErrorLevel
-		if(ErrorLevel){
-			ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundOpenPink%A_ScreenHeight%.png
-			fxSoundOpen := ErrorLevel
+	Loop, Read, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
+	{
+		If(nextline)
+		{	
+			currentOutput.=A_LoopReadLine
+			nextline:=false
+		}
+		else IfInString, A_LoopReadLine, %MySearchTerm%
+		{
+			currentOutput.=A_LoopReadLine
+			nextline:=true
 		}
 	}
 
-	CoordMode, Mouse, Screen
-	MouseGetPos, mouseX, mouseY
-	resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
-	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
-		resFix(1000, 600)
-		MouseMove, %xValue0%, %yValue0%
+	if(currentOutput = ""){ ; Realtek is the current output 
+		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Philco\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
+	}else{
+		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Realtek\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
 	}
 
-	CoordMode, Mouse, Relative
-	resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
-	ImageSearch, fxX, fxY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundRealtek%A_ScreenHeight%.png
-	if(!ErrorLevel){ ; Laptop
+	Process, Close, FxSound.exe
+	Process, WaitClose, ahk_exe FxSound.exe, 2
+
+	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
+	Sleep, 100
+
+	if(currentOutput = ""){
 		SoundSet, %lowVol%, MASTER
-		MouseClick, Left, %fxX%, %fxY%, 1, 0
-		sleepTime(300)
-		resFix(800, 200)
-		MouseClick, Left, %xValue0%, %yValue0%, 1, 0
-	}else{ ; TV
-		resFix(600, 80, 1200, 200) ; (mouseX > 600 && mouseY > 80 && mouseX < 1100 && mouseY < 200)
-		ImageSearch, fxX, fxY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundPhilco%A_ScreenHeight%.png
-		if(!ErrorLevel){
-			SoundSet, %highVol%, MASTER
-			MouseClick, Left, %fxX%, %fxY%, 1, 0
-			sleepTime(300)
-			resFix(800, 250)
-			MouseClick, Left, %xValue0%, %yValue0%, 1, 0
-		}Else{
-			MsgBox, , Error, FxSound Error, 1
-		}
+	}else{
+		SoundSet, %highVol%, MASTER
 	}
-	sleepTime(300)
-	CoordMode, Mouse, Screen
-	CoordMode, Pixel, Screen
-	resFix(1930, 1080)
-	ImageSearch, fxCloseX, fxCloseY, 0, 0, %xValue0%, %yValue0%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\FxSoundClose%A_ScreenHeight%.png
-	MouseClick, Left, % fxCloseX+8, % fxCloseY+8, 1, 0
-	Sleep, 300
-
-	ToolTip, 
-	MouseMove, %mouseX%, %mouseY%, 0
-	CoordMode, Mouse, Relative
-	CoordMode, Pixel, Relative
-	WinActivate, %activeWindow%
 Return
 F12::
 	Goto, fxSoundChangeOutput
@@ -2583,27 +2568,6 @@ Return
 		MouseClick, Left, %MBnotClassicalX%, %MBnotClassicalY%, 2, 0 ; Not Classical
 		Sleep 50
 		MouseMove, %mouseX%, %mouseY%, 0
-	Return
-
-	$>!m::
-	$<^>!m::
-		Send, #{Up}
-		Sleep, 100
-
-		MouseGetPos, mouseX, mouseY
-		resFix(400, 0, 600, 100)
-		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
-			resFix(1000, 600)
-			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
-		}
-
-		ImageSearch, , , 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\MBNowPlaying%A_ScreenHeight%.png
-		if(ErrorLevel){
-			resFix(540, 50)
-			ControlClick, x%xValue0% y%yValue0%, ahk_exe MusicBee.exe, , Left, 1
-		}else{
-			WinMinimize, ahk_class WindowsForms10.Window.8.app.0.2bf8098_r7_ad1
-		}
 	Return
 
 	$Esc::
