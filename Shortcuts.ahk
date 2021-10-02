@@ -1,4 +1,4 @@
-#SingleInstance force
+#SingleInstance Force
 #NoEnv
 ;#Warn
 #Persistent
@@ -8,7 +8,7 @@
 #UseHook, On
 #InstallMouseHook
 
-ListLines, Off
+ListLines, On
 Process, Priority, , A
 SetBatchLines, -1
 SetKeyDelay, 0, 0
@@ -45,16 +45,15 @@ prevValue := headphones
 ;SetTimer, checkHeadphones, 500
 
 JoystickNumber = 0
-GetKeyState, joy_name, 1JoyName
-if(joy_name = "")
-	SetTimer, checkController, 500
+GetKeyState, JoyR, JoyR
+if(JoyR = "")
+	SetTimer, checkController, 300
 
 gotActivated := 0
-SetTimer, programRoutine, 100
+SetTimer, programRoutine, 50
 
 joystickSwitch := 0
 SetTimer, WatchPOVandStick, 20
-
 resChange := 0
 
 ; Sound output
@@ -203,7 +202,7 @@ programRoutine:
 		SetTimer, WatchPOV, Off
 		SetTimer, WatchJoystick, Off
 		SetTimer, joyButtons, Off
-		flipJoystickSwitch := 0
+		joystickAsMouseSwitch := 0
 
 		Gosub, WatchPOV
 
@@ -500,9 +499,7 @@ joystickAsMouse:
 Return
 WatchJoystick:
 	JoyZ := GetKeyState("JoyZ")
-	if(JoyZ = ""){
-		Reload
-	}else if(JoyZ < 45){
+	if(JoyZ < 45){
 		JoyMultiplier := 0.10
 		Gosub, joystickAsMouse
 	}else if (JoyZ >= 45 && JoyZ <= 55){
@@ -528,7 +525,7 @@ WatchJoystick:
 return
 joyButtons:
 	SetTimer, joyButtons, Off
-	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !GetKeyState("Joy7") 
+	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !(GetKeyState("Joy7")) 
 		&& !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items"))){
 
 		Send, {LButton Down}
@@ -536,12 +533,12 @@ joyButtons:
 		Send, {LButton Up}
 		Gosub, lbActions
 	}
-	if(GetKeyState("Joy2") && !GetKeyState("Joy7")){
+	if(GetKeyState("Joy2") && !(GetKeyState("Joy7"))){
 		Send, {RButton Down}
 		KeyWait, Joy2
 		Send, {RButton Up}
 	}
-	if(GetKeyState("Joy3") && !GetKeyState("Joy7")){
+	if(GetKeyState("Joy3") && !(GetKeyState("Joy7"))){
 		Send, {LControl Down}
 		while(GetKeyState("Joy3")){
 			if(GetKeyState("Joy1")){
@@ -552,7 +549,7 @@ joyButtons:
 		}
 		Send, {LControl Up}
 	}
-	if(GetKeyState("Joy4") && !GetKeyState("Joy7")){
+	if(GetKeyState("Joy4") && !(GetKeyState("Joy7"))){
 		if(WinActive("ahk_exe vivaldi.exe")){
 			Send, ^{w}
 		}else if(WinActive("ahk_exe explorer.exe")){
@@ -585,6 +582,21 @@ joyButtons:
 			}
 
 			if(GetKeyState("Joy5")){
+				Send, {LAlt Down}
+				Send, +{Tab}
+				KeyWait, Joy5
+			}
+			if(GetKeyState("Joy6")){
+				Send, {LAlt Down}
+				Send, {Tab}
+				KeyWait, Joy6
+			}
+		}
+		Send, {LAlt Up}
+	}
+	if(GetKeyState("Joy8")){
+		while(GetKeyState("Joy8")){
+			if(GetKeyState("Joy5")){
 				Gosub, turnOnOffLights
 				KeyWait, Joy5
 			}
@@ -594,6 +606,11 @@ joyButtons:
 			}
 		}
 	}
+	if(GetKeyState("Joy9")){
+		Send, {F5}
+		KeyWait, Joy9
+	}
+
 	SetTimer, joyButtons, On
 Return
 
@@ -763,7 +780,6 @@ Return
 ; Game mode
 JoystickAsMouseEnable:
 	if(flipJoystickSwitch){
-		joystickAsMouseSwitch := !joystickAsMouseSwitch
 		if(joystickAsMouseSwitch){
 			SetTimer, WatchPOV, On
 			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
@@ -778,11 +794,12 @@ JoystickAsMouseEnable:
 			Goto, smoothTooltip
 		}
 	}
+	joystickAsMouseSwitch := !joystickAsMouseSwitch
 Return
 Joy7::
 	flipJoystickSwitch := 0
 	While(GetKeyState("Joy8", "P")){
-		if(!GetKeyState("Joy7", "P"))
+		if(!(GetKeyState("Joy7", "P")))
 			flipJoystickSwitch := 1
 	}
 
@@ -791,7 +808,7 @@ Return
 Joy8::
 	flipJoystickSwitch := 0
 	While(GetKeyState("Joy7", "P")){
-		if(!GetKeyState("Joy8", "P"))
+		if(!(GetKeyState("Joy8", "P")))
 			flipJoystickSwitch := 1
 	}
 
@@ -1344,6 +1361,8 @@ $F3::
 Return
 
 fxSoundChangeOutput:
+	Process, Close, FxSound.exe
+	
 	MySearchTerm := "philco"
 	 
 	currentOutput := "" ; clears the var variable if it has contents
@@ -1369,17 +1388,7 @@ fxSoundChangeOutput:
 		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Realtek\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
 	}
 
-	Process, Close, FxSound.exe
-	Process, WaitClose, ahk_exe FxSound.exe, 2
-
 	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
-	Sleep, 100
-
-	if(currentOutput = ""){
-		SoundSet, %lowVol%, MASTER
-	}else{
-		SoundSet, %highVol%, MASTER
-	}
 Return
 F12::
 	Goto, fxSoundChangeOutput
@@ -2438,12 +2447,12 @@ Return
 	Return
 
 	$Joy5::
-		if(!GetKeyState("Joy7", "P"))
+		if(!(GetKeyState("Joy7", "P")) && !(GetKeyState("Joy8")))
 			Send, ^{F1}
 		KeyWait, Joy5
 	Return
 	$Joy6::
-		if(!GetKeyState("Joy7", "P"))
+		if(!(GetKeyState("Joy7", "P")) && !(GetKeyState("Joy8")))
 			Send, ^{F2}
 		KeyWait, Joy6
 	Return
