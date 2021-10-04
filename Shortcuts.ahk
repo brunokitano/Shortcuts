@@ -610,6 +610,10 @@ joyButtons:
 		Send, {F5}
 		KeyWait, Joy9
 	}
+	if(GetKeyState("Joy10")){
+		Send, !{r}
+		KeyWait, Joy9
+	}
 
 	SetTimer, joyButtons, On
 Return
@@ -1935,6 +1939,13 @@ Return
 	$^0::
 		ControlClick, x110 y560, , , Left, 1
 		Send, {Enter}
+	Return
+
+	$Joy5::
+		Send, !{Left}
+	Return
+	$Joy6::
+		Send, !{Right}
 	Return
 
 ; Vivaldi
