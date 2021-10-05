@@ -606,13 +606,13 @@ joyButtons:
 			}
 		}
 	}
-	if(GetKeyState("Joy9")){
+	if(GetKeyState("Joy9") && !(GetKeyState("Joy7"))){
 		Send, {F5}
 		KeyWait, Joy9
 	}
-	if(GetKeyState("Joy10")){
+	if(GetKeyState("Joy10") && !(GetKeyState("Joy7"))){
 		Send, !{r}
-		KeyWait, Joy9
+		KeyWait, Joy10
 	}
 
 	SetTimer, joyButtons, On
@@ -1942,10 +1942,12 @@ Return
 	Return
 
 	$Joy5::
-		Send, !{Left}
+		if(!(GetKeyState("Joy7")))
+			Send, !{Left}
 	Return
 	$Joy6::
-		Send, !{Right}
+		if(!(GetKeyState("Joy7")))
+			Send, !{Right}
 	Return
 
 ; Vivaldi
