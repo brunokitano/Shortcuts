@@ -1721,7 +1721,68 @@ Return
 	Return
 
 expSelect:
-	
+	MouseGetPos, mouseX, mouseY
+	if(goingDown){
+		if(WinActive("Recycle Bin") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\desktop.png
+		}else if(WinActive("Desktop") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\pc.png
+		}else if(WinActive("This PC") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\downloads.png
+		}else if(WinActive("Downloads") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\sonarr.png
+		}else if(WinActive("D:\Users\Bruno\Videos\Sonarr") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\series.png
+		}else if(WinActive("D:\Users\Bruno\Videos\Series") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\documents.png
+		}else if(WinActive("Documents") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\media.png
+		}else if(WinActive("C:\Users\Bruno\Media") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\scripts.png
+		}else if(WinActive("D:\Users\Bruno\Documents\Scripts") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive.png
+		}else if(WinActive("D:\Users\Bruno\Google Drive") && WinActive("ahk_exe explorer.exe") && !WinActive("D:\Users\Bruno\Google Drive\Registro")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro.png
+		}else if(WinActive("D:\Users\Bruno\Google Drive\Registro") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleEmpty.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleFull.png
+		}else{
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\sonarr.png
+		}
+	}else{
+		if(WinActive("Recycle Bin") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro.png
+		}else if(WinActive("Desktop") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleEmpty.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleFull.png
+		}else if(WinActive("This PC") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\desktop.png
+		}else if(WinActive("Downloads") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\pc.png
+		}else if(WinActive("D:\Users\Bruno\Videos\Sonarr") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\downloads.png
+		}else if(WinActive("D:\Users\Bruno\Videos\Series") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\sonarr.png
+		}else if(WinActive("Documents") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\series.png
+		}else if(WinActive("C:\Users\Bruno\Media") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\documents.png
+		}else if(WinActive("D:\Users\Bruno\Documents\Scripts") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\media.png
+		}else if(WinActive("D:\Users\Bruno\Google Drive") && WinActive("ahk_exe explorer.exe") && !WinActive("D:\Users\Bruno\Google Drive\Registro")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\scripts.png
+		}else if(WinActive("D:\Users\Bruno\Google Drive\Registro") && WinActive("ahk_exe explorer.exe")){
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive.png
+		}else{
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\sonarr.png
+		}
+	}
+
+	MouseClick, Left, %expX%, %expY%, 1, 0
+	MouseMove, %mouseX%, %mouseY%
+	goingDown := 0
 Return
 #IfWinActive, ahk_exe explorer.exe
 	$^Tab::
@@ -1731,19 +1792,22 @@ Return
 	~$F2::
 	Return
 
-	$1::
-		
-	Return
-
-	$2::
-		
-	Return
-
 	$Joy5::
+	$1::
+		Gosub, expSelect
+	Return
+
+	$Joy6::
+	$2::
+		goingDown := 1
+		Gosub, expSelect
+	Return
+
+	$Joy9::
 		if(!(GetKeyState("Joy7")))
 			Send, !{Left}
 	Return
-	$Joy6::
+	$Joy10::
 		if(!(GetKeyState("Joy7")))
 			Send, !{Right}
 	Return
