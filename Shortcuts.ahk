@@ -50,7 +50,7 @@ if(JoyR = "")
 	SetTimer, checkController, 300
 
 gotActivated := 0
-SetTimer, programRoutine, 50
+SetTimer, programRoutine, 10
 
 joystickSwitch := 0
 SetTimer, WatchPOVandStick, 20
@@ -821,6 +821,7 @@ Return
 VK07::	
 $>!g::
 $<^>!g::
+	SetTimer, programRoutine, On
 	Suspend, Off
 	Gui, Destroy
 	Gui +AlwaysOnTop -0x30000
@@ -888,17 +889,14 @@ GameChoose:
 		{
 			Run, "C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice\NVIDIA RTX Voice.exe", C:\Program Files\NVIDIA Corporation\NVIDIA RTX Voice, Hide
 			Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\Discord.bat"
-			runDiscord := 1
-		}
-		
-		if(runDiscord){
 			WinWait, ahk_class RTXVoiceWindowClass
 			Sleep, 200
 			WinActivate, ahk_class RTXVoiceWindowClass
 			WinWaitActive, ahk_class RTXVoiceWindowClass, , 1.5
-			Send, !{F4}				
-			runDiscord := 0
+			Send, !{F4}	
 		}
+		SetTimer, programRoutine, Off
+		SetTimer, WatchPOVandStick, Off
 
 	Gui, Destroy
 	}
@@ -1683,6 +1681,10 @@ Return
 	$vk07::
 	$Joy2::
 	$Esc::
+		if(ProcessExist("AoTClock.exe"))
+			SetTimer, programRoutine, On
+		else
+			SetTimer, programRoutine, Off
 		Gui, Destroy
 	Return
 #IfWinActive, Emulators
