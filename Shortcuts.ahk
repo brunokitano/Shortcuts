@@ -1363,6 +1363,7 @@ $F3::
 Return
 
 fxSoundChangeOutput:
+	WinGetActiveTitle, currentActive
 	Process, Close, FxSound.exe
 	
 	MySearchTerm := "philco"
@@ -1391,6 +1392,10 @@ fxSoundChangeOutput:
 	}
 
 	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
+	WinWaitActive, ahk_exe FxSound.exe, , 5
+	Sleep, 100
+	while(!WinActive(currentActive))
+		WinActivate, %currentActive%
 Return
 F12::
 	Goto, fxSoundChangeOutput
