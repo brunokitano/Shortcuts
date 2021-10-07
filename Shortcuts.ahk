@@ -1794,13 +1794,16 @@ Return
 
 	$Joy5::
 	$1::
-		Gosub, expSelect
+		if(!(GetKeyState("Joy7")))
+			Gosub, expSelect
 	Return
 
 	$Joy6::
 	$2::
-		goingDown := 1
-		Gosub, expSelect
+		if(!(GetKeyState("Joy7"))){			
+			goingDown := 1
+			Gosub, expSelect
+		}
 	Return
 
 	$Joy9::
