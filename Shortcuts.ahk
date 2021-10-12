@@ -1362,6 +1362,9 @@ $F3::
 	}
 Return
 
+FxSoundTrayTip:
+	TrayTip, FxSound, Changing Output to %futureOutput%, 3
+Return
 fxSoundChangeOutput:
 	WinGetActiveTitle, currentActive
 	Process, Close, FxSound.exe
@@ -1387,13 +1390,16 @@ fxSoundChangeOutput:
 
 	if(currentOutput = ""){ ; Realtek is the current output 
 		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Philco\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
+		futureOutput := "TV"
 	}else{
 		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Realtek\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
+		futureOutput := "Headphone Jack"
 	}
 
+	SetTimer, FxSoundTrayTip, -1
 	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
 	WinWaitActive, ahk_exe FxSound.exe, , 5
-	Sleep, 100
+	Sleep, 300
 	while(!WinActive(currentActive))
 		WinActivate, %currentActive%
 Return
