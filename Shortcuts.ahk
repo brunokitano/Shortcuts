@@ -1398,10 +1398,6 @@ fxSoundChangeOutput:
 
 	SetTimer, FxSoundTrayTip, -1
 	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
-	WinWaitActive, ahk_exe FxSound.exe, , 5
-	Sleep, 300
-	while(!WinActive(currentActive))
-		WinActivate, %currentActive%
 Return
 F12::
 	Goto, fxSoundChangeOutput
