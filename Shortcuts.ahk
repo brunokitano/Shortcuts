@@ -1363,7 +1363,7 @@ $F3::
 Return
 
 FxSoundTrayTip:
-	TrayTip, FxSound, Changing Output to %futureOutput%, 3
+	TrayTip, FxSound, Changing Output to %futureOutput%, 2.5
 Return
 fxSoundChangeOutput:
 	WinGetActiveTitle, currentActive
