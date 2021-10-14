@@ -1337,6 +1337,32 @@ $>+;::
 Return
 
 $F1::
+	if(ProcessExist("AoTClock.exe")){
+		if(!ProcessExist("vivaldi.exe")){
+			Run, D:\Program Files\Vivaldi\Application\vivaldi.exe
+			WinWait, ahk_exe vivaldi.exe
+		}
+
+		Process, Exist, vivaldi.exe
+		vivaldiPID=%Errorlevel%
+		if(vivaldiPID){
+			WinActivate ahk_pid %vivaldiPID%
+			WinWaitActive, ahk_exe vivaldi.exe, , 1.5
+			Sleep, 10
+		}
+
+		resFix(1270, 340)
+		PixelGetColor, searchBar, %xValue0%, %yValue0%, Fast RGB
+		if(searchBar != "0x2B2B2B" || searchBar != "0x2B2C34"){
+			Send, {Esc}
+			Send, {F1}
+		}else{
+			Send, {F1}
+		}
+	}else{
+		Send, {F1}
+	}
+Return
 $F2::
 $F3::
 	if(!ProcessExist("vivaldi.exe")){
