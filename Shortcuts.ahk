@@ -53,6 +53,7 @@ gotActivated := 0
 SetTimer, programRoutine, 10
 
 joystickSwitch := 0
+sameKeys := 0
 SetTimer, WatchPOVandStick, 20
 resChange := 0
 
@@ -337,40 +338,67 @@ showMessage:
 	}
 Return
 
+povDirection:
+	POV := GetKeyState("JoyPOV")  ; Get position of the POV control.
+	KeyToHoldDownPrevPOV := KeyToHoldDownPOV  ; Prev now holds the key that was down before (if any).
+	if (POV < 0)   ; No angle to report
+		KeyToHoldDownPOV := ""
+    else if (POV > 31500)               ; 315 to 360 degrees: Forward
+		KeyToHoldDownPOV := "Up"
+	else if POV between 0 and 4500      ; 0 to 45 degrees: Forward
+		KeyToHoldDownPOV := "Up"
+	else if POV between 4501 and 13500  ; 45 to 135 degrees: Right
+		KeyToHoldDownPOV := "Right"
+	else if POV between 13501 and 22500 ; 135 to 225 degrees: Down
+		KeyToHoldDownPOV := "Down"
+	else                                ; 225 to 315 degrees: Left
+		KeyToHoldDownPOV := "Left"
+Return
+povPressandDelay:
+	while((KeyToHoldDownPOV = KeyToHoldDownPrevPOV) && !(KeyToHoldDownPOV = "" && KeyToHoldDownPrevPOV = "")){
+		Gosub, povDirection
+		
+		SetKeyDelay -1  ; Avoid delays between keystrokes.
+		if KeyToHoldDownPOV   ; There is a key to press down.
+		    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+
+		if(sameKeys = 0){
+			startTime := A_TickCount
+			runTime := 0
+			while((runTime <= 500) && (KeyToHoldDownPOV = KeyToHoldDownPrevPOV) && !(KeyToHoldDownPOV = "" && KeyToHoldDownPrevPOV = "")){
+				Gosub, povDirection
+				runTime := A_TickCount - startTime
+			}
+			sameKeys++
+		}else if(sameKeys > 0){
+			startTime := A_TickCount
+			runTime := 0
+			while((runTime <= 30) && (KeyToHoldDownPOV = KeyToHoldDownPrevPOV) && !(KeyToHoldDownPOV = "" && KeyToHoldDownPrevPOV = "")){
+				Gosub, povDirection
+				runTime := A_TickCount - startTime
+			}
+			sameKeys++
+		}
+
+		if KeyToHoldDownPrevPOV   ; There is a previous key to release.
+		    Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
+	}
+	if KeyToHoldDownPrevPOV   ; There is a previous key to release.
+		Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
+	sameKeys := 0
+Return
 WatchPOVandStick:
+	SetTimer, WatchPOVandStick, Off
+
 	if(WinActive("ahk_exe AutoHotkey.exe") && (WinActive("Games") || WinActive("Resolution")
 		|| WinActive("Yes || No") || WinActive("Emulators"))){
 		
 		joystickSwitch := !joystickSwitch
 
-		if(joystickSwitch){		
-		    POV := GetKeyState("JoyPOV")  ; Get position of the POV control.
-		    KeyToHoldDownPrevPOV := KeyToHoldDownPOV  ; Prev now holds the key that was down before (if any).
+		if(joystickSwitch){	
+		    Gosub, povDirection
 
-		    ; Some joysticks might have a smooth/continous POV rather than one in fixed increments.
-		    ; To support them all, use a range:
-		    if (POV < 0)   ; No angle to report
-		        KeyToHoldDownPOV := ""
-		    else if (POV > 31500)               ; 315 to 360 degrees: Forward
-		        KeyToHoldDownPOV := "Up"
-		    else if POV between 0 and 4500      ; 0 to 45 degrees: Forward
-		        KeyToHoldDownPOV := "Up"
-		    else if POV between 4501 and 13500  ; 45 to 135 degrees: Right
-		        KeyToHoldDownPOV := "Right"
-		    else if POV between 13501 and 22500 ; 135 to 225 degrees: Down
-		        KeyToHoldDownPOV := "Down"
-		    else                                ; 225 to 315 degrees: Left
-		        KeyToHoldDownPOV := "Left"
-
-		    if (KeyToHoldDownPOV = KeyToHoldDownPrevPOV)  ; The correct key is already down (or no key is needed).
-		        return  ; Do nothing.
-
-		    ; Otherwise, release the previous key and press down the new key:
-		    SetKeyDelay -1  ; Avoid delays between keystrokes.
-		    if KeyToHoldDownPrevPOV   ; There is a previous key to release.
-		        Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
-		    if KeyToHoldDownPOV   ; There is a key to press down.
-		        Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+		    Gosub, povPressandDelay
 		}else{
 			JoyX := GetKeyState("JoyX")  ; Get position of X axis.
 			JoyY := GetKeyState("JoyY")  ; Get position of Y axis.
@@ -398,36 +426,18 @@ WatchPOVandStick:
 			    Send, {%KeyToHoldDownStick% down}  ; Press it down.
 		}
 	}
+
+	SetTimer, WatchPOVandStick, On
 return
 
 WatchPOV:
-	POV := GetKeyState("JoyPOV")  ; Get position of the POV control.
-	KeyToHoldDownPrevPOV := KeyToHoldDownPOV  ; Prev now holds the key that was down before (if any).
+	SetTimer, WatchPOV, Off
 
-	; Some joysticks might have a smooth/continous POV rather than one in fixed increments.
-	; To support them all, use a range:
-	if (POV < 0)   ; No angle to report
-	    KeyToHoldDownPOV := ""
-	else if (POV > 31500)               ; 315 to 360 degrees: Forward
-	    KeyToHoldDownPOV := "Up"
-	else if POV between 0 and 4500      ; 0 to 45 degrees: Forward
-	    KeyToHoldDownPOV := "Up"
-	else if POV between 4501 and 13500  ; 45 to 135 degrees: Right
-	    KeyToHoldDownPOV := "Right"
-	else if POV between 13501 and 22500 ; 135 to 225 degrees: Down
-	    KeyToHoldDownPOV := "Down"
-	else                                ; 225 to 315 degrees: Left
-	    KeyToHoldDownPOV := "Left"
+	Gosub, povDirection
 
-	if (KeyToHoldDownPOV = KeyToHoldDownPrevPOV)  ; The correct key is already down (or no key is needed).
-	    return  ; Do nothing.
-
-	; Otherwise, release the previous key and press down the new key:
-	SetKeyDelay -1  ; Avoid delays between keystrokes.
-	if KeyToHoldDownPrevPOV   ; There is a previous key to release.
-	    Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
-	if KeyToHoldDownPOV   ; There is a key to press down.
-	    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+	Gosub, povPressandDelay
+	
+	SetTimer, WatchPOV, On
 Return
 joystickAsMouse:
 	MouseNeedsToBeMoved := false  ; Set default.
