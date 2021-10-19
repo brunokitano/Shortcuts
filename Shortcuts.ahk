@@ -1724,10 +1724,14 @@ Return
 	$vk07::
 	$Joy2::
 	$Esc::
-		if(ProcessExist("AoTClock.exe"))
+		if(ProcessExist("AoTClock.exe")){
 			SetTimer, programRoutine, On
-		else
+			SetTimer, WatchPOV, On
+			SetTimer, WatchJoystick, On  ; Monitor the movement of the joystick
+			SetTimer, joyButtons, On
+		}else{
 			SetTimer, programRoutine, Off
+		}
 		Gui, Destroy
 	Return
 #IfWinActive, Emulators
