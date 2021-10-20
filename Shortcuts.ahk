@@ -360,7 +360,7 @@ povPressandDelay:
 		
 		SetKeyDelay -1  ; Avoid delays between keystrokes.
 		if KeyToHoldDownPOV   ; There is a key to press down.
-		    Send, {%KeyToHoldDownPOV% down}  ; Press it down.
+		    Send, {%KeyToHoldDownPOV%}  ; Press it down.
 
 		if(sameKeys = 0){
 			startTime := A_TickCount
@@ -379,12 +379,7 @@ povPressandDelay:
 			}
 			sameKeys++
 		}
-
-		if KeyToHoldDownPrevPOV   ; There is a previous key to release.
-		    Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
 	}
-	if KeyToHoldDownPrevPOV   ; There is a previous key to release.
-		Send, {%KeyToHoldDownPrevPOV% up}  ; Release it.
 	sameKeys := 0
 Return
 WatchPOVandStick:
