@@ -959,7 +959,7 @@ GameChoose:
 		Send, ^{F23}
 		Sleep, 50
 		
-		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
+;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
 		Process, Exist, vivaldi.exe
 		vivaldiPID=%Errorlevel%
 		if(vivaldiPID){
@@ -975,6 +975,9 @@ GameChoose:
 		Gui, Add, DropDownList, vEmuChoice Choose1, RetroArch|Citra|Cemu|Close
 		Gui, Add, Button, gEmuChoose, Choose
 		Gui, Show, , Emulators
+
+		SetTimer, programRoutine, Off
+		SetTimer, WatchPOVandStick, Off
 	}
 Return
 EmuChoose:
@@ -1779,7 +1782,9 @@ expSelect:
 		}else if(WinActive("D:\Users\Bruno\Documents\Scripts") && WinActive("ahk_exe explorer.exe")){
 			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive.png
 		}else if(WinActive("D:\Users\Bruno\Google Drive") && WinActive("ahk_exe explorer.exe") && !WinActive("D:\Users\Bruno\Google Drive\Registro")){
-			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro.png
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro1.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro2.png
 		}else if(WinActive("D:\Users\Bruno\Google Drive\Registro") && WinActive("ahk_exe explorer.exe")){
 			ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleEmpty.png
 			if(ErrorLevel)
@@ -1789,7 +1794,9 @@ expSelect:
 		}
 	}else{
 		if(WinActive("Recycle Bin") && WinActive("ahk_exe explorer.exe")){
-			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro.png
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro1.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro2.png
 		}else if(WinActive("Desktop") && WinActive("ahk_exe explorer.exe")){
 			ImageSearch, expX, expY, 0, 0, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\recycleEmpty.png
 			if(ErrorLevel)
@@ -2631,6 +2638,14 @@ Return
 		Send, {m Down}
 		Sleep, 100
 		Send, {m Up}
+	Return
+
+#If WinActive("ahk_exe SearchApp.exe") || WinActive("ahk_exe StartMenuExperienceHost.exe") || WinActive("ahk_exe ApplicationFrameHost.exe") || WinActive("ahk_exe ShellExperienceHost.exe")
+	Joy5::
+		Send, {LButton}
+	Return
+	Joy6::
+		Send, {RButton}
 	Return
 Return
 
