@@ -983,7 +983,7 @@ Return
 EmuChoose:
 	Gui, Submit
 	if(EmuChoice = "RetroArch"){
-		Run, "D:\RetroArch-Win64\retroarch.exe"
+		Run, steam://rungameid/1118310 ; retroarch
 	}
 	if(EmuChoice = "Citra"){
 		Run, "C:\Users\Bruno\AppData\Local\Citra\canary-mingw\citra-qt.exe"
