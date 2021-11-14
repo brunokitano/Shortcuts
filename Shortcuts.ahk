@@ -259,7 +259,7 @@ programRoutine:
 			}
 			prevWani := "reviews"
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
-			if(prevWani != "reviews"){
+			if(prevWani != "dashboard"){
 				Gosub, loadingPage
 				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 				if(ErrorLevel){
