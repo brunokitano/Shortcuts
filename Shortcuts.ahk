@@ -217,6 +217,68 @@ programRoutine:
 			ControlClick, x1150 y195, ahk_exe vivaldi.exe, , Left, 1
 		}
 		Sleep, 300 ; Make it scan less 
+	}else if(WinActive("WaniKani / Lessons - Vivaldi") || WinActive("WaniKani / Reviews - Vivaldi") || WinActive("WaniKani / Dashboard - Vivaldi")){
+		if(WinActive("WaniKani / Lessons - Vivaldi")){
+			if(prevWani != "lessons"){
+				Gosub, loadingPage
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				if(ErrorLevel){
+					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
+					if(!ErrorLevel){
+						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+						Sleep, 10
+						ControlSend, , 140, ahk_exe vivaldi.exe
+						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					}
+				}else{ ; if it's 110%
+					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+					Sleep, 10
+					ControlSend, , 140, ahk_exe vivaldi.exe
+					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+				}
+			}
+			prevWani := "lessons"
+		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
+			if(prevWani != "reviews"){
+				Gosub, loadingPage
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				if(ErrorLevel){
+					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
+					if(!ErrorLevel){
+						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+						Sleep, 10
+						ControlSend, , 110, ahk_exe vivaldi.exe
+						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					}
+				}else{ ; if it's 140%
+					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+					Sleep, 10
+					ControlSend, , 110, ahk_exe vivaldi.exe
+					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+				}
+			}
+			prevWani := "reviews"
+		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
+			if(prevWani != "reviews"){
+				Gosub, loadingPage
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				if(ErrorLevel){
+					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
+					if(!ErrorLevel){
+						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+						Sleep, 10
+						ControlSend, , 110, ahk_exe vivaldi.exe
+						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					}
+				}else{ ; if it's 140%
+					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+					Sleep, 10
+					ControlSend, , 110, ahk_exe vivaldi.exe
+					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+				}
+			}
+			prevWani := "dashboard"
+		}
 	}
 
 	SetTimer, programRoutine, On
@@ -2150,6 +2212,7 @@ Return
 		Gosub, isOnYt
 		Gosub, actionOnYt
 	Return
+/*	
 	~^r::
 	~$F5::
 		MouseGetPos, mouseX, mouseY
@@ -2213,7 +2276,7 @@ Return
 			}
 		}
 	Return
-
+*/
 lbActions:
 	resFix(500, 100)
 	PixelGetColor, colorVar, %xValue0%, %yValue0%, Fast RGB
@@ -2233,7 +2296,7 @@ lbActions:
 			}
 			Gosub, downloadsPanel
 			Sleep, 500
-			Gosub, loadingPage
+		;	Gosub, loadingPage
 			Gosub, isOnYt
 			Gosub, actionOnYt
 		}
@@ -2250,7 +2313,7 @@ lbActions:
 			}
 			Gosub, downloadsPanel
 			Sleep, 500
-			Gosub, loadingPage
+		;	Gosub, loadingPage
 			Gosub, isOnYt
 			Gosub, actionOnYt
 		}
@@ -2642,10 +2705,12 @@ Return
 
 #If WinActive("ahk_exe SearchApp.exe") || WinActive("ahk_exe StartMenuExperienceHost.exe") || WinActive("ahk_exe ApplicationFrameHost.exe") || WinActive("ahk_exe ShellExperienceHost.exe")
 	Joy5::
-		Send, {LButton}
+		if(MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
+			Send, {LButton}
 	Return
 	Joy6::
-		Send, {RButton}
+		if(MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
+			Send, {RButton}
 	Return
 Return
 
