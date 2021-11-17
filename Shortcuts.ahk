@@ -229,30 +229,48 @@ programRoutine:
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
-				if(ErrorLevel){
+
+				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				incorrectZoom := ErrorLevel
+				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					zoomValue := 140
 					Gosub, vivaldiZoom
+
+					Sleep, 100
+					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+					incorrectZoom := ErrorLevel
 				}
 			}
 			prevWani := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(prevWani != "reviews"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
-				if(ErrorLevel){
+
+				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				incorrectZoom := ErrorLevel
+				while(incorrectZoom && WinActive("WaniKani / Reviews - Vivaldi")){
 					zoomValue := 110
 					Gosub, vivaldiZoom
+
+					Sleep, 100
+					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+					incorrectZoom := ErrorLevel
 				}
 			}
 			prevWani := "reviews"
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(prevWani != "dashboard"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
-				if(ErrorLevel){
+				
+				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				incorrectZoom := ErrorLevel
+				while(incorrectZoom && WinActive("WaniKani / Dashboard - Vivaldi")){
 					zoomValue := 110
 					Gosub, vivaldiZoom
+
+					Sleep, 100
+					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+					incorrectZoom := ErrorLevel
 				}
 			}
 			prevWani := "dashboard"
