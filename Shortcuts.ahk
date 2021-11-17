@@ -236,7 +236,7 @@ programRoutine:
 					zoomValue := 140
 					Gosub, vivaldiZoom
 
-					Sleep, 100
+					Sleep, 150
 					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 					incorrectZoom := ErrorLevel
 				}
@@ -248,11 +248,11 @@ programRoutine:
 
 				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				incorrectZoom := ErrorLevel
-				while(incorrectZoom && WinActive("WaniKani / Reviews - Vivaldi")){
+				while((incorrectZoom && WinActive("WaniKani / Reviews - Vivaldi")) || (incorrectZoom && WinActive("WaniKani / Dashboard - Vivaldi"))){
 					zoomValue := 110
 					Gosub, vivaldiZoom
 
-					Sleep, 100
+					Sleep, 150
 					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 					incorrectZoom := ErrorLevel
 				}
