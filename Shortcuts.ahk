@@ -192,6 +192,14 @@ reopenKDE:
 	SetTimer, reopenKDE, On
 Return
 
+vivaldiZoom:
+	BlockInput, On
+	ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+	Sleep, 10
+	ControlSend, , %zoomValue%, ahk_exe vivaldi.exe
+	ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+	BlockInput, Off
+Return
 programRoutine:
 	SetTimer, programRoutine, Off
 
@@ -221,60 +229,30 @@ programRoutine:
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 				if(ErrorLevel){
-					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
-					if(!ErrorLevel){
-						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-						Sleep, 10
-						ControlSend, , 140, ahk_exe vivaldi.exe
-						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
-					}
-				}else{ ; if it's 110%
-					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-					Sleep, 10
-					ControlSend, , 140, ahk_exe vivaldi.exe
-					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					zoomValue := 140
+					Gosub, vivaldiZoom
 				}
 			}
 			prevWani := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(prevWani != "reviews"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				if(ErrorLevel){
-					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
-					if(!ErrorLevel){
-						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-						Sleep, 10
-						ControlSend, , 110, ahk_exe vivaldi.exe
-						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
-					}
-				}else{ ; if it's 140%
-					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-					Sleep, 10
-					ControlSend, , 110, ahk_exe vivaldi.exe
-					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					zoomValue := 110
+					Gosub, vivaldiZoom
 				}
 			}
 			prevWani := "reviews"
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(prevWani != "dashboard"){
 				Gosub, loadingPage
-				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				if(ErrorLevel){
-					ImageSearch, , , 1230, 710, 1280, 740, *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi90.png
-					if(!ErrorLevel){
-						ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-						Sleep, 10
-						ControlSend, , 110, ahk_exe vivaldi.exe
-						ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
-					}
-				}else{ ; if it's 140%
-					ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-					Sleep, 10
-					ControlSend, , 110, ahk_exe vivaldi.exe
-					ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+					zoomValue := 110
+					Gosub, vivaldiZoom
 				}
 			}
 			prevWani := "dashboard"
