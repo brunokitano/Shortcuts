@@ -603,7 +603,7 @@ joyButtons:
 			Send, +{Delete}
 		}else if(WinActive("ahk_exe MusicBee.exe")){
 			Send, +{Delete}
-		}else if(WinActive("ahk_exe mpc-hc64.exe")){
+		}else if(WinActive("ahk_exe mpc-hc64.exe") || WinActive("ahk_exe PotPlayerMini64.exe")){
 			Send, !{F4}
 		}
 		KeyWait, Joy4
