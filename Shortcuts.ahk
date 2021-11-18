@@ -194,10 +194,11 @@ Return
 
 vivaldiZoom:
 	BlockInput, On
+	SetControlDelay, 10
 	ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
-	Sleep, 10
 	ControlSend, , %zoomValue%, ahk_exe vivaldi.exe
 	ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+	SetControlDelay, 0
 	BlockInput, Off
 Return
 programRoutine:
@@ -230,14 +231,14 @@ programRoutine:
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
 
-				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 				incorrectZoom := ErrorLevel
 				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					zoomValue := 140
 					Gosub, vivaldiZoom
 
 					Sleep, 150
-					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 					incorrectZoom := ErrorLevel
 				}
 			}
@@ -246,14 +247,14 @@ programRoutine:
 			if(prevWani != "reviewsOrDashboard"){
 				Gosub, loadingPage
 
-				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				incorrectZoom := ErrorLevel
 				while((incorrectZoom && WinActive("WaniKani / Reviews - Vivaldi")) || (incorrectZoom && WinActive("WaniKani / Dashboard - Vivaldi"))){
 					zoomValue := 110
 					Gosub, vivaldiZoom
 
 					Sleep, 150
-					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *10 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 					incorrectZoom := ErrorLevel
 				}
 			}
