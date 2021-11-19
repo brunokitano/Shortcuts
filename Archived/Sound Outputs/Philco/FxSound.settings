@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PROPERTIES>
+  <VALUE name="power" val="1"/>
+  <VALUE name="hotkeys" val="1"/>
+  <VALUE name="preset" val="Bruno2"/>
+  <VALUE name="run_minimized" val="1"/>
+  <VALUE name="menu_clicked" val="1"/>
+  <VALUE name="view" val="2"/>
+  <VALUE name="ads" val="0"/>
+  <VALUE name="output_device_id" val="{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}"/>
+  <VALUE name="output_device_name" val="TV-PHILCO (Intel(R) Display Audio)"/>
+  <VALUE name="version" val="1.1.11.0"/>
+  <VALUE name="survey_timer" val="0"/>
+  <VALUE name="survey_displayed" val="1"/>
+  <VALUE name="hide_help_tooltips" val="0"/>
+  <VALUE name="auto_select_output" val="0"/>
+</PROPERTIES>

@@ -1450,7 +1450,6 @@ fxSoundChangeOutput:
 	 
 	currentOutput := "" ; clears the var variable if it has contents
 	TheFile := "" ; clears the TheFile variable if it has contents
-
 	Loop, Read, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
 	{
 		If(nextline)
@@ -1464,14 +1463,19 @@ fxSoundChangeOutput:
 			nextline:=true
 		}
 	}
-
-	if(currentOutput = ""){ ; Realtek is the current output 
-		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Philco\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
+	
+	FileRead, textContents, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
+	if(currentOutput = ""){ ; Realtek is the current output, change it to philco
+		textContents := StrReplace(textContents, "Speakers (Realtek High Definition Audio)", "TV-PHILCO (Intel(R) Display Audio)")
+		textContents := StrReplace(textContents, "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}", "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}")
 		futureOutput := "TV"
 	}else{
-		FileCopy, D:\Users\Bruno\Documents\Scripts\Shortcuts\Shortcuts\Sound Outputs\Realtek\FxSound.settings, C:\Users\Bruno\AppData\Roaming\FxSound, 1
+		textContents := StrReplace(textContents, "TV-PHILCO (Intel(R) Display Audio)", "Speakers (Realtek High Definition Audio)")
+		textContents := StrReplace(textContents, "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}", "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}")
 		futureOutput := "Headphone Jack"
 	}
+	FileDelete, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
+	FileAppend, %textContents%, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
 
 	SetTimer, FxSoundTrayTip, -1
 	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\FxSound\FxSound.lnk
