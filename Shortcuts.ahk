@@ -655,11 +655,15 @@ joyButtons:
 		}
 	}
 	if(GetKeyState("Joy9") && !(GetKeyState("Joy7"))){
-		Send, {F5}
+		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
+			Send, {F5}
+		}
 		KeyWait, Joy9
 	}
 	if(GetKeyState("Joy10") && !(GetKeyState("Joy7"))){
-		Send, !{r}
+		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
+			Send, !{r}
+		}
 		KeyWait, Joy10
 	}
 
