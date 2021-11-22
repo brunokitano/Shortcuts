@@ -469,13 +469,15 @@ WatchPOVandStick:
 return
 
 WatchPOV:
-	SetTimer, WatchPOV, Off
+	if(!WinActive("ahk_exe PotPlayerMini64.exe")){
+		SetTimer, WatchPOV, Off
 
-	Gosub, povDirection
+		Gosub, povDirection
 
-	Gosub, povPressandDelay
-	
-	SetTimer, WatchPOV, On
+		Gosub, povPressandDelay
+		
+		SetTimer, WatchPOV, On
+	}
 Return
 joystickAsMouse:
 	MouseNeedsToBeMoved := false  ; Set default.
@@ -1889,13 +1891,13 @@ Return
 
 	$Joy5::
 	$1::
-		if(!(GetKeyState("Joy7")))
+		if(!GetKeyState("Joy7") && !GetKeyState("Joy8"))
 			Gosub, expSelect
 	Return
 
 	$Joy6::
 	$2::
-		if(!(GetKeyState("Joy7"))){			
+		if(!GetKeyState("Joy7") && !GetKeyState("Joy8")){			
 			goingDown := 1
 			Gosub, expSelect
 		}
