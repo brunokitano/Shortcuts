@@ -2699,13 +2699,13 @@ Return
 		Send, {m Up}
 	Return
 
-#If WinActive("ahk_exe SearchApp.exe") || WinActive("ahk_exe StartMenuExperienceHost.exe") || WinActive("ahk_exe ApplicationFrameHost.exe") || WinActive("ahk_exe ShellExperienceHost.exe")
+#If (WinActive("ahk_exe Explorer.EXE") && WinActive("ahk_class Shell_TrayWnd")) || WinActive("ahk_exe SearchApp.exe") || WinActive("ahk_exe StartMenuExperienceHost.exe") || WinActive("ahk_exe ApplicationFrameHost.exe") || WinActive("ahk_exe ShellExperienceHost.exe")
 	Joy5::
-		if(MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
+		if((MouseIsOver("ahk_exe Explorer.EXE") && MouseIsOver("ahk_class Shell_TrayWnd")) || MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
 			Send, {LButton}
 	Return
 	Joy6::
-		if(MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
+		if((MouseIsOver("ahk_exe Explorer.EXE") && MouseIsOver("ahk_class Shell_TrayWnd")) || MouseIsOver("ahk_exe SearchApp.exe") || MouseIsOver("ahk_exe StartMenuExperienceHost.exe") || MouseIsOver("ahk_exe ApplicationFrameHost.exe") || MouseIsOver("ahk_exe ShellExperienceHost.exe"))
 			Send, {RButton}
 	Return
 Return
