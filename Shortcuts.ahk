@@ -915,13 +915,13 @@ GameChoose:
 			resChange := 1 ; correct this
 		}
 
-		Process, Exist, vivaldi.exe
-		vivaldiPID=%Errorlevel%
-		if(vivaldiPID){
-			WinActivate ahk_pid %vivaldiPID%
-			WinWaitActive, ahk_exe vivaldi.exe, , 1.5
-			Send, !{F4}
-		}
+;		Process, Exist, vivaldi.exe
+;		vivaldiPID=%Errorlevel%
+;		if(vivaldiPID){
+;			WinActivate ahk_pid %vivaldiPID%
+;			WinWaitActive, ahk_exe vivaldi.exe, , 1.5
+;			Send, !{F4}
+;		}
 ;		Process, Close, WhatsApp.exe
 		Process, Close, AoTClock.exe
 
@@ -1009,13 +1009,13 @@ GameChoose:
 		Sleep, 50
 		
 ;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
-		Process, Exist, vivaldi.exe
-		vivaldiPID=%Errorlevel%
-		if(vivaldiPID){
-			WinActivate ahk_pid %vivaldiPID%
-			WinWaitActive, ahk_exe vivaldi.exe, , 1.5
-			Send, !{F4}
-		}
+;		Process, Exist, vivaldi.exe
+;		vivaldiPID=%Errorlevel%
+;		if(vivaldiPID){
+;			WinActivate ahk_pid %vivaldiPID%
+;			WinWaitActive, ahk_exe vivaldi.exe, , 1.5
+;			Send, !{F4}
+;		}
 	;	Process, Close, WhatsApp.exe
 		Process, Close, AoTClock.exe
 
@@ -1833,7 +1833,10 @@ expSelect:
 		}else if(WinActive("C:\Users\Bruno\Media") && WinActive("ahk_exe explorer.exe")){
 			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\scripts.png
 		}else if(WinActive("D:\Users\Bruno\Documents\Scripts") && WinActive("ahk_exe explorer.exe")){
-			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive.png
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive1.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive2.png
+
 		}else if(WinActive("D:\Users\Bruno\Google Drive") && WinActive("ahk_exe explorer.exe") && !WinActive("D:\Users\Bruno\Google Drive\Registro")){
 			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\registro1.png
 			if(ErrorLevel)
@@ -1871,7 +1874,9 @@ expSelect:
 		}else if(WinActive("D:\Users\Bruno\Google Drive") && WinActive("ahk_exe explorer.exe") && !WinActive("D:\Users\Bruno\Google Drive\Registro")){
 			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\scripts.png
 		}else if(WinActive("D:\Users\Bruno\Google Drive\Registro") && WinActive("ahk_exe explorer.exe")){
-			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive.png
+			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive1.png
+			if(ErrorLevel)
+				ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\drive2.png
 		}else{
 			ImageSearch, expX, expY, 10, 150, 80, 500, *20 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\ExpQA\sonarr.png
 		}
