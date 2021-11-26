@@ -583,12 +583,12 @@ joyButtons:
 		Send, {LButton Up}
 		Gosub, lbActions
 	}
-	if(GetKeyState("Joy2") && !(GetKeyState("Joy7"))){
+	if(GetKeyState("Joy2") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		Send, {RButton Down}
 		KeyWait, Joy2
 		Send, {RButton Up}
 	}
-	if(GetKeyState("Joy3") && !(GetKeyState("Joy7"))){
+	if(GetKeyState("Joy3") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		Send, {LControl Down}
 		while(GetKeyState("Joy3")){
 			if(GetKeyState("Joy1")){
