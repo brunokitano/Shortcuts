@@ -599,7 +599,7 @@ joyButtons:
 		}
 		Send, {LControl Up}
 	}
-	if(GetKeyState("Joy4") && !(GetKeyState("Joy7"))){
+	if(GetKeyState("Joy4") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		if(WinActive("ahk_exe vivaldi.exe")){
 			Send, ^{w}
 		}else if(WinActive("ahk_exe explorer.exe")){
@@ -653,6 +653,10 @@ joyButtons:
 			if(GetKeyState("Joy6")){
 				Gosub, fxSoundChangeOutput
 				KeyWait, Joy6
+			}
+			if(GetKeyState("Joy4")){
+				Gosub, wanikaniAuto
+				KeyWait, Joy4
 			}
 		}
 	}
@@ -1295,8 +1299,7 @@ $<^>!,::
 Return
 
 ; WaniKani
-$>+/::
-$>+;::
+wanikaniAuto:
 	if(!WinActive("ahk_exe vivaldi.exe")){	
 		Process, Exist, vivaldi.exe
 		vivaldiPID=%Errorlevel%
@@ -1391,6 +1394,10 @@ $>+;::
 		resFix(1740, 160)
 		ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1 ; If it's already on review/lesson page
 	}
+Return
+$>+/::
+$>+;::
+	Gosub, wanikaniAuto
 Return
 
 $F1::
