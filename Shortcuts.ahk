@@ -1384,7 +1384,8 @@ wanikaniAuto:
 		if(!waniKaniReview){
 			Send, {Esc}
 			Sleep, 10
-			Run, https://www.wanikani.com/review/session
+			;Run, https://www.wanikani.com/review/session
+			Run, https://www.wanikani.com/review/
 		}
 		if(waniKaniLesson){
 			Send, {Esc}
