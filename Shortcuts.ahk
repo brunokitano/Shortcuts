@@ -1387,7 +1387,7 @@ wanikaniAuto:
 		}
 
 		resFix(1080, 1452, 228, 1824, 313)
-		PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 50, Fast RGB  ; Lesson
+		PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 50, Fast RGB ; Review
 		waniKaniLesson := ErrorLevel
 		if(!waniKaniLesson){
 			Send, {Esc}
@@ -1397,17 +1397,17 @@ wanikaniAuto:
 			waniKaniReview := 1
 		}else{
 			resFix(1080, 1452, 228, 1824, 313)
-			PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 50, Fast RGB ; Review
+			PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 50, Fast RGB  ; Lesson
 			waniKaniReview := ErrorLevel
 		}
 
-		if(!waniKaniReview){
+		if(!waniKaniLesson){
 			Send, {Esc}
 			Sleep, 10
 			;Run, https://www.wanikani.com/review/session
 			Run, https://www.wanikani.com/review/
 		}
-		if(waniKaniLesson){
+		if(waniKaniReview){
 			Send, {Esc}
 			Sleep, 10
 		}
