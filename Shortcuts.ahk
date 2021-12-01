@@ -1399,7 +1399,8 @@ wanikaniAuto:
 			waniLesson := ErrorLevel
 			Send, {Esc}
 			Sleep, 10
-			Run, https://www.wanikani.com/lesson/session
+			if(!waniLesson)
+				Run, https://www.wanikani.com/lesson/session
 		}
 	}else{
 		resFix(768, 1130, 120, 1250, 160) ; check if the scaling is correct
