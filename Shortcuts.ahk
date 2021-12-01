@@ -1388,28 +1388,21 @@ wanikaniAuto:
 
 		resFix(1080, 1452, 228, 1824, 313)
 		PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 50, Fast RGB ; Review
-		waniKaniLesson := ErrorLevel
-		if(!waniKaniLesson){
+		waniKaniReview := ErrorLevel
+		if(!waniKaniReview){
 			Send, {Esc}
 			Sleep, 10
-			Run, https://www.wanikani.com/lesson/session
+			Run, https://www.wanikani.com/Review
 
-			waniKaniReview := 1
+			
 		}else{
 			resFix(1080, 1452, 228, 1824, 313)
 			PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 50, Fast RGB  ; Lesson
-			waniKaniReview := ErrorLevel
-		}
+			waniLesson := ErrorLevel
+			Send, {Esc}
+			Sleep, 10
 
-		if(!waniKaniLesson){
-			Send, {Esc}
-			Sleep, 10
-			;Run, https://www.wanikani.com/review/session
-			Run, https://www.wanikani.com/review/
-		}
-		if(waniKaniReview){
-			Send, {Esc}
-			Sleep, 10
+			Run, https://www.wanikani.com/lesson/session
 		}
 	}else{
 		resFix(768, 1130, 120, 1250, 160) ; check if the scaling is correct
