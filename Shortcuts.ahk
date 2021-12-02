@@ -1392,7 +1392,7 @@ wanikaniAuto:
 		if(!waniKaniReview){
 			Send, {Esc}
 			Sleep, 10
-			Run, https://www.wanikani.com/Review			
+			Run, https://www.wanikani.com/review			
 		}else{
 			resFix(1080, 1452, 228, 1824, 313)
 			PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 50, Fast RGB  ; Lesson
