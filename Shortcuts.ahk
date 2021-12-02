@@ -356,6 +356,7 @@ stores:
 	WinActivate 
 	ControlSetText, Button1, &GOG
 	ControlSetText, Button2, &Steam
+	ControlSetText, Button3, &Xbox
 return
 closeClass:
 	IfWinNotExist, Close Class
@@ -918,7 +919,7 @@ GameChoose:
 		Gui, Destroy
 
 		SetTimer, stores, 50
-		MsgBox, 0x1003, Stores, Which Store?
+		MsgBox, 0x1203, Stores, Which Store?
 		IfMsgBox, Yes
 		{
 			Run, steam://rungameid/14209988591219638272 ; GOG 2.0
@@ -927,18 +928,23 @@ GameChoose:
 		{
 			Run, "C:\Users\Bruno\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Big Picture.lnk"
 		}
+		IfMsgBox, Cancel
+		{
+			Run, shell:AppsFolder\Microsoft.GamingApp_8wekyb3d8bbwe!Microsoft.Xbox.App
+		}
+		WinWait, Resolution, , 2
+		WinActivate, Resolution
 
 		SetTimer, resolution, 50
 		MsgBox, 0x1003, Resolution, Which resolution?
 		IfMsgBox, Yes
 		{
-			Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\768p.bat"
-			resChange := 1 ; correct this
+			if(A_ScreenHeight != 768)
+				Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\768p.bat"
 		}
 		IfMsgBox, No
 		{
 			Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\900p.bat"
-			resChange := 1 ; correct this
 		}
 
 ;		Process, Exist, vivaldi.exe
@@ -963,6 +969,9 @@ GameChoose:
 			Send, !{F4}			
 		}
 
+		WinWait, Yes || No, , 2
+		WinActivate, Yes || No
+
 		SetTimer, yesNo, 50
 		MsgBox, 0x1101, Yes || No, Do you want to open Discord and RTX Voice?
 		IfMsgBox, OK
@@ -985,7 +994,7 @@ GameChoose:
 		Send, ^{F23}
 		Sleep, 50
 
-		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\1080p.bat"
+;		Run, "D:\Users\Bruno\Documents\Scripts\Shortcuts\Bats\1080p.bat"
 		if(!ProcessExist("vivaldi.exe")){
 			Run, "D:\Program Files\Vivaldi\Application\vivaldi.exe"
 		}
