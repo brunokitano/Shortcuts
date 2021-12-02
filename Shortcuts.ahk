@@ -1006,6 +1006,9 @@ GameChoose:
 		Process, Close, NVIDIA RTX Voice.exe
 		Process, Close, GalaxyClient.exe
 		Process, Close, EpicGamesLauncher.exe
+		WinActivate, Xbox
+		WinWaitActive, Xbox, , 2
+		WinKill, Xbox
 		Process, Close, Discord.exe
 		Process, Close, retroarch.exe
 		Process, Close, citra-qt.exe
