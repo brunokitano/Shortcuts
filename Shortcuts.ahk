@@ -576,6 +576,7 @@ WatchJoystick:
 return
 joyButtons:
 	SetTimer, joyButtons, Off
+	; A
 	if(GetKeyState("Joy1") && !(GetKeyState("Joy3")) && !(GetKeyState("Joy7")) 
 		&& !(WinActive("Delete File") || WinActive("Delete Folder") || WinActive("Delete Multiple Items"))){
 
@@ -584,14 +585,19 @@ joyButtons:
 		Send, {LButton Up}
 		Gosub, lbActions
 	}
+
+	; B
 	if(GetKeyState("Joy2") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		Send, {RButton Down}
 		KeyWait, Joy2
 		Send, {RButton Up}
 	}
+
+	; X
 	if(GetKeyState("Joy3") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		Send, {LControl Down}
 		while(GetKeyState("Joy3")){
+	; X+A
 			if(GetKeyState("Joy1")){
 				Send, {LButton Down}
 				KeyWait, Joy1
@@ -600,6 +606,8 @@ joyButtons:
 		}
 		Send, {LControl Up}
 	}
+
+	; Y
 	if(GetKeyState("Joy4") && !(GetKeyState("Joy7")) && !(GetKeyState("Joy8"))){
 		if(WinActive("ahk_exe vivaldi.exe")){
 			Send, ^{w}
@@ -613,30 +621,37 @@ joyButtons:
 		KeyWait, Joy4
 	}
 
+	; Select
 	if(GetKeyState("Joy7")){
 		while(GetKeyState("Joy7")){
+	; Select+A
 			if(GetKeyState("Joy1")){
 				Send, ^!{m}
 				KeyWait, Joy1
 			}
+	; Select+B
 			if(GetKeyState("Joy2")){
 				Send, {Media_Next}
 				KeyWait, Joy2
 			}
+	; Select+X
 			if(GetKeyState("Joy3")){
 				Send, {Media_Prev}
 				KeyWait, Joy3
 			}
+	; Select+Y
 			if(GetKeyState("Joy4")){
 				Send, !{Media_Play_Pause}
 				KeyWait, Joy4
 			}
 
+	; Select+LB
 			if(GetKeyState("Joy5")){
 				Send, {LAlt Down}
 				Send, +{Tab}
 				KeyWait, Joy5
 			}
+	; Select+RB
 			if(GetKeyState("Joy6")){
 				Send, {LAlt Down}
 				Send, {Tab}
@@ -645,28 +660,37 @@ joyButtons:
 		}
 		Send, {LAlt Up}
 	}
+
+	; Pause
 	if(GetKeyState("Joy8")){
 		while(GetKeyState("Joy8")){
+	; Pause+LB
 			if(GetKeyState("Joy5")){
 				Gosub, turnOnOffLights
 				KeyWait, Joy5
 			}
+	; Pause+RB
 			if(GetKeyState("Joy6")){
 				Gosub, fxSoundChangeOutput
 				KeyWait, Joy6
 			}
+	; Pause+Y
 			if(GetKeyState("Joy4")){
 				Gosub, wanikaniAuto
 				KeyWait, Joy4
 			}
 		}
 	}
+
+	; LSB
 	if(GetKeyState("Joy9") && !(GetKeyState("Joy7"))){
 		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
 			Send, {F5}
 		}
 		KeyWait, Joy9
 	}
+
+	; RSB
 	if(GetKeyState("Joy10") && !(GetKeyState("Joy7"))){
 		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
 			Send, !{r}
