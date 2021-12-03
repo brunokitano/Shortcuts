@@ -676,7 +676,6 @@ joyButtons:
 			}
 	; Pause+Y
 			if(GetKeyState("Joy4")){
-				Gosub, vivaldiFullscreen
 				Gosub, wanikaniAuto
 				KeyWait, Joy4
 			}
@@ -1385,6 +1384,8 @@ wanikaniAuto:
 		WinMaximize, ahk_exe vivaldi.exe
 		Sleep, 200
 	}
+
+	Gosub, vivaldiFullscreen
 
 	MouseGetPos, mouseX, mouseY
 
