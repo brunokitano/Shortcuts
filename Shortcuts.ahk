@@ -676,6 +676,7 @@ joyButtons:
 			}
 	; Pause+Y
 			if(GetKeyState("Joy4")){
+				Gosub, vivaldiFullscreen
 				Gosub, wanikaniAuto
 				KeyWait, Joy4
 			}
@@ -753,6 +754,19 @@ smoothTooltip:
 		runTime := A_TickCount - startTime
 	}
 	ToolTip, 
+Return
+
+vivaldiFullscreen:
+	resFix(1080, 9, 85, 50, 140)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+	vivaldiFullError := ErrorLevel
+	while(vivaldiFullError && WinActive("ahk_exe vivaldi.exe")){
+		Send, {Esc}
+		Sleep, 150
+
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		vivaldiFullError := ErrorLevel
+	}
 Return
 
 
