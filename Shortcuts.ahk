@@ -249,7 +249,7 @@ programRoutine:
 
 				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				incorrectZoom := ErrorLevel
-				while((incorrectZoom && WinActive("WaniKani / Reviews - Vivaldi")) || (incorrectZoom && WinActive("WaniKani / Dashboard - Vivaldi"))){
+				while(incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi") ||  WinActive("WaniKani / Dashboard - Vivaldi"))){
 					zoomValue := 110
 					Gosub, vivaldiZoom
 
