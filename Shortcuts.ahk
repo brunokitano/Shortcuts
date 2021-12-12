@@ -2015,7 +2015,7 @@ downloadsPanel:
 	if(!ErrorLevel){
 		resFix(1080, 30, 600)
 		PixelGetColor, panelExist, %xValue0%, %yValue0%, Fast RGB
-		if(!(panelExist = "0x282828" || panelExist = "0x1C1D49" || panelExist = "0x2E2F36")){
+		if(!(panelExist = "0x282828" || panelExist = "0x1C1D49" || panelExist = "0x2E2F36"|| panelExist = "0x020203")){
 			Send, +{F4}
 			Sleep, 400
 		}
