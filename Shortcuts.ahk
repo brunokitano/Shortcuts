@@ -197,6 +197,15 @@ vivaldiZoom:
 	SetControlDelay, 10
 	ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
 	ControlSend, , %zoomValue%, ahk_exe vivaldi.exe
+	Sleep, 10
+	Clipboard := ""
+	Send, ^{c}
+	ClipWait, 0.1
+	if(ErrorLevel){
+		Send, ^{a}
+		Send, ^{c}
+		ClipWait, 0.1
+	}
 	ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
 	SetControlDelay, 0
 	BlockInput, Off
@@ -231,10 +240,12 @@ programRoutine:
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
 
+				Clipboard := ""
+				zoomValue := 140
+
 				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
 				incorrectZoom := ErrorLevel
-				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
-					zoomValue := 140
+				while((incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi") && Clipboard != zoomValue)){
 					Gosub, vivaldiZoom
 
 					Sleep, 150
@@ -247,10 +258,12 @@ programRoutine:
 			if(prevWani != "reviewsOrDashboard"){
 				Gosub, loadingPage
 
+				Clipboard := ""
+				zoomValue := 110
+
 				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
 				incorrectZoom := ErrorLevel
-				while(incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi") ||  WinActive("WaniKani / Dashboard - Vivaldi"))){
-					zoomValue := 110
+				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi") ||  WinActive("WaniKani / Dashboard - Vivaldi"))) && Clipboard != zoomValue){
 					Gosub, vivaldiZoom
 
 					Sleep, 150
@@ -1454,7 +1467,7 @@ wanikaniAuto:
 				Run, https://www.wanikani.com/lesson/session
 		}
 	}else{
-		resFix(768, 1130, 120, 1250, 160) ; check if the scaling is correct
+		resFix(768, 1130, 120, 1250, 268)
 
 		PixelSearch, wanikaniButtonX, wanikaniButtonY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x2ECC71, 20, Fast RGB
 		if(!ErrorLevel){
