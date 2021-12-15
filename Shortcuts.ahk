@@ -2026,12 +2026,12 @@ downloadsPanel:
 	resFix(1080, 9, 85, 50, 120)
 	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
 	if(!ErrorLevel){
-		resFix(1080, 30, 600)
-		PixelGetColor, panelExist, %xValue0%, %yValue0%, Fast RGB
-		if(!(panelExist = "0x282828" || panelExist = "0x1C1D49" || panelExist = "0x2E2F36" || panelExist = "0x020203"|| panelExist = "0xFFFFFF")){
-			Send, +{F4}
-			Sleep, 400
-		}
+;		resFix(1080, 30, 600)
+;		PixelGetColor, panelExist, %xValue0%, %yValue0%, Fast RGB
+;		if(!(panelExist = "0x282828" || panelExist = "0x1C1D49" || panelExist = "0x2E2F36" || panelExist = "0x020203")){
+;			Send, +{F4}
+;			Sleep, 400
+;		}
 
 		MouseGetPos, mouseX, mouseY
 		resFix(1080, 200, 200)
