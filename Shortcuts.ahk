@@ -1432,7 +1432,8 @@ wanikaniAuto:
 			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
 		}
-		while(waniKaniError){
+		waniKaniErrorTimes := 0
+		while(waniKaniError && waniKaniErrorTimes < 5){
 			resFix(1080, 1820, 70)
 			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
 			varTime := varTime + 500
@@ -1448,6 +1449,8 @@ wanikaniAuto:
 			resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
 			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
 			waniKaniError := ErrorLevel
+
+			waniKaniErrorTimes++
 		}
 
 		resFix(1080, 1452, 228, 1824, 313)
