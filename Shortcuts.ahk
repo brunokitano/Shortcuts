@@ -52,7 +52,7 @@ if(JoyR = "")
 gotActivated := 0
 SetTimer, programRoutine, 10
 
-joystickSwitch := 0
+joystickSwitch := 1
 sameKeys := 0
 SetTimer, WatchPOVandStick, 20
 resChange := 0
@@ -1055,7 +1055,7 @@ GameChoose:
 
 		Process, Close, NVIDIA RTX Voice.exe
 		Process, Close, GalaxyClient.exe
-		Process, Close, EpicGamesLauncher.exe
+		;Process, Close, EpicGamesLauncher.exe
 		WinActivate, Xbox
 		WinWaitActive, Xbox, , 2
 		WinKill, Xbox
