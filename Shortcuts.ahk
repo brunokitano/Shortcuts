@@ -1435,7 +1435,7 @@ wanikaniAuto:
 		while(waniKaniError){
 			resFix(1080, 1820, 70)
 			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
-			varTime := varTime + 100
+			varTime := varTime + 500
 			Sleep, %varTime%
 
 			MouseGetPos, mouseX, mouseY
