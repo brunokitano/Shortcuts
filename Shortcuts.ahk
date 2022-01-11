@@ -50,6 +50,8 @@ if(JoyR = "")
 	SetTimer, checkController, 300
 
 gotActivated := 0
+previousDirectory := ""
+currentDirectory := ""
 SetTimer, programRoutine, 10
 
 joystickSwitch := 1
@@ -272,6 +274,26 @@ programRoutine:
 				}
 			}
 			prevWani := "reviewsOrDashboard"
+		}
+	}else if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
+		WinGetPos, , , expW, expH, A
+		WinGetActiveTitle, currentDirectory
+		KeyWait, 1
+		KeyWait, 2
+		KeyWait, Joy5
+		KeyWait, Joy6
+		KeyWait, LButton
+
+		if(WinActive("D:\Users\Bruno\Videos\Sonarr") && previousDirectory != "D:\Users\Bruno\Videos\Sonarr"){
+			previousDirectory := "D:\Users\Bruno\Videos\Sonarr"
+			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+			if(detailsPane != "0x0E0A04")
+				Send, !+{p}
+		}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && (previousDirectory != currentDirectory)){
+			WinGetActiveTitle, previousDirectory
+			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+			if(detailsPane = "0x0E0A04")
+				Send, !+{p}
 		}
 	}
 
@@ -769,14 +791,14 @@ smoothTooltip:
 Return
 
 vivaldiFullscreen:
-	resFix(1080, 9, 85, 50, 140)
-	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+	resFix(768, 1330, 40, 1360, 70)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 	vivaldiFullError := ErrorLevel
 	while(vivaldiFullError && WinActive("ahk_exe vivaldi.exe")){
 		Send, {Esc}
 		Sleep, 150
 
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 		vivaldiFullError := ErrorLevel
 	}
 Return
@@ -1353,8 +1375,8 @@ $<^>!,::
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(1080, 9, 85, 50, 140)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		resFix(768, 1330, 40, 1360, 70)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 		if(ErrorLevel){
 			Send, {f}
 			vivaldiWindow := 1
@@ -1599,8 +1621,8 @@ $<!Tab::
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(1080, 9, 85, 50, 140)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		resFix(768, 1330, 40, 1360, 70)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 		if(ErrorLevel){
 			Send, {f}
 			Sleep, 50
@@ -2026,8 +2048,8 @@ downloadsPanel:
 		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 	}
 
-	resFix(1080, 9, 85, 50, 120)
-	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+	resFix(768, 1330, 40, 1360, 70)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *100 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 	if(!ErrorLevel){
 ;		resFix(1080, 30, 600)
 ;		PixelGetColor, panelExist, %xValue0%, %yValue0%, Fast RGB
@@ -2132,15 +2154,15 @@ Return
 				resFix(1080, 1000, 600)
 				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 			}
-			resFix(1080, 9, 85, 50, 140)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+			resFix(768, 1330, 40, 1360, 70)
+			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 			vivaldiFullError := ErrorLevel
 			if(ErrorLevel){
 				Send, {Esc}
 			}
 			while(vivaldiFullError){
-				resFix(1080, 9, 85, 50, 140)
-				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+				resFix(768, 1330, 40, 1360, 70)
+				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 				vivaldiFullError := ErrorLevel
 			}
 			MouseMove, %mouseX%, %mouseY%, 0
@@ -2281,8 +2303,8 @@ Return
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(1080, 9, 85, 50, 140)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		resFix(768, 1330, 40, 1360, 70)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 		if(ErrorLevel){
 			Send, {Esc}
 		}
@@ -2297,8 +2319,8 @@ Return
 			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
 		}
 
-		resFix(1080, 9, 85, 50, 140)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiRarbg%A_ScreenHeight%.png
+		resFix(768, 1330, 40, 1360, 70)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiFull%A_ScreenHeight%.png
 		if(ErrorLevel){
 			Send, {Esc}
 		}
