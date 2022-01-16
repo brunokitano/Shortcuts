@@ -2082,7 +2082,7 @@ downloadsPanel:
 
 		resFix(1080, 200, 200)
 		ImageSearch, , , 0, 0, %xValue0%, %yValue0%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\VivaldiDownloads%A_ScreenHeight%.png
-		if(!Error){
+		if(!ErrorLevel){
 			Send, ^{j}
 		}
 	}
