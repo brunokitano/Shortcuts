@@ -278,7 +278,7 @@ programRoutine:
 	}else if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
 		WinGetPos, , , expW, expH, A
 		WinGetActiveTitle, currentDirectory
-		
+
 		if(GetKeyState("1", "P"))
 			KeyWait, 1
 		else if(GetKeyState("2", "P"))
@@ -724,6 +724,10 @@ joyButtons:
 			if(GetKeyState("Joy4")){
 				Gosub, wanikaniAuto
 				KeyWait, Joy4
+			}
+	; Pause+A
+			if(GetKeyState("Joy1")){
+				Send, !{F4}
 			}
 		}
 	}
