@@ -278,11 +278,22 @@ programRoutine:
 	}else if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
 		WinGetPos, , , expW, expH, A
 		WinGetActiveTitle, currentDirectory
-		KeyWait, 1
-		KeyWait, 2
-		KeyWait, Joy5
-		KeyWait, Joy6
-		KeyWait, LButton
+		
+		if(GetKeyState("1", "P"))
+			KeyWait, 1
+		else if(GetKeyState("2", "P"))
+			KeyWait, 2
+		else if(GetKeyState("Joy5", "P"))
+			KeyWait, Joy5
+		else if(GetKeyState("Joy6", "P"))
+			KeyWait, Joy6
+		else if(GetKeyState("Joy1", "P"))
+			KeyWait, Joy1
+		else if(GetKeyState("LButton", "P"))
+			KeyWait, LButton
+		
+		if(!ErrorLevel)
+			Sleep, 20
 
 		if(WinActive("D:\Users\Bruno\Videos\Sonarr") && previousDirectory != "D:\Users\Bruno\Videos\Sonarr"){
 			previousDirectory := "D:\Users\Bruno\Videos\Sonarr"
