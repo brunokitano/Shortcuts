@@ -279,21 +279,23 @@ programRoutine:
 		WinGetPos, , , expW, expH, A
 		WinGetActiveTitle, currentDirectory
 
-		if(GetKeyState("1", "P"))
-			KeyWait, 1
-		else if(GetKeyState("2", "P"))
-			KeyWait, 2
-		else if(GetKeyState("Joy5", "P"))
-			KeyWait, Joy5
-		else if(GetKeyState("Joy6", "P"))
-			KeyWait, Joy6
-		else if(GetKeyState("Joy1", "P"))
-			KeyWait, Joy1
-		else if(GetKeyState("LButton", "P"))
-			KeyWait, LButton
-		
-		if(!ErrorLevel)
+		if(GetKeyState("1", "P") || GetKeyState("2", "P") || GetKeyState("Joy5", "P") 
+		|| GetKeyState("Joy6", "P") || GetKeyState("Joy1", "P") || GetKeyState("LButton", "P")){	
+			if(GetKeyState("1", "P"))
+				KeyWait, 1
+			else if(GetKeyState("2", "P"))
+				KeyWait, 2
+			else if(GetKeyState("Joy5", "P"))
+				KeyWait, Joy5
+			else if(GetKeyState("Joy6", "P"))
+				KeyWait, Joy6
+			else if(GetKeyState("Joy1", "P"))
+				KeyWait, Joy1
+			else if(GetKeyState("LButton", "P"))
+				KeyWait, LButton
+
 			Sleep, 20
+		}
 
 		if(WinActive("D:\Users\Bruno\Videos\Sonarr") && previousDirectory != "D:\Users\Bruno\Videos\Sonarr"){
 			previousDirectory := "D:\Users\Bruno\Videos\Sonarr"
