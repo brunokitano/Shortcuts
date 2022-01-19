@@ -723,13 +723,14 @@ joyButtons:
 				KeyWait, Joy6
 			}
 	; Pause+Y
-			if(GetKeyState("Joy4")){
+			if(GetKeyState("Joy1")){
 				Gosub, wanikaniAuto
-				KeyWait, Joy4
+				KeyWait, Joy1
 			}
 	; Pause+A
-			if(GetKeyState("Joy1")){
+			if(GetKeyState("Joy4")){
 				Send, !{F4}
+				KeyWait, Joy4
 			}
 		}
 	}
@@ -2035,12 +2036,18 @@ Return
 
 	$Joy5::
 	$1::
+		KeyWait, 1
+		KeyWait, Joy5
+
 		if(!GetKeyState("Joy7") && !GetKeyState("Joy8"))
 			Gosub, expSelect
 	Return
 
 	$Joy6::
 	$2::
+		KeyWait, 2
+		KeyWait, Joy6
+
 		if(!GetKeyState("Joy7") && !GetKeyState("Joy8")){			
 			goingDown := 1
 			Gosub, expSelect
