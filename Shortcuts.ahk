@@ -197,7 +197,8 @@ Return
 vivaldiZoom:
 	BlockInput, On
 	SetControlDelay, 10
-	ControlClick, x1265 y735, ahk_exe vivaldi.exe, , Left, 1
+	resFix(768, 1265, 735)
+	ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
 	ControlSend, , %zoomValue%, ahk_exe vivaldi.exe
 	Sleep, 10
 	Clipboard := ""
@@ -245,13 +246,15 @@ programRoutine:
 				Clipboard := ""
 				zoomValue := 140
 
-				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+				resFix(768, 1230, 710, 1300, 740)
+				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140_%A_ScreenHeight%.png
 				incorrectZoom := ErrorLevel
 				while((incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi") && Clipboard != zoomValue)){
 					Gosub, vivaldiZoom
 
 					Sleep, 150
-					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140.png
+					resFix(768, 1230, 710, 1300, 740)
+					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140_%A_ScreenHeight%.png
 					incorrectZoom := ErrorLevel
 				}
 			}
@@ -263,13 +266,15 @@ programRoutine:
 				Clipboard := ""
 				zoomValue := 110
 
-				ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+				resFix(768, 1230, 710, 1300, 750)
+				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_%A_ScreenHeight%.png
 				incorrectZoom := ErrorLevel
 				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi") ||  WinActive("WaniKani / Dashboard - Vivaldi"))) && Clipboard != zoomValue){
 					Gosub, vivaldiZoom
 
 					Sleep, 150
-					ImageSearch, , , 1230, 710, 1280, 740, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110.png
+					resFix(768, 1230, 710, 1300, 750)
+					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_%A_ScreenHeight%.png
 					incorrectZoom := ErrorLevel
 				}
 			}
