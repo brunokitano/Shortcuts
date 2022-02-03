@@ -294,7 +294,14 @@ programRoutine:
 			else if(GetKeyState("LButton", "P"))
 				KeyWait, LButton
 
-			Sleep, 20
+			WinGetActiveTitle, changedDirectory
+			runTime := 0
+			startTime := A_TickCount
+			while(currentDirectory = changedDirectory && runTime <= 200){
+				WinGetActiveTitle, changedDirectory
+				runTime := A_TickCount - startTime
+			}
+			Sleep, 100
 		}
 
 		if(WinActive("D:\Users\Bruno\Videos\Sonarr") && previousDirectory != "D:\Users\Bruno\Videos\Sonarr"){
@@ -302,7 +309,12 @@ programRoutine:
 			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
 			if(detailsPane != "0x0E0A04")
 				Send, !+{p}
-		}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && (previousDirectory != currentDirectory)){
+		}else if(WinActive("D:\Users\Bruno\Videos\Series") && previousDirectory != "D:\Users\Bruno\Videos\Series"){
+			previousDirectory := "D:\Users\Bruno\Videos\Series"
+			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+			if(detailsPane != "0x0E0A04")
+				Send, !+{p}
+		}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && !WinActive("D:\Users\Bruno\Videos\Series") && (previousDirectory != currentDirectory)){
 			WinGetActiveTitle, previousDirectory
 			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
 			if(detailsPane = "0x0E0A04")
@@ -1592,7 +1604,8 @@ fxSoundChangeOutput:
 	WinGetActiveTitle, currentActive
 	Process, Close, FxSound.exe
 	
-	MySearchTerm := "philco"
+	;MySearchTerm := "philco"
+	MySearchTerm := "panasonic"
 	 
 	currentOutput := "" ; clears the var variable if it has contents
 	TheFile := "" ; clears the TheFile variable if it has contents
@@ -1611,13 +1624,17 @@ fxSoundChangeOutput:
 	}
 	
 	FileRead, textContents, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
-	if(currentOutput = ""){ ; Realtek is the current output, change it to philco
-		textContents := StrReplace(textContents, "Speakers (Realtek High Definition Audio)", "TV-PHILCO (Intel(R) Display Audio)")
-		textContents := StrReplace(textContents, "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}", "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}")
+	if(currentOutput = ""){ ; Realtek is the current output, change it to TV
+		;textContents := StrReplace(textContents, "Speakers (Realtek High Definition Audio)", "TV-PHILCO (Intel(R) Display Audio)")
+		;textContents := StrReplace(textContents, "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}", "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}")
+		textContents := StrReplace(textContents, "Speakers (Realtek High Definition Audio)", "Panasonic-TV (Intel(R) Display Audio)")
+		textContents := StrReplace(textContents, "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}", "{0.0.0.00000000}.{67cee19e-936e-477f-9796-c7a6f230ff1e}")
 		futureOutput := "TV"
 	}else{
-		textContents := StrReplace(textContents, "TV-PHILCO (Intel(R) Display Audio)", "Speakers (Realtek High Definition Audio)")
-		textContents := StrReplace(textContents, "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}", "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}")
+		;textContents := StrReplace(textContents, "TV-PHILCO (Intel(R) Display Audio)", "Speakers (Realtek High Definition Audio)")
+		;textContents := StrReplace(textContents, "{0.0.0.00000000}.{f80174d9-5f21-4599-8957-2852f2495fb5}", "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}")
+		textContents := StrReplace(textContents, "Panasonic-TV (Intel(R) Display Audio)", "Speakers (Realtek High Definition Audio)")
+		textContents := StrReplace(textContents, "{0.0.0.00000000}.{67cee19e-936e-477f-9796-c7a6f230ff1e}", "{0.0.0.00000000}.{577cb51f-f82d-456f-8878-44ea83a018d7}")
 		futureOutput := "Headphone Jack"
 	}
 	FileDelete, C:\Users\Bruno\AppData\Roaming\FxSound\FxSound.settings
