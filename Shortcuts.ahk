@@ -259,8 +259,8 @@ programRoutine:
 				}
 			}
 			prevWani := "lessons"
-		}else if(WinActive("WaniKani / Reviews - Vivaldi") || WinActive("WaniKani / Dashboard - Vivaldi")){
-			if(prevWani != "reviewsOrDashboard"){
+		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
+			if(prevWani != "reviews"){
 				Gosub, loadingPage
 
 				Clipboard := ""
@@ -275,7 +275,7 @@ programRoutine:
 				else if(A_ScreenHeight = 1080)
 					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi130_1080.png
 				incorrectZoom := ErrorLevel
-				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi") ||  WinActive("WaniKani / Dashboard - Vivaldi"))) && Clipboard != zoomValue){
+				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi"))) && Clipboard != zoomValue){
 					Gosub, vivaldiZoom
 
 					Sleep, 150
@@ -287,7 +287,36 @@ programRoutine:
 					incorrectZoom := ErrorLevel
 				}
 			}
-			prevWani := "reviewsOrDashboard"
+			prevWani := "reviews"
+		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
+			if(prevWani != "dashboard"){
+				Gosub, loadingPage
+
+				Clipboard := ""
+				if(A_ScreenHeight = 768)
+					zoomValue := 110
+				else if(A_ScreenHeight = 1080)
+					zoomValue := 120
+
+				resFix(768, 1230, 710, 1300, 750)
+				if(A_ScreenHeight = 768)
+					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
+				else if(A_ScreenHeight = 1080)
+					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi120_1080.png
+				incorrectZoom := ErrorLevel
+				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi"))) && Clipboard != zoomValue){
+					Gosub, vivaldiZoom
+
+					Sleep, 150
+					resFix(768, 1230, 710, 1300, 750)
+					if(A_ScreenHeight = 768)
+						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
+					else if(A_ScreenHeight = 1080)
+						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi120_1080.png
+					incorrectZoom := ErrorLevel
+				}
+			}
+			prevWani := "dashboard"
 		}
 	}else if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
 		WinGetPos, , , expW, expH, A
