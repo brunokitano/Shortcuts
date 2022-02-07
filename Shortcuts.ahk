@@ -801,7 +801,7 @@ joyButtons:
 	; RSB
 	if(GetKeyState("Joy10") && !(GetKeyState("Joy7"))){
 		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
-			Send, !{r}
+			Send, ^{r}
 		}
 		KeyWait, Joy10
 	}
