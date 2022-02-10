@@ -232,13 +232,17 @@ programRoutine:
 		WinActivate, Resolution
 		WinActivate, Yes || No
 		WinActivate, Emulators
-	}else if InStr(winTitle, "Stories", CaseSensitive := false) and InStr(winTitle, "Instagram", CaseSensitive := false){
+	}
+
+	if InStr(winTitle, "Stories", CaseSensitive := false) and InStr(winTitle, "Instagram", CaseSensitive := false){
 		ImageSearch, , , 1100, 150, 1200, 250, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\InstaMuted.png
 		if(!ErrorLevel){
 			ControlClick, x1150 y195, ahk_exe vivaldi.exe, , Left, 1
 		}
 		Sleep, 300 ; Make it scan less 
-	}else if(WinActive("WaniKani / Lessons - Vivaldi") || WinActive("WaniKani / Reviews - Vivaldi") || WinActive("WaniKani / Dashboard - Vivaldi")){
+	}
+
+	if(WinActive("WaniKani / Lessons - Vivaldi") || WinActive("WaniKani / Reviews - Vivaldi") || WinActive("WaniKani / Dashboard - Vivaldi")){
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
@@ -318,7 +322,9 @@ programRoutine:
 			}
 			prevWani := "dashboard"
 		}
-	}else if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
+	}
+
+	if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
 		WinGetPos, , , expW, expH, A
 		WinGetActiveTitle, currentDirectory
 
@@ -363,6 +369,10 @@ programRoutine:
 			if(detailsPane = "0x0E0A04")
 				Send, !+{p}
 		}
+	}
+
+	if(WinExist("ahk_exe SRAppPB.exe")){
+		Process, Close, SRAppPB.exe
 	}
 
 	SetTimer, programRoutine, On
