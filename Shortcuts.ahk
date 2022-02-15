@@ -361,7 +361,7 @@ programRoutine:
 			}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && !WinActive("D:\Users\Bruno\Videos\Series")){
 				WinGetActiveTitle, previousDirectory
 				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
-				if(detailsPane = "0x0E0A04" && ((previousDirectory != "D:\Users\Bruno\Videos\Sonarr") || (previousDirectory != "D:\Users\Bruno\Videos\Series")))
+				if(detailsPane = "0x0E0A04")
 					Send, !+{p}
 			}
 		}
