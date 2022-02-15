@@ -271,7 +271,7 @@ programRoutine:
 				if(A_ScreenHeight = 768)
 					zoomValue := 110
 				else if(A_ScreenHeight = 1080)
-					zoomValue := 130
+					zoomValue := 140
 
 				resFix(768, 1230, 710, 1300, 750)
 				if(A_ScreenHeight = 768)
