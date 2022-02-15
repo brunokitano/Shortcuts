@@ -325,8 +325,7 @@ programRoutine:
 	}
 
 	if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
-		WinGetPos, , , expW, expH, A
-		WinGetActiveTitle, currentDirectory
+		Sleep, 50
 
 		if(GetKeyState("1", "P") || GetKeyState("2", "P") || GetKeyState("Joy5", "P") 
 		|| GetKeyState("Joy6", "P") || GetKeyState("Joy1", "P") || GetKeyState("LButton", "P")){	
@@ -343,31 +342,28 @@ programRoutine:
 			else if(GetKeyState("LButton", "P"))
 				KeyWait, LButton
 
-			WinGetActiveTitle, changedDirectory
-			runTime := 0
-			startTime := A_TickCount
-			while(currentDirectory = changedDirectory && runTime <= 200){
-				WinGetActiveTitle, changedDirectory
-				runTime := A_TickCount - startTime
-			}
 			Sleep, 100
 		}
 
-		if(WinActive("D:\Users\Bruno\Videos\Sonarr") && previousDirectory != "D:\Users\Bruno\Videos\Sonarr"){
-			previousDirectory := "D:\Users\Bruno\Videos\Sonarr"
-			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
-			if(detailsPane != "0x0E0A04")
-				Send, !+{p}
-		}else if(WinActive("D:\Users\Bruno\Videos\Series") && previousDirectory != "D:\Users\Bruno\Videos\Series"){
-			previousDirectory := "D:\Users\Bruno\Videos\Series"
-			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
-			if(detailsPane != "0x0E0A04")
-				Send, !+{p}
-		}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && !WinActive("D:\Users\Bruno\Videos\Series") && (previousDirectory != currentDirectory)){
-			WinGetActiveTitle, previousDirectory
-			PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
-			if(detailsPane = "0x0E0A04")
-				Send, !+{p}
+		WinGetPos, , , expW, expH, A
+		WinGetActiveTitle, currentDirectory
+		if(previousDirectory != currentDirectory){
+			if(WinActive("D:\Users\Bruno\Videos\Sonarr")){
+				previousDirectory := "D:\Users\Bruno\Videos\Sonarr"
+				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+				if(detailsPane != "0x0E0A04")
+					Send, !+{p}
+			}else if(WinActive("D:\Users\Bruno\Videos\Series")){
+				previousDirectory := "D:\Users\Bruno\Videos\Series"
+				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+				if(detailsPane != "0x0E0A04")
+					Send, !+{p}
+			}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && !WinActive("D:\Users\Bruno\Videos\Series")){
+				WinGetActiveTitle, previousDirectory
+				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
+				if(detailsPane = "0x0E0A04" && ((previousDirectory != "D:\Users\Bruno\Videos\Sonarr") || (previousDirectory != "D:\Users\Bruno\Videos\Series")))
+					Send, !+{p}
+			}
 		}
 	}
 
