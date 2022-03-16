@@ -254,7 +254,8 @@ vivaldiZoom:
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
-	} 
+	}
+	ControlClick, , ahk_exe vivaldi.exe, , Left, 1, U
 	SetControlDelay, 0
 	BlockInput, Off
 Return
