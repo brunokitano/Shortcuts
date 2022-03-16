@@ -26,6 +26,8 @@ ntimes := 0
 ;ToolTipColor("Black", "White")
 CoordMode, ToolTip, Screen
 
+#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Scripts\FindText.ahk
+
 I_Icon = D:\Users\Bruno\Documents\Scripts\Shortcuts\Icon\Shortcut.ico
 IfExist, %I_Icon%
 Menu, Tray, Icon, %I_Icon%
@@ -196,20 +198,63 @@ Return
 
 vivaldiZoom:
 	BlockInput, On
-	SetControlDelay, 10
-	resFix(768, 1265, 735)
-	ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
-	ControlSend, , %zoomValue%, ahk_exe vivaldi.exe
-	Sleep, 10
-	Clipboard := ""
-	Send, ^{c}
-	ClipWait, 0.1
-	if(ErrorLevel){
-		Send, ^{a}
-		Send, ^{c}
-		ClipWait, 0.1
-	}
-	ControlSend, , {Enter}{Esc}, ahk_exe vivaldi.exe
+	SetControlDelay, 80
+	resFix(1080, 1800, 1030, 200, 10)
+	if(desiredZoom = 110){
+		Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+			Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+		}else{
+			Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+				Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
+			}else{
+				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+			}
+		}
+	}else if(desiredZoom = 120){
+		Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+			Text:="|<+>*120$10.wznzDww000wznzDwy"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+		}else{
+			Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+				Text:="|<+>*120$10.wznzDww000wznzDwy"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
+			}else{
+				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+			}
+		}
+	}else if(desiredZoom = 140){
+		Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+			Text:="|<+>*120$10.wznzDww000wznzDwy"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
+		}else{
+			Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+				Text:="|<+>*120$10.wznzDww000wznzDwy"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
+			}else{
+				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+			}
+		}
+	} 
 	SetControlDelay, 0
 	BlockInput, Off
 Return
@@ -246,78 +291,88 @@ programRoutine:
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(prevWani != "lessons"){
 				Gosub, loadingPage
+				desiredZoom := 140
+				resFix(1080, 1800, 1030, 200, 10)
 
-				Clipboard := ""
-				zoomValue := 140
+				Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					incorrectZoom := 0
+				else
+					incorrectZoom := 1
 
-				resFix(768, 1230, 710, 1300, 740)
-				ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140_%A_ScreenHeight%.png
-				incorrectZoom := ErrorLevel
-				while((incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi") && Clipboard != zoomValue)){
+				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
-
-					Sleep, 150
-					resFix(768, 1230, 710, 1300, 740)
-					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi140_%A_ScreenHeight%.png
-					incorrectZoom := ErrorLevel
+					Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						incorrectZoom := 0
+					else
+						incorrectZoom := 1
 				}
 			}
 			prevWani := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(prevWani != "reviews"){
 				Gosub, loadingPage
+				resFix(1080, 1800, 1030, 200, 10)
 
-				Clipboard := ""
-				if(A_ScreenHeight = 768)
-					zoomValue := 110
-				else if(A_ScreenHeight = 1080)
-					zoomValue := 140
+				if(A_ScreenHeight = 768){
+					desiredZoom := 110
+					Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+				}else if(A_ScreenHeight = 1080){
+					desiredZoom := 140
+					Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+				}
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					incorrectZoom := 0
+				else
+					incorrectZoom := 1
 
-				resFix(768, 1230, 710, 1300, 750)
-				if(A_ScreenHeight = 768)
-					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
-				else if(A_ScreenHeight = 1080)
-					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi130_1080.png
-				incorrectZoom := ErrorLevel
-				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi"))) && Clipboard != zoomValue){
+				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi")))){
 					Gosub, vivaldiZoom
-
-					Sleep, 150
-					resFix(768, 1230, 710, 1300, 750)
-					if(A_ScreenHeight = 768)
-						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
-					else if(A_ScreenHeight = 1080)
-						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi130_1080.png
-					incorrectZoom := ErrorLevel
+					if(A_ScreenHeight = 768){
+						desiredZoom := 110
+						Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+					}else if(A_ScreenHeight = 1080){
+						desiredZoom := 140
+						Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+					}
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						incorrectZoom := 0
+					else
+						incorrectZoom := 1
 				}
 			}
 			prevWani := "reviews"
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(prevWani != "dashboard"){
 				Gosub, loadingPage
+				resFix(1080, 1800, 1030, 200, 10)
 
-				Clipboard := ""
-				if(A_ScreenHeight = 768)
-					zoomValue := 110
-				else if(A_ScreenHeight = 1080)
-					zoomValue := 120
+				if(A_ScreenHeight = 768){
+					desiredZoom := 110
+					Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+				}else if(A_ScreenHeight = 1080){
+					desiredZoom := 120
+					Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
+				}
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					incorrectZoom := 0
+				else
+					incorrectZoom := 1
 
-				resFix(768, 1230, 710, 1300, 750)
-				if(A_ScreenHeight = 768)
-					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
-				else if(A_ScreenHeight = 1080)
-					ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi120_1080.png
-				incorrectZoom := ErrorLevel
-				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi"))) && Clipboard != zoomValue){
+				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi")))){
 					Gosub, vivaldiZoom
-
-					Sleep, 150
-					resFix(768, 1230, 710, 1300, 750)
-					if(A_ScreenHeight = 768)
-						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi110_768.png
-					else if(A_ScreenHeight = 1080)
-						ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *TransBlack *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\vivaldi120_1080.png
-					incorrectZoom := ErrorLevel
+					if(A_ScreenHeight = 768){
+						desiredZoom := 110
+						Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+					}else if(A_ScreenHeight = 1080){
+						desiredZoom := 120
+						Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
+					}
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						incorrectZoom := 0
+					else
+						incorrectZoom := 1	
 				}
 			}
 			prevWani := "dashboard"
