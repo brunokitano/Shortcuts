@@ -325,6 +325,7 @@ programRoutine:
 	}
 
 	if(WinActive("ahk_class CabinetWClass") && WinActive("ahk_exe explorer.exe")){
+		WinGetActiveTitle, currentDirectory
 		Sleep, 50
 
 		if(GetKeyState("1", "P") || GetKeyState("2", "P") || GetKeyState("Joy5", "P") 
@@ -342,6 +343,13 @@ programRoutine:
 			else if(GetKeyState("LButton", "P"))
 				KeyWait, LButton
 
+			WinGetActiveTitle, changedDirectory
+			runTime := 0
+			startTime := A_TickCount
+			while(currentDirectory = changedDirectory && runTime <= 200){
+				WinGetActiveTitle, changedDirectory
+				runTime := A_TickCount - startTime
+			}
 			Sleep, 100
 		}
 
@@ -358,7 +366,7 @@ programRoutine:
 				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
 				if(detailsPane != "0x0E0A04")
 					Send, !+{p}
-			}else if(!WinActive("D:\Users\Bruno\Videos\Sonarr") && !WinActive("D:\Users\Bruno\Videos\Series")){
+			}else{
 				WinGetActiveTitle, previousDirectory
 				PixelGetColor, detailsPane, % expW-50, % expH-50, Fast RGB
 				if(detailsPane = "0x0E0A04")
@@ -783,12 +791,19 @@ joyButtons:
 				Gosub, fxSoundChangeOutput
 				KeyWait, Joy6
 			}
-	; Pause+Y
+	; Pause+A
 			if(GetKeyState("Joy1")){
-				Gosub, wanikaniAuto
+				reviewAndLesson := 1
+				Gosub, waniKaniAuto
 				KeyWait, Joy1
 			}
-	; Pause+A
+	; Pause+B
+			if(GetKeyState("Joy2")){
+				reviewAndLesson := 0
+				Gosub, waniKaniAuto
+				KeyWait, Joy2
+			}
+	; Pause+Y
 			if(GetKeyState("Joy4")){
 				Send, !{F4}
 				KeyWait, Joy4
@@ -799,7 +814,11 @@ joyButtons:
 	; LSB
 	if(GetKeyState("Joy9") && !(GetKeyState("Joy7"))){
 		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
-			Send, {F5}
+			JoyZ := GetKeyState("JoyZ")
+			if(JoyZ > 55)
+				Send, ^{r}
+			else
+				Send, {F5}
 		}
 		KeyWait, Joy9
 	}
@@ -807,9 +826,17 @@ joyButtons:
 	; RSB
 	if(GetKeyState("Joy10") && !(GetKeyState("Joy7"))){
 		if(!WinActive("ahk_exe PotPlayerMini64.exe")){
-			Send, ^{r}
+			Send, {LShift Down}
+			while(GetKeyState("Joy10")){
+		; RSB+A
+				if(GetKeyState("Joy1")){
+					Send, {LButton Down}
+					KeyWait, Joy1
+					Send, {LButton Up}
+				}
+			}
+			Send, {LShift Up}
 		}
-		KeyWait, Joy10
 	}
 
 	SetTimer, joyButtons, On
@@ -1484,7 +1511,70 @@ $<^>!,::
 Return
 
 ; WaniKani
-wanikaniAuto:
+waniKaniExtensionLoading:
+	MouseGetPos, mouseX, mouseY
+
+	resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+		resFix(1080, 1000, 600)
+		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+	}
+
+	resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+	ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
+	waniKaniError := ErrorLevel
+	if(waniKaniError){
+		resFix(1080, 1820, 70)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
+		Sleep, 10
+
+		varTime := 1300
+		Sleep, %varTime%
+
+		resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
+		waniKaniError := ErrorLevel
+	}
+	waniKaniErrorTimes := 0
+	while(waniKaniError && waniKaniErrorTimes < 3){
+		resFix(1080, 1820, 70)
+		ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
+		varTime := varTime + 500
+		Sleep, %varTime%
+
+		MouseGetPos, mouseX, mouseY
+		resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
+			resFix(1080, 1000, 600)
+			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
+		}
+		
+		resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
+		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
+		waniKaniError := ErrorLevel
+
+		waniKaniErrorTimes++
+	}
+Return
+waniKaniReviewAndLesson:
+	resFix(1080, 1452, 228, 1824, 313)
+	PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 20, Fast RGB ; Review
+	waniKaniReview := ErrorLevel
+	if(!waniKaniReview){
+		Send, {Esc}
+		Sleep, 10
+		Run, https://www.wanikani.com/review			
+	}else{
+		resFix(1080, 1452, 228, 1824, 313)
+		PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 20, Fast RGB  ; Lesson
+		waniLesson := ErrorLevel
+		Send, {Esc}
+		Sleep, 10
+		if(!waniLesson)
+			Run, https://www.wanikani.com/lesson/session
+	}
+Return
+waniKaniAuto:
 	if(!WinActive("ahk_exe vivaldi.exe")){	
 		Process, Exist, vivaldi.exe
 		vivaldiPID=%Errorlevel%
@@ -1510,58 +1600,10 @@ wanikaniAuto:
 	}
 
 	if(!WinActive("WaniKani / Reviews - Vivaldi") && !WinActive("WaniKani / Lessons - Vivaldi")){
-		MouseGetPos, mouseX, mouseY
-
-		resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-		if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
-			resFix(1080, 1000, 600)
-			MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
-		}
-
-		resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-		ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
-		waniKaniError := ErrorLevel
-		if(waniKaniError){
-			resFix(1080, 1820, 70)
-			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
-			Sleep, 10
-
-			varTime := 1000
-			Sleep, %varTime%
-
-			resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
-			waniKaniError := ErrorLevel
-		}
-		waniKaniErrorTimes := 0
-		while(waniKaniError && waniKaniErrorTimes < 3){
-			resFix(1080, 1820, 70)
-			ControlClick, x%xValue0% y%yValue0%, ahk_exe vivaldi.exe, , Left, 1
-			varTime := varTime + 500
-			Sleep, %varTime%
-
-			MouseGetPos, mouseX, mouseY
-			resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
-				resFix(1080, 1000, 600)
-				MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
-			}
-			
-			resFix(1080, 1350, 10, 1930, 360) ; (mouseX > 1400 && mouseY > 10 && mouseX < 1930 && mouseY < 360)
-			ImageSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, *50 D:\Users\Bruno\Documents\Scripts\Shortcuts\Images\WaniKaniExtension%A_ScreenHeight%.png ; Detects if the extension is open
-			waniKaniError := ErrorLevel
-
-			waniKaniErrorTimes++
-		}
-
-		resFix(1080, 1452, 228, 1824, 313)
-		PixelSearch, waniX, waniY, %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0x00AAFF, 20, Fast RGB ; Review
-		waniKaniReview := ErrorLevel
-		if(!waniKaniReview){
-			Send, {Esc}
-			Sleep, 10
-			Run, https://www.wanikani.com/review			
-		}else{
+		Gosub, waniKaniExtensionLoading
+		if(reviewAndLesson = 1)
+			Gosub, waniKaniReviewAndLesson
+		else{
 			resFix(1080, 1452, 228, 1824, 313)
 			PixelSearch, , , %xValue0%, %yValue0%, %xValue1%, %yValue1%, 0xF100A1, 20, Fast RGB  ; Lesson
 			waniLesson := ErrorLevel
@@ -1591,7 +1633,8 @@ wanikaniAuto:
 Return
 $>+/::
 $>+;::
-	Gosub, wanikaniAuto
+	reviewAndLesson := 1
+	Gosub, waniKaniAuto
 Return
 
 $F1::
