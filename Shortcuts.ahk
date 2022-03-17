@@ -72,9 +72,9 @@ if InvertYAxis
 else
 	YAxisMultiplier = 1
 
-;SetTimer, WatchPOV, 10
-;SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
-;SetTimer, joyButtons, 10
+SetTimer, WatchPOV, 10
+SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
+SetTimer, joyButtons, 10
 
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 
@@ -83,11 +83,11 @@ joystickAsMouseSwitch := 1
 JoystickNumber = 0
 GetKeyState, JoyR, JoyR
 if(JoyR = "")
-;SetTimer, checkController, 300
+SetTimer, checkController, 300
 
 joystickSwitch := 1
 sameKeys := 0
-;SetTimer, WatchPOVandStick, 20
+SetTimer, WatchPOVandStick, 20
 resChange := 0
 	;VARIABLES AND FUNCTIONS
 
