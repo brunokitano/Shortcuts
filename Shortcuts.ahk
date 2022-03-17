@@ -46,20 +46,11 @@ RegRead, headphones, HKEY_LOCAL_MACHINE, %headphonesPath%, %headphonesValue%
 prevValue := headphones
 ;SetTimer, checkHeadphones, 500
 
-JoystickNumber = 0
-GetKeyState, JoyR, JoyR
-if(JoyR = "")
-	SetTimer, checkController, 300
 
 gotActivated := 0
 previousDirectory := ""
 currentDirectory := ""
 SetTimer, programRoutine, 10
-
-joystickSwitch := 1
-sameKeys := 0
-SetTimer, WatchPOVandStick, 20
-resChange := 0
 
 ; Sound output
 outputChange := 0 
@@ -81,13 +72,23 @@ if InvertYAxis
 else
 	YAxisMultiplier = 1
 
-SetTimer, WatchPOV, 10
-SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
-SetTimer, joyButtons, 10
+;SetTimer, WatchPOV, 10
+;SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
+;SetTimer, joyButtons, 10
 
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 
 joystickAsMouseSwitch := 1
+
+JoystickNumber = 0
+GetKeyState, JoyR, JoyR
+if(JoyR = "")
+;SetTimer, checkController, 300
+
+joystickSwitch := 1
+sameKeys := 0
+;SetTimer, WatchPOVandStick, 20
+resChange := 0
 	;VARIABLES AND FUNCTIONS
 
 
@@ -202,55 +203,55 @@ vivaldiZoom:
 	resFix(1080, 1800, 1030, 200, 10)
 	if(desiredZoom = 110){
 		Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
-		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
 			Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 		}else{
 			Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
 				Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
 			}else{
 				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
 	}else if(desiredZoom = 120){
 		Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
 			Text:="|<+>*120$10.wznzDww000wznzDwy"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 		}else{
 			Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
-				Text:="|<+>*120$10.wznzDww000wznzDwy"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
+				Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
 	}else if(desiredZoom = 140){
 		Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+		if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
 			Text:="|<+>*120$10.wznzDww000wznzDwy"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
 		}else{
 			Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
-			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+			if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text)){
 				Text:="|<+>*120$10.wznzDww000wznzDwy"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
@@ -296,7 +297,7 @@ programRoutine:
 				resFix(1080, 1800, 1030, 200, 10)
 
 				Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
@@ -304,7 +305,7 @@ programRoutine:
 				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
 					Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
-					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
@@ -323,7 +324,7 @@ programRoutine:
 					desiredZoom := 140
 					Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
 				}
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
@@ -337,7 +338,7 @@ programRoutine:
 						desiredZoom := 140
 						Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
 					}
-					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
@@ -356,7 +357,7 @@ programRoutine:
 					desiredZoom := 120
 					Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
 				}
-				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
@@ -370,7 +371,7 @@ programRoutine:
 						desiredZoom := 120
 						Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
 					}
-					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+					if (ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.15, 0.15, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1	
