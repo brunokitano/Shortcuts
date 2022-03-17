@@ -55,6 +55,16 @@ SetTimer, programRoutine, 10
 ; Sound output
 outputChange := 0 
 
+JoystickNumber = 0
+GetKeyState, JoyR, JoyR
+if(JoyR = "")
+SetTimer, checkController, 300
+
+joystickSwitch := 1
+sameKeys := 0
+SetTimer, WatchPOVandStick, 20
+resChange := 0
+
 ; Joystic as mouse
 JoyMultiplier = 0.50 
 JoyThreshold = 0
@@ -80,15 +90,6 @@ GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 
 joystickAsMouseSwitch := 1
 
-JoystickNumber = 0
-GetKeyState, JoyR, JoyR
-if(JoyR = "")
-SetTimer, checkController, 300
-
-joystickSwitch := 1
-sameKeys := 0
-SetTimer, WatchPOVandStick, 20
-resChange := 0
 	;VARIABLES AND FUNCTIONS
 
 
