@@ -347,6 +347,8 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
+						else
+							ToolTip, Error
 					}
 				}
 
@@ -392,6 +394,8 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
+						else
+							ToolTip, Error
 					}
 				}
 
@@ -459,6 +463,8 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
+						else
+							ToolTip, Error
 					}
 				}
 
@@ -772,15 +778,13 @@ WatchPOVandStick:
 return
 
 WatchPOV:
-	if(!WinActive("ahk_exe PotPlayerMini64.exe")){
-		SetTimer, WatchPOV, Off
+	SetTimer, WatchPOV, Off
 
-		Gosub, povDirection
+	Gosub, povDirection
 
-		Gosub, povPressandDelay
-		
-		SetTimer, WatchPOV, On
-	}
+	Gosub, povPressandDelay
+	
+	SetTimer, WatchPOV, On
 Return
 joystickAsMouse:
 	MouseNeedsToBeMoved := false  ; Set default.
