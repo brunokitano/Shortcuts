@@ -347,8 +347,25 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
-						else
-							ToolTip, Error
+						else{
+							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+								useAlternate := 0
+							else{
+								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
+								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+									useAlternate := 1
+								else{
+									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
+									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+										useAlternate := 2
+									else{
+										MsgBox, Error
+										Return
+									}
+								}
+							}
+						}
 					}
 				}
 
@@ -394,8 +411,25 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
-						else
-							ToolTip, Error
+						else{
+							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+								useAlternate := 0
+							else{
+								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
+								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+									useAlternate := 1
+								else{
+									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
+									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+										useAlternate := 2
+									else{
+										MsgBox, Error
+										Return
+									}
+								}
+							}
+						}
 					}
 				}
 
@@ -463,8 +497,25 @@ programRoutine:
 						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
-						else
-							ToolTip, Error
+						else{
+							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+								useAlternate := 0
+							else{
+								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
+								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+									useAlternate := 1
+								else{
+									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
+									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+										useAlternate := 2
+									else{
+										MsgBox, Error
+										Return
+									}
+								}
+							}
+						}
 					}
 				}
 
