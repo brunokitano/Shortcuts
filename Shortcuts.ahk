@@ -27,6 +27,7 @@ ntimes := 0
 CoordMode, ToolTip, Screen
 
 #Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\FindText.ahk
+#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\getURL.ahk
 
 I_Icon = D:\Users\Bruno\Documents\Scripts\Shortcuts\Icon\Shortcut.ico
 IfExist, %I_Icon%
@@ -328,14 +329,13 @@ programRoutine:
 		}
 		Sleep, 300 ; Make it scan less 
 	}
-
-	if(WinActive("WaniKani / Lessons - Vivaldi") || WinActive("WaniKani / Reviews - Vivaldi") || WinActive("WaniKani / Dashboard - Vivaldi")){
+	if(WinActive("ahk_class Chrome_WidgetWin_1") && WinActive("ahk_exe vivaldi.exe")){
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
-			if(prevWani != "lessons"){
+			if(significantTab != "lessons"){
 				Gosub, loadingPage
+
 				desiredZoom := 140
 				resFix(1080, 1800, 1030, 200, 10)
-
 				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
 				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
 					useAlternate := 0
@@ -375,6 +375,7 @@ programRoutine:
 					Text:="|<140>*89$38.lyQ7sQsT69wGQ7laDAblsNnl3wQ6Qy1z79bDy1laNnz1AE0MzUn7tWTt0lyQDwsM"
 				else if(useAlternate = 2)
 					Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
+
 				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 					incorrectZoom := 0
 				else
@@ -382,24 +383,19 @@ programRoutine:
 
 				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
-					if(useAlternate = 0)
-						Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
-					else if(useAlternate = 1)
-						Text:="|<140>*89$38.lyQ7sQsT69wGQ7laDAblsNnl3wQ6Qy1z79bDy1laNnz1AE0MzUn7tWTt0lyQDwsM"
-					else if(useAlternate = 2)
-						Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
+					
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
 				}
 			}
-			prevWani := "lessons"
+			significantTab := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
-			if(prevWani != "reviews"){
+			if(significantTab != "reviews" || significantTab != "reviewsSession"){
 				Gosub, loadingPage
-				resFix(1080, 1800, 1030, 200, 10)
 
+				resFix(1080, 1800, 1030, 200, 10)
 				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
 				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
 					useAlternate := 0
@@ -433,30 +429,27 @@ programRoutine:
 					}
 				}
 
-				if(A_ScreenHeight = 768){
-					desiredZoom := 110
-					if(useAlternate = 0)
-						Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-					else if(useAlternate = 1)
-						Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-					else if(useAlternate = 2)
-						Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-				}else if(A_ScreenHeight = 1080){
-					desiredZoom := 120
-					if(useAlternate = 0)
-						Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
-					else if(useAlternate = 1)
-						Text:="|<120>*89$38.lkQ7sQsNW9wGQ7waDAbly9nl3wTaQy1z7lbDy1lttnz1AQyMzUn6TWTt0lUADwsM"
-					else if(useAlternate = 2)
-						Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"
-				}
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-					incorrectZoom := 0
-				else
-					incorrectZoom := 1
-
-				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi")))){
-					Gosub, vivaldiZoom
+				sURL := GetActiveBrowserURL()
+				if(sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session"){
+					if(A_ScreenHeight = 768){
+						desiredZoom := 110
+						if(useAlternate = 0)
+							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+						else if(useAlternate = 1)
+							Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
+						else if(useAlternate = 2)
+							Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
+					}else if(A_ScreenHeight = 1080){
+						desiredZoom := 140
+						if(useAlternate = 0)
+							Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
+						else if(useAlternate = 1)
+							Text:="|<140>*89$38.lyQ7sQsT69wGQ7laDAblsNnl3wQ6Qy1z79bDy1laNnz1AE0MzUn7tWTt0lyQDwsM"
+						else if(useAlternate = 2)
+							Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
+					}
+					significantTab := "reviews"
+				}else if(sURL != "https://www.wanikani.com/review" && sURL = "https://www.wanikani.com/review/session"){
 					if(A_ScreenHeight = 768){
 						desiredZoom := 110
 						if(useAlternate = 0)
@@ -474,15 +467,24 @@ programRoutine:
 						else if(useAlternate = 2)
 							Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"
 					}
+					significantTab := "reviewsSession"
+				}
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+					incorrectZoom := 0
+				else
+					incorrectZoom := 1
+
+				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi")))){
+					Gosub, vivaldiZoom
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
 				}
 			}
-			prevWani := "reviews"
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
-			if(prevWani != "dashboard"){
+			if(significantTab != "dashboard"){
 				Gosub, loadingPage
 				resFix(1080, 1800, 1030, 200, 10)
 				
@@ -543,30 +545,14 @@ programRoutine:
 
 				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi")))){
 					Gosub, vivaldiZoom
-					if(A_ScreenHeight = 768){
-						desiredZoom := 110
-						if(useAlternate = 0)
-							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-						else if(useAlternate = 1)
-							Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-						else if(useAlternate = 2)
-							Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-					}else if(A_ScreenHeight = 1080){
-						desiredZoom := 120
-						if(useAlternate = 0)
-							Text:="|<120>*109$38.tkS7sQsRX8yGQ7wbDgbtz9nt3yTaQy5zblbDy1tttnz9CQyQzknaTmDtYtUC7wsM"
-						else if(useAlternate = 1)
-							Text:="|<120>*89$38.lkQ7sQsNW9wGQ7waDAbly9nl3wTaQy1z7lbDy1lttnz1AQyMzUn6TWTt0lUADwsM"
-						else if(useAlternate = 2)
-							Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"
-					}
+
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1	
 				}
 			}
-			prevWani := "dashboard"
+			significantTab := "dashboard"
 		}
 	}
 
