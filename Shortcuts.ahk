@@ -22,11 +22,11 @@ SetControlDelay, 0
 	;OPTIMIZATIONS
 
 ntimes := 0
-;#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Scripts\Tooltip.ahk
+;#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\Tooltip.ahk
 ;ToolTipColor("Black", "White")
 CoordMode, ToolTip, Screen
 
-#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Scripts\FindText.ahk
+#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\FindText.ahk
 
 I_Icon = D:\Users\Bruno\Documents\Scripts\Shortcuts\Icon\Shortcut.ico
 IfExist, %I_Icon%
