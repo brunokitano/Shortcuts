@@ -51,7 +51,7 @@ prevValue := headphones
 gotActivated := 0
 previousDirectory := ""
 currentDirectory := ""
-SetTimer, programRoutine, 10
+SetTimer, programRoutine, 50
 
 ; Sound output
 outputChange := 0 
@@ -59,7 +59,7 @@ outputChange := 0
 JoystickNumber = 0
 GetKeyState, JoyR, JoyR
 if(JoyR = "")
-SetTimer, checkController, 300
+	SetTimer, checkController, 300
 
 joystickSwitch := 1
 sameKeys := 0
@@ -179,8 +179,8 @@ checkHeadphones:
 Return
 
 checkController:
-	GetKeyState, joy_name, 1JoyName
-	if(joy_name != "")
+	GetKeyState, JoyR, JoyR
+	if(JoyR != "")
 		Reload
 Return
 
@@ -201,6 +201,10 @@ Return
 
 vivaldiZoom:
 	BlockInput, On
+	SetTimer, WatchPOV, Off
+	SetTimer, WatchJoystick, Off
+	SetTimer, joyButtons, Off
+	
 	SetControlDelay, 80
 	resFix(1080, 1800, 1030, 200, 10)
 	if(desiredZoom = 110){
@@ -300,6 +304,46 @@ vivaldiZoom:
 	ControlClick, , ahk_exe vivaldi.exe, , Left, 1, U
 	SetControlDelay, 0
 	BlockInput, Off
+	SetTimer, WatchPOV, On
+	SetTimer, WatchJoystick, On
+	SetTimer, joyButtons, On
+Return
+checkFindText:
+	resFix(1080, 1800, 1030, 200, 10)
+	
+	Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+	if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+		useAlternate := 0
+	}else{
+		Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+			useAlternate := 1
+		else{
+			Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				useAlternate := 2
+			else{
+				Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+					useAlternate := 0
+				else{
+					Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+						useAlternate := 1
+					else{
+						Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
+						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+							useAlternate := 2
+						else{
+							MsgBox, , , Error, 1000 
+							SetTimer, programRoutine, On
+							Return
+						}
+					}
+				}
+			}
+		}
+	}
 Return
 programRoutine:
 	SetTimer, programRoutine, Off
@@ -335,39 +379,8 @@ programRoutine:
 				Gosub, loadingPage
 
 				desiredZoom := 140
-				resFix(1080, 1800, 1030, 200, 10)
-				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
-					useAlternate := 0
-				}else{
-					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-						useAlternate := 1
-					else{
-						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
-						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-							useAlternate := 2
-						else{
-							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-								useAlternate := 0
-							else{
-								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-									useAlternate := 1
-								else{
-									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-										useAlternate := 2
-									else{
-										MsgBox, Error
-										Return
-									}
-								}
-							}
-						}
-					}
-				}
+
+				Gosub, checkFindText
 
 				if(useAlternate = 0)
 					Text:="|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
@@ -381,6 +394,7 @@ programRoutine:
 				else
 					incorrectZoom := 1
 
+				i := 0
 				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
 					
@@ -388,49 +402,26 @@ programRoutine:
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
+
+					i++
+					if(i >= 2)
+						Gosub, checkFindText
 				}
 			}
 			significantTab := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(significantTab != "reviews" || significantTab != "reviewsSession"){
 				Gosub, loadingPage
-
-				resFix(1080, 1800, 1030, 200, 10)
-				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
-					useAlternate := 0
-				}else{
-					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-						useAlternate := 1
-					else{
-						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
-						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-							useAlternate := 2
-						else{
-							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-								useAlternate := 0
-							else{
-								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-									useAlternate := 1
-								else{
-									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-										useAlternate := 2
-									else{
-										MsgBox, Error
-										Return
-									}
-								}
-							}
-						}
-					}
-				}
+				
+				Gosub, checkFindText
 
 				sURL := GetActiveBrowserURL()
 				if(sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session"){
+					if(significantTab = "reviews"){
+						SetTimer, programRoutine, On
+						Return
+					}
+
 					if(A_ScreenHeight = 768){
 						desiredZoom := 110
 						if(useAlternate = 0)
@@ -450,6 +441,11 @@ programRoutine:
 					}
 					significantTab := "reviews"
 				}else if(sURL != "https://www.wanikani.com/review" && sURL = "https://www.wanikani.com/review/session"){
+					if(significantTab = "reviewsSession"){
+						SetTimer, programRoutine, On
+						Return
+					}
+
 					if(A_ScreenHeight = 768){
 						desiredZoom := 110
 						if(useAlternate = 0)
@@ -475,51 +471,24 @@ programRoutine:
 				else
 					incorrectZoom := 1
 
+				i := 0
 				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi")))){
 					Gosub, vivaldiZoom
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
+					
+					i++
+					if(i >= 2)
+						Gosub, checkFindText
 				}
 			}
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(significantTab != "dashboard"){
 				Gosub, loadingPage
-				resFix(1080, 1800, 1030, 200, 10)
-				
-				Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
-					useAlternate := 0
-				}else{
-					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-						useAlternate := 1
-					else{
-						Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
-						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-							useAlternate := 2
-						else{
-							Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-							if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-								useAlternate := 0
-							else{
-								Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-								if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-									useAlternate := 1
-								else{
-									Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-									if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
-										useAlternate := 2
-									else{
-										MsgBox, Error
-										Return
-									}
-								}
-							}
-						}
-					}
-				}
+
+				Gosub, checkFindText
 
 				if(A_ScreenHeight = 768){
 					desiredZoom := 110
@@ -543,13 +512,18 @@ programRoutine:
 				else
 					incorrectZoom := 1
 
+				i := 0
 				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi")))){
 					Gosub, vivaldiZoom
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 						incorrectZoom := 0
 					else
-						incorrectZoom := 1	
+						incorrectZoom := 1
+
+					i++
+					if(i >= 2)
+						Gosub, checkFindText
 				}
 			}
 			significantTab := "dashboard"
