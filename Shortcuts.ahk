@@ -335,7 +335,7 @@ checkFindText:
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
 							useAlternate := 2
 						else{
-							MsgBox, , , Error, 1000 
+							MsgBox, , , Error, 1
 							SetTimer, programRoutine, On
 							Return
 						}
