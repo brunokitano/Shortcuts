@@ -457,6 +457,10 @@ joyButtons:
 				KeyWait, Joy4
 			}
 		}
+	; Pause+RT	
+			JoyZ := GetKeyState("JoyZ")
+			if(JoyZ < 45)
+				Reload
 	}
 
 	; LSB
