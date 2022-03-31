@@ -31,12 +31,19 @@ sharedVariables:
 	else if(WatchPOVandStick = 1 && WatchPOVandStickVar = 0)
 		ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 4, "1")
 
-;Fifth line is for Reloading
-	FileReadLine, reloadVar, D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt, 5
-	if(reload = 0 && reloadVar = 1)
+;Fifth line is to joystick to read for Reloading
+	FileReadLine, reloadReadVar, D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt, 5
+	if(reloadRead = 0 && reloadReadVar = 1)
 		ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 5, "0")
-	else if(reload = 1 && reloadVar = 0)
+	else if(reloadRead = 1 && reloadReadVar = 0)
 		ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 5, "1")
+
+;Sixth line is to joystick to write for Reloading
+	FileReadLine, reloadWriteVar, D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt, 6
+	if(reloadWriteVar = 1){
+		ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 6, "0")
+		Reload
+	}
 Return
 ReplaceLine(filePath, strNum, text) {
    oFile := FileOpen(filePath, "rw")

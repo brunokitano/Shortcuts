@@ -103,8 +103,8 @@ sharedVariablesJoysticks:
 	}
 
 ;Fifth line is for Reloading
-	FileReadLine, WatchPOVandStickVar, D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt, 5
-	if(reloadingVar = 1){
+	FileReadLine, reloadVar, D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt, 5
+	if(reloadVar = 1){
 		ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 5, "0")
 		Reload
 	}
@@ -459,8 +459,10 @@ joyButtons:
 	; Pause+RT	
 			JoyZ := GetKeyState("JoyZ")
 			if(JoyZ < 45)
-				Reload
+				Reload := 1
 		}
+		if(Reload)
+			ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 6, "1")
 	}
 
 	; LSB
