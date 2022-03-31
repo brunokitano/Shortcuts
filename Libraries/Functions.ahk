@@ -1,5 +1,6 @@
 ﻿#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\FindText.ahk
-#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\getURL.ahk
+#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\GetUrl.ahk
+Return
 
 sharedVariables:
 ; First line is for WatchPOV
@@ -381,7 +382,6 @@ programRoutine:
 	if(WinActive("ahk_class Chrome_WidgetWin_1") && WinActive("ahk_exe vivaldi.exe")){
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(significantTab != "lessons"){
-				test := "lessons"
 				Gosub, loadingPage
 
 				desiredZoom := 140
@@ -415,12 +415,12 @@ programRoutine:
 				}
 			}
 			significantTab := "lessons"
+			previousURL := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(significantTab != "reviews" || significantTab != "reviewsSession"){
-				test := "reviews"
-
 				previousURL := sURL
-				sURL := GetActiveBrowserURL()
+				sURL := GetUrl("A")
+
 				if(previousURL = sURL){
 					SetTimer, programRoutine, On
 					Return
@@ -499,7 +499,6 @@ programRoutine:
 			}
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(significantTab != "dashboard"){
-				test := "dashboard"
 				Gosub, loadingPage
 
 				Gosub, checkFindText
@@ -541,6 +540,7 @@ programRoutine:
 				}
 			}
 			significantTab := "dashboard"
+			previousURL := "dashboard"
 		}
 	}
 
@@ -1291,7 +1291,6 @@ loadingPage:
 	if(mouseX > xValue0 && mouseY > yValue0 && mouseX < xValue1 && mouseY < yValue1){
 		resFix(1080, 1000, 600)
 		MouseMove, %xValue0%, %yValue0%, 0 ; Center of the page
-	ToolTip, %test%
 	}
 
 	resFix(1080, 80, 40, 160, 110)

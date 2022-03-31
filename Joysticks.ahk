@@ -28,7 +28,7 @@ if(JoyR = "")
 
 joystickSwitch := 1
 sameKeys := 0
-SetTimer, WatchPOVandStick, 10
+SetTimer, WatchPOVandStick, 20
 ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 4, "1")
 resChange := 0
 
@@ -49,18 +49,18 @@ if InvertYAxis
 else
 	YAxisMultiplier = 1
 
-SetTimer, WatchPOV, 10
+SetTimer, WatchPOV, 50
 ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 1, "1")
-SetTimer, WatchJoystick, 10  ; Monitor the movement of the joystick.
+SetTimer, WatchJoystick, 5  ; Monitor the movement of the joystick.
 ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 2, "1")
-SetTimer, joyButtons, 10
+SetTimer, joyButtons, 20
 ReplaceLine("D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\sharedVariables.txt", 3, "1")
 
 GetKeyState, JoyInfo, %JoystickNumber%JoyInfo
 
 joystickAsMouseSwitch := 1
 
-SetTimer, sharedVariablesJoysticks, 10
+;SetTimer, sharedVariablesJoysticks, 50
 
 I_Icon = D:\Users\Bruno\Pictures\Icons\gamepad.ico
 IfExist, %I_Icon%
