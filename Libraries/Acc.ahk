@@ -206,9 +206,9 @@ Acc_Children(oAcc)
 
 	pAcc := ComObjValue(oAcc)
 	size := A_PtrSize * 2 + 8
-	VarSetCapacity(varChildren, oAcc.accChildCount * size, 0)
+	Try VarSetCapacity(varChildren, oAcc.accChildCount * size, 0)
 	obtained := ""
-	hResult := DllCall(address
+	Try hResult := DllCall(address
 		, "Ptr",pAcc
 		, "Int",0
 		, "Int",oAcc.accChildCount
