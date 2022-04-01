@@ -1,4 +1,4 @@
-﻿#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\FindText.ahk
+#Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\FindText.ahk
 #Include D:\Users\Bruno\Documents\Scripts\Shortcuts\Libraries\GetUrl.ahk
 Return
 
@@ -147,9 +147,10 @@ vivaldiZoom:
 			Text:="|<120>*89$38.lkQ7sQsNW9wGQ7waDAbly9nl3wTaQy1z7lbDy1lttnz1AQyMzUn6TWTt0lUADwsM"
 		else if(useAlternate = 2)
 			Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"
-		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 			Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 		}else{
 			if(useAlternate = 0)
@@ -158,16 +159,18 @@ vivaldiZoom:
 				Text:="|<140>*89$38.lyQ7sQsT69wGQ7laDAblsNnl3wQ6Qy1z79bDy1laNnz1AE0MzUn7tWTt0lyQDwsM"
 			else if(useAlternate = 2)
 				Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 				Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
 			}else{
 				if(useAlternate = 0)
 					Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
 				else if(useAlternate = 1)
 					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
@@ -178,9 +181,10 @@ vivaldiZoom:
 			Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
 		else if(useAlternate = 2)
 			Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 			Text:="|<+>*120$10.wznzDww000wznzDwy"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 		}else{
 			if(useAlternate = 0)
@@ -189,16 +193,17 @@ vivaldiZoom:
 				Text:="|<140>*89$38.lyQ7sQsT69wGQ7laDAblsNnl3wQ6Qy1z79bDy1laNnz1AE0MzUn7tWTt0lyQDwsM"
 			else if(useAlternate = 2)
 				Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 				Text:="|<->*96$22.zzzzzzzzzzzzzzzzzzzzzzz03zw0Dzzzzzzzzzzzzzzzzzzzzzzs"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				if(useAlternate = 0)
 					Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
 				else if(useAlternate = 1)
 					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
@@ -209,9 +214,10 @@ vivaldiZoom:
 			Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
 		else if(useAlternate = 2)
 			Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 			Text:="|<+>*120$10.wznzDww000wznzDwy"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
 		}else{
 			if(useAlternate = 0)
@@ -220,16 +226,18 @@ vivaldiZoom:
 				Text:="|<120>*89$38.lkQ7sQsNW9wGQ7waDAbly9nl3wTaQy1z7lbDy1lttnz1AQyMzUn6TWTt0lUADwsM"
 			else if(useAlternate = 2)
 				Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 				Text:="|<+>*120$10.wznzDww000wznzDwy"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				if(useAlternate = 0)
 					Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
 				else if(useAlternate = 1)
 					Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
 			}
 		}
@@ -243,29 +251,30 @@ vivaldiZoom:
 Return
 checkFindText:
 	resFix(1080, 1800, 1030, 200, 10)
-	
+	useAlternate := ""
+
 	Text:="|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-	if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text)){
+	if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 		useAlternate := 0
 	}else{
 		Text:="|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 			useAlternate := 1
 		else{
 			Text:="|<Reset>*102$34.0zzzzwlzzzwnbzzznCMAC60nAanAkQsCQnAk483AnDy7wnYyNDnD88C32"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 				useAlternate := 2
 			else{
 				Text:="|<110>*105$38.tyy7sQsSD8yGQ73bDgbtwtnt3yTCQy1zbnbDy1twtnz9CTCQzknbnmDtYtwy7wsM"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					useAlternate := 0
 				else{
 					Text:="|<110>*88$38.lww7sQsSC9wGQ73aDAblwtnl3wTCQy1z7nbDy1lwtnz1ATCMzUn7nWTt0lwwDwsM"
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 						useAlternate := 1
 					else{
 						Text:="|<110>*96$37.nwwDsNlsQntAksCNwoyTaQyEzDnCTUTbtbDyFnwnbzGNyNnz9AzCNzAaTbVzb6"
-						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 							useAlternate := 2
 						else{
 							MsgBox, , , Error, 1
@@ -402,7 +411,9 @@ programRoutine:
 				else if(useAlternate = 2)
 					Text:="|<140>*50$39.tyA7sAQDVYT871w8nt1zD16D8Dts8ls3zC16Dw1tW8lz1DA06Ts8tyAXy9DDlUzX1U"
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				zoomASCII := Text
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
@@ -410,15 +421,18 @@ programRoutine:
 				i := 0
 				while(incorrectZoom && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
-					
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
 
 					i++
-					if(i >= 2)
+					if(i >= 2){
+						ToolTip, i
+						i := 0
 						Gosub, checkFindText
+					}
 				}
 			}
 			significantTab := "lessons"
@@ -486,7 +500,9 @@ programRoutine:
 					significantTab := "reviewsSession"
 				}
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+				zoomASCII := Text
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
@@ -494,14 +510,18 @@ programRoutine:
 				i := 0
 				while((incorrectZoom && (WinActive("WaniKani / Reviews - Vivaldi")))){
 					Gosub, vivaldiZoom
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
 					
 					i++
-					if(i >= 2)
+					if(i >= 2){
+						ToolTip, i
+						i := 0
 						Gosub, checkFindText
+					}
 				}
 			}
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
@@ -527,23 +547,28 @@ programRoutine:
 					else if(useAlternate = 2)
 						Text:="|<120>*97$37.nkwDsNlnAntAkzaNwoyTmQyEzDtCTUTbtbDyFnlnbzGNntnz9AtyNzAaQ1Vzb6"				
 				}
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+
+				zoomASCII := Text
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
 
 				i := 0
-				while((incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi")))){
+				while(incorrectZoom && (WinActive("WaniKani / Dashboard - Vivaldi"))){
 					Gosub, vivaldiZoom
 
-					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0.05, 0.05, Text))
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
 						incorrectZoom := 0
 					else
 						incorrectZoom := 1
 
 					i++
-					if(i >= 2)
+					if(i >= 2){
+						i := 0
 						Gosub, checkFindText
+					}
 				}
 			}
 			significantTab := "dashboard"
