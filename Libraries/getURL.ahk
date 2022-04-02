@@ -16,7 +16,7 @@ GetUrl_Recurse(oAcc)
 {
 	Try if (oAcc.accValue(0) ~= "^http")
 		return oAcc
-	for i,accChild in Acc_Children(oAcc) {
+	Try for i,accChild in Acc_Children(oAcc) {
 		oAcc := GetUrl_Recurse(accChild)
 		if IsObject(oAcc)
 			return oAcc

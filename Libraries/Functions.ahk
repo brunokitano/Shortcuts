@@ -429,7 +429,6 @@ programRoutine:
 
 					i++
 					if(i >= 2){
-						ToolTip, i
 						i := 0
 						Gosub, checkFindText
 					}
