@@ -184,8 +184,9 @@ vivaldiZoom:
 
 		if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 			Text := "|<+>*120$10.wznzDww000wznzDwy"
-			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+			if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
 				ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+			}
 		}else{
 			if(useAlternate = 0)
 				Text := "|<140>*96$38.tyS7sQsT78yGQ7lbDgbtsNnt3yS6Qy1zb9bDy1taNnz9CM0QzknbtmDtYtyS7wsM"
@@ -331,8 +332,6 @@ useTheOtherAlternate:
 	}else if(whichUseAltenateWasUsed = 101){
 		useAlternate := 1
 		whichUseAltenateWasUsed := 111
-	}else if(whichUseAltenateWasUsed = 111){
-		MsgBox, , , None of the alternates worked
 	}
 Return
 programRoutine:
@@ -477,7 +476,7 @@ programRoutine:
 						incorrectZoom := 1
 
 					i++
-					if(i >= 2){
+					if(i >= 3){
 						Gosub, useTheOtherAlternate
 						Gosub, selectDesiredZoom
 						i := 0
@@ -488,11 +487,20 @@ programRoutine:
 					else
 						incorrectZoom := 1
 				}
+
+				if(whichUseAltenateWasUsed = 111){
+					Tooltip, Tried all alternates
+					Goto, smoothTooltip			
+				}
+
+				significantTab := "lessons"
+				previousURL := "lessons"
 			}
-			significantTab := "lessons"
-			previousURL := "lessons"
 		}else if(WinActive("WaniKani / Reviews - Vivaldi")){
 			if(significantTab != "reviews" || significantTab != "reviewsSession"){
+				KeyWait, Joy1
+				KeyWait, LButton
+
 				previousURL := sURL
 				sURL := GetUrl("A")
 
@@ -509,8 +517,6 @@ programRoutine:
 					whichUseAltenateWasUsed := 010
 				else if(useAlternate = 2)
 					whichUseAltenateWasUsed := 100
-
-				Gosub, selectDesiredZoom
 
 				if(sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session"){
 					if(significantTab = "reviews"){
@@ -554,7 +560,7 @@ programRoutine:
 						incorrectZoom := 1
 
 					i++
-					if(i >= 2){
+					if(i >= 3){
 						Gosub, useTheOtherAlternate
 						Gosub, selectDesiredZoom
 						i := 0
@@ -566,6 +572,10 @@ programRoutine:
 						incorrectZoom := 1
 				}
 
+				if(whichUseAltenateWasUsed = 111){
+					Tooltip, Tried all alternates
+					Goto, smoothTooltip
+				}
 
 				if(sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session")
 					significantTab := "reviews"
@@ -609,7 +619,7 @@ programRoutine:
 						incorrectZoom := 1
 
 					i++
-					if(i >= 2){
+					if(i >= 3){
 						Gosub, useTheOtherAlternate
 						Gosub, selectDesiredZoom
 						i := 0
@@ -620,9 +630,15 @@ programRoutine:
 					else
 						incorrectZoom := 1
 				}
+
+				if(whichUseAltenateWasUsed = 111){
+					Tooltip, Tried all alternates
+					Goto, smoothTooltip
+				}
+
+				significantTab := "dashboard"
+				previousURL := "dashboard"
 			}
-			significantTab := "dashboard"
-			previousURL := "dashboard"
 		}
 	}
 
