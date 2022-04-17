@@ -166,12 +166,21 @@ vivaldiZoom:
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 3
 			}else{
 				if(useAlternate = 0)
-					Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				else if(useAlternate = 1)
-					Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+					Text:="|<130>*106$38.tkS7sQsRb8yGQ7wbDgbtyNnt3yQCQy1zbtbDy1tz9nz9CTmQzknaMmDtYtkS7wsM"
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
-					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+					Text := "|<+>*120$10.wznzDww000wznzDwy"
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}else{
+					if(useAlternate = 0)
+						Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+					else if(useAlternate = 1)
+						Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}
 			}
 		}
 	}else if(desiredZoom = 120){
@@ -201,11 +210,20 @@ vivaldiZoom:
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				if(useAlternate = 0)
-					Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				else if(useAlternate = 1)
-					Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
-					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+					Text:="|<130>*106$38.tkS7sQsRb8yGQ7wbDgbtyNnt3yQCQy1zbtbDy1tz9nz9CTmQzknaMmDtYtkS7wsM"
+
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+					Text := "|<+>*120$10.wznzDww000wznzDwy"
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}else{
+					if(useAlternate = 0)
+						Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+					else if(useAlternate = 1)
+						Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}
 			}
 		}
 	}else if(desiredZoom = 140){
@@ -234,12 +252,21 @@ vivaldiZoom:
 					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 2
 			}else{
 				if(useAlternate = 0)
-					Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
-				else if(useAlternate = 1)
-					Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+					Text:="|<130>*106$38.tkS7sQsRb8yGQ7wbDgbtyNnt3yQCQy1zbtbDy1tz9nz9CTmQzknaMmDtYtkS7wsM"
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
-					ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text)){
+					Text := "|<+>*120$10.wznzDww000wznzDwy"
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}else{
+					if(useAlternate = 0)
+						Text := "|<Reset>*103$33.0zzzztbzzztCTzzz9n3VkUAn9gn8CRDCN9k4839aTsDtCHtYz9l11UMU"
+					else if(useAlternate = 1)
+						Text := "|<Reset>*102$33.1zzzztbzzznAzzzyNb3VkUAn9gmMAtDCH9UAM2NYztDnAHvAyNn13UMU"
+
+					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+						ControlClick, x%x% y%y%, ahk_exe vivaldi.exe, , Left, 1
+				}
 			}
 		}
 	}
@@ -288,6 +315,8 @@ checkFindText:
 			}
 		}
 	}
+	if(useAlternate = 1 || useAlternate = 2)
+		Tooltip, useAlternate%useAlternate%
 Return
 selectDesiredZoom:
 	if(desiredZoom = 110){
