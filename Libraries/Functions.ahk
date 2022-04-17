@@ -278,7 +278,8 @@ checkFindText:
 						if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
 							useAlternate := 2
 						else{
-							MsgBox, , , Error, 1
+							ToolTip, Reset button not detected
+							Goto, smoothTooltip
 							SetTimer, programRoutine, On
 							Return
 						}
@@ -445,9 +446,7 @@ programRoutine:
 	if(WinActive("ahk_class Chrome_WidgetWin_1") && WinActive("ahk_exe vivaldi.exe")){
 		if(WinActive("WaniKani / Lessons - Vivaldi")){
 			if(significantTab != "lessons"){
-				Gosub, loadingPage
-
-				desiredZoom := 140
+				;Gosub, loadingPage
 
 				Gosub, checkFindText
 				if(useAlternate = 0)
@@ -457,17 +456,18 @@ programRoutine:
 				else if(useAlternate = 2)
 					whichUseAltenateWasUsed := 100
 
+				desiredZoom := 140
 				Gosub, selectDesiredZoom
 
 				zoomASCII := Text
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
 
 				i := 0
-				while(incorrectZoom && whichUseAltenateWasUsed != 111 && WinActive("WaniKani / Lessons - Vivaldi")){
+				while(incorrectZoom && whichUseAltenateWasUsed != "Error" && WinActive("WaniKani / Lessons - Vivaldi")){
 					Gosub, vivaldiZoom
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
@@ -477,9 +477,13 @@ programRoutine:
 
 					i++
 					if(i >= 3){
-						Gosub, useTheOtherAlternate
-						Gosub, selectDesiredZoom
-						i := 0
+						if(whichUseAltenateWasUsed != 111){
+							Gosub, useTheOtherAlternate
+							Gosub, selectDesiredZoom
+							i := 0
+						}else{
+							whichUseAltenateWasUsed := "Error"
+						}
 					}
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
@@ -488,9 +492,11 @@ programRoutine:
 						incorrectZoom := 1
 				}
 
-				if(whichUseAltenateWasUsed = 111){
+				if(whichUseAltenateWasUsed = "Error"){
 					Tooltip, Tried all alternates
-					Goto, smoothTooltip			
+					Goto, smoothTooltip
+					SetTimer, programRoutine, On
+					Return
 				}
 
 				significantTab := "lessons"
@@ -503,12 +509,23 @@ programRoutine:
 
 				previousURL := sURL
 				sURL := GetUrl("A")
-
-				if(previousURL = sURL){
+				if(sURL = ""){
+					Tooltip, URL is Blank
+					Goto, smoothTooltip
+					WinClose, ahk_exe vivaldi.exe
+					Run, "C:\Users\Bruno\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Vivaldi.ink"
 					SetTimer, programRoutine, On
 					Return
 				}
-				Gosub, loadingPage
+
+				if(previousURL = sURL){
+					if(!((sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session" && significantTab != "reviews") 
+					|| (sURL != "https://www.wanikani.com/review" && sURL = "https://www.wanikani.com/review/session" && significantTab != "reviewsSession"))){
+						SetTimer, programRoutine, On
+						Return
+					}
+				}
+				;Gosub, loadingPage
 
 				Gosub, checkFindText
 				if(useAlternate = 0)
@@ -551,7 +568,7 @@ programRoutine:
 					incorrectZoom := 1
 
 				i := 0
-				while((incorrectZoom && whichUseAltenateWasUsed != 111 && (WinActive("WaniKani / Reviews - Vivaldi")))){
+				while((incorrectZoom && whichUseAltenateWasUsed != "Error" && (WinActive("WaniKani / Reviews - Vivaldi")))){
 					Gosub, vivaldiZoom
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
@@ -561,9 +578,13 @@ programRoutine:
 
 					i++
 					if(i >= 3){
-						Gosub, useTheOtherAlternate
-						Gosub, selectDesiredZoom
-						i := 0
+						if(whichUseAltenateWasUsed != 111){
+							Gosub, useTheOtherAlternate
+							Gosub, selectDesiredZoom
+							i := 0
+						}else{
+							whichUseAltenateWasUsed := "Error"
+						}
 					}
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
@@ -572,9 +593,11 @@ programRoutine:
 						incorrectZoom := 1
 				}
 
-				if(whichUseAltenateWasUsed = 111){
+				if(whichUseAltenateWasUsed = "Error"){
 					Tooltip, Tried all alternates
 					Goto, smoothTooltip
+					SetTimer, programRoutine, On
+					Return
 				}
 
 				if(sURL = "https://www.wanikani.com/review" && sURL != "https://www.wanikani.com/review/session")
@@ -584,7 +607,7 @@ programRoutine:
 			}
 		}else if(WinActive("WaniKani / Dashboard - Vivaldi")){
 			if(significantTab != "dashboard"){
-				Gosub, loadingPage
+				;Gosub, loadingPage
 
 				Gosub, checkFindText
 				if(useAlternate = 0)
@@ -603,13 +626,13 @@ programRoutine:
 
 				zoomASCII := Text
 
-				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, Text))
+				if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
 					incorrectZoom := 0
 				else
 					incorrectZoom := 1
 
 				i := 0
-				while(incorrectZoom && whichUseAltenateWasUsed != 111 && (WinActive("WaniKani / Dashboard - Vivaldi"))){
+				while(incorrectZoom && whichUseAltenateWasUsed != "Error" && (WinActive("WaniKani / Dashboard - Vivaldi"))){
 				Sleep, 1000
 					Gosub, vivaldiZoom
 
@@ -620,9 +643,13 @@ programRoutine:
 
 					i++
 					if(i >= 3){
-						Gosub, useTheOtherAlternate
-						Gosub, selectDesiredZoom
-						i := 0
+						if(whichUseAltenateWasUsed != 111){
+							Gosub, useTheOtherAlternate
+							Gosub, selectDesiredZoom
+							i := 0
+						}else{
+							whichUseAltenateWasUsed := "Error"
+						}
 					}
 
 					if(ok:=FindText(X, Y, xValue0-xValue1, yValue0-yValue1, xValue0+xValue1, yValue0+yValue1, 0, 0, zoomASCII))
@@ -631,9 +658,11 @@ programRoutine:
 						incorrectZoom := 1
 				}
 
-				if(whichUseAltenateWasUsed = 111){
+				if(whichUseAltenateWasUsed = "Error"){
 					Tooltip, Tried all alternates
 					Goto, smoothTooltip
+					SetTimer, programRoutine, On
+					Return
 				}
 
 				significantTab := "dashboard"
